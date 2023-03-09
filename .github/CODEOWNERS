@@ -1,0 +1,3 @@
+# Automatically generated CODEOWNERS
+# Regenerate with `make update-codeowners`
+draft-steele-cose-merkle-tree-proofs.md orie@transmute.industries henk.birkholz@sit.fraunhofer.de Maik.Riechert@microsoft.com antdl@microsoft.com fournet@microsoft.com
