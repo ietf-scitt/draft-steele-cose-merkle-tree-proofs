@@ -71,7 +71,22 @@ This specification describes three CBOR data structures for primary use in COSE 
 
 # Introduction
 
-This specification describes three CBOR data structures for primary use in COSE envelopes. A format for Merkle Tree Root Signatures with metadata, a format for Inclusions Paths, and a format for disclosure of a single hadh tree leaf payload (Merkle Tree Proofs).
+Merkle proofs are verifiable data structures that support secure data storage,
+through their ability to protect the integrity of batches of documents or collections of statements.
+
+Merkle proofs can be used to prove a document is in a database (proof of existence),
+or that a smaller set of statements are contained in a large set of statements (proof of disclosure).
+
+A merkle proof is a path from a leaf to a root in a merkle tree.
+
+Merkle trees are constructed from simple operations such as concatenation and digest via a cryptographic hash function.
+
+The simple design and valuable cryptographic properties of merkle trees have been leveraged in many network and database applications.
+
+Differences in the representation of a merkle tree, merkle leaf and merkle inclusion proof can increase the
+burden for implementers, and create interoperability challenges.
+
+This document describes the three data structures necessary to use merkle proofs with COSE envelopes.
 
 ## Requirements Notation
 
