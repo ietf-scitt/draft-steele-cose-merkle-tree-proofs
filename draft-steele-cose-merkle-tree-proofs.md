@@ -109,13 +109,13 @@ Signed Merkle Tree Proof:
 
 # CBOR Merkle Structures
 
-This section describes representations of merkle tree structures in CBOR. 
+This section describes representations of merkle tree structures in CBOR.
 
-Some of the structures such as the construction of a merkle tree leaf, 
+Some of the structures such as the construction of a merkle tree leaf,
 or an inclusion proof from a leaf to a merkle root, might have several different representations.
 
-Some differences in representations are necessary to support efficient 
-verification of proofs and compatibility with deployed tree algorithms used in specific implementations. 
+Some differences in representations are necessary to support efficient
+verification of proofs and compatibility with deployed tree algorithms used in specific implementations.
 
 ## Signed Merkle Tree Root
 
@@ -139,12 +139,12 @@ Note: The payload is just a byte string representing the Merkle tree root hash (
 
 ## Inclusion Paths
 
-{{-certificate-transparency-v1}} defines a merkle audit path for a leaf in a merkle tree 
+{{-certificate-transparency-v1}} defines a merkle audit path for a leaf in a merkle tree
 as the shortest list of additional nodes in the merkle tree required to compute the merkle root for that tree.
 
 {{-certificate-transparency-v2}} changed the term from "merkle audit path" to "merkle inclusion proof".
 
-We prefer to use the term "inclusion path" to avoid confusion with structures that contain the "merkle audit path", 
+We prefer to use the term "inclusion path" to avoid confusion with structures that contain the "merkle audit path",
 in addition to a merkle root, addition metadata and a merkle leaf.
 
 One example of such a structure is a "transparent signed statement" or "claim" as defined in {{-scitt-architecture}}.
