@@ -96,11 +96,13 @@ This document describes the three data structures necessary to use merkle proofs
 
 Leaf Bytes:
 
-: TBD
+: A merkle tree leaf is labelled with the cryptographic hash of a sequence of bytes. 
+These bytes may be structured as a combination of Payload and Extra Data.
 
 Merkle Tree:
 
-: A Merkle tree is a tree where every leaf is labelled with the cryptographic hash of a sequence of bytes and every node that is not a leaf is labeled with the cryptographic hash of the labels of its child nodes.
+: A Merkle tree is a tree where every leaf is labelled with the cryptographic hash of a sequence of 
+bytes and every node that is not a leaf is labeled with the cryptographic hash of the labels of its child nodes.
 
 Merkle Tree Root:
 
@@ -112,7 +114,9 @@ Merkle Tree Algorithm:
 
 Payload and Extra Data:
 
-: A payload is data bound to in a Merkle tree leaf. The Merkle tree algorithm determines how a payload together with extra data is bound to a leaf. The simplest case is that the payload is the leaf itself without extra data.
+: A payload is data bound to in a Merkle tree leaf. 
+The Merkle tree algorithm determines how a payload together with extra data is bound to a leaf.
+The simplest case is that the payload is the leaf itself without extra data.
 
 Inclusion Path:
 
@@ -152,6 +156,8 @@ Payload: Merkle tree root hash bytes according to tree alg (i.e., header params 
 
 Note: The payload is just a byte string representing the Merkle tree root hash (and not some wrapper structure) so that it can be detached (see defintion of payload in https://www.rfc-editor.org/rfc/rfc9052#section-4.1) and easily re-computed from an inclusion path and leaf bytes. This allows to design other structures that force re-computation and prevent faulty implementations (forgetting to match a computed root with one embedded in a signature).
 
+One example of a Signed Merkle Tree Root is a "transparent signed statement" or "claim" as defined in {{-scitt-architecture}}.
+
 ## Inclusion Paths
 
 {{-certificate-transparency-v1}} defines a merkle audit path for a leaf in a merkle tree
@@ -159,10 +165,7 @@ as the shortest list of additional nodes in the merkle tree required to compute 
 
 {{-certificate-transparency-v2}} changed the term from "merkle audit path" to "merkle inclusion proof".
 
-We prefer to use the term "inclusion path" to avoid confusion with structures that contain the "merkle audit path",
-in addition to a merkle root, addition metadata and a merkle leaf.
-
-One example of such a structure is a "transparent signed statement" or "claim" as defined in {{-scitt-architecture}}.
+We prefer to use the term "inclusion path" to avoid confusion with Signed Merkle Tree Proof.
 
 If the tree size and leaf index is known, then a compact inclusion path variant can be used:
 
