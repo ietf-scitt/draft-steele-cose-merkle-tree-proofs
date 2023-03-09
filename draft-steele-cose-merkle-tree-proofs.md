@@ -94,7 +94,7 @@ Merkle Tree Algorithm:
 
 : A Merkle tree algorithm specifies how nodes in the tree must be hashed to compute the root node.
 
-Payload and Extra Data: 
+Payload and Extra Data:
 
 : A payload is data bound to in a Merkle tree leaf. The Merkle tree algorithm determines how a payload together with extra data is bound to a leaf. The simplest case is that the payload is the leaf itself without extra data.
 
@@ -207,7 +207,7 @@ This document establishes a registry of Merkle tree algorithms with the followin
 
 | Name              | Label | Description
 |---
-|Reserved           | 0     | 
+|Reserved           | 0     |
 |CCF_SHA256         | 1     | CCF with SHA-256
 |RFC6962_SHA256     | 2     | RFC6962 with SHA-256
 |RFC6962_BL_SHA256  | 3     | RFC6962 with blinding and SHA-256
