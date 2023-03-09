@@ -96,12 +96,12 @@ This document describes the three data structures necessary to use merkle proofs
 
 Leaf Bytes:
 
-: A merkle tree leaf is labelled with the cryptographic hash of a sequence of bytes. 
+: A merkle tree leaf is labelled with the cryptographic hash of a sequence of bytes.
 These bytes may be structured as a combination of Payload and Extra Data.
 
 Merkle Tree:
 
-: A Merkle tree is a tree where every leaf is labelled with the cryptographic hash of a sequence of 
+: A Merkle tree is a tree where every leaf is labelled with the cryptographic hash of a sequence of
 bytes and every node that is not a leaf is labeled with the cryptographic hash of the labels of its child nodes.
 
 Merkle Tree Root:
@@ -114,7 +114,7 @@ Merkle Tree Algorithm:
 
 Payload and Extra Data:
 
-: A payload is data bound to in a Merkle tree leaf. 
+: A payload is data bound to in a Merkle tree leaf.
 The Merkle tree algorithm determines how a payload together with extra data is bound to a leaf.
 The simplest case is that the payload is the leaf itself without extra data.
 
