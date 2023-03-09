@@ -48,14 +48,15 @@ author:
 
 normative:
   RFC8949:
-  RFC9162:
+  RFC6962: certificate-transparency-v1
+  RFC9162: certificate-transparency-v2
   RFC6234:
   RFC8032:
   RFC6979:
 
 informative:
   I-D.ietf-cose-countersign:
-  I-D.ietf-scitt-architecture:
+  I-D.ietf-scitt-architecture: scitt-architecture
   CCF_Merkle_Tree:
     target: https://microsoft.github.io/CCF/main/architecture/merkle_tree.html
     title: CCF - Merkle Tree
@@ -106,9 +107,15 @@ Signed Merkle Tree Proof:
 
 : A signed Merkle tree proof is the combination of signed Merkle tree root hash, inclusion path, extra data, and payload.
 
-# Merkle Tree Related CBOR Structures
+# CBOR Merkle Structures
 
-[FIXME] SecIntro Text
+This section describes representations of merkle tree structures in CBOR. 
+
+Some of the structures such as the construction of a merkle tree leaf, 
+or an inclusion proof from a leaf to a merkle root, might have several different representations.
+
+Some differences in representations are necessary to support efficient 
+verification of proofs and compatibility with deployed tree algorithms used in specific implementations. 
 
 ## Signed Merkle Tree Root
 
@@ -130,9 +137,19 @@ Payload: Merkle tree root hash bytes according to tree alg (i.e., header params 
 
 Note: The payload is just a byte string representing the Merkle tree root hash (and not some wrapper structure) so that it can be detached (see defintion of payload in https://www.rfc-editor.org/rfc/rfc9052#section-4.1) and easily re-computed from an inclusion path and leaf bytes. This allows to design other structures that force re-computation and prevent faulty implementations (forgetting to match a computed root with one embedded in a signature).
 
-## Inclusion Path
+## Inclusion Paths
 
-If the tree size and leaf index is known, then a compact inclusion path (see, REF NEEDED, CT RFC?) variant can be used:
+{{-certificate-transparency-v1}} defines a merkle audit path for a leaf in a merkle tree 
+as the shortest list of additional nodes in the merkle tree required to compute the merkle root for that tree.
+
+{{-certificate-transparency-v2}} changed the term from "merkle audit path" to "merkle inclusion proof".
+
+We prefer to use the term "inclusion path" to avoid confusion with structures that contain the "merkle audit path", 
+in addition to a merkle root, addition metadata and a merkle leaf.
+
+One example of such a structure is a "transparent signed statement" or "claim" as defined in {{-scitt-architecture}}.
+
+If the tree size and leaf index is known, then a compact inclusion path variant can be used:
 
 ~~~~ cddl
 IndexAwareInclusionPath = #6.1234([
