@@ -1,0 +1,81 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2023-03-12T01:24:30.480439+00:00",
+  "repo": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOJHVbLc5LtiiX",
+      "title": "Update merkle proof references",
+      "url": "https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs/pull/1",
+      "state": "OPEN",
+      "author": "OR13",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-03-09T19:54:00Z",
+      "updatedAt": "2023-03-09T22:18:18Z",
+      "baseRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
+      "baseRefName": "main",
+      "baseRefOid": "7e6393773d85eb321eb9c45ca17019065781df62",
+      "headRepository": "OR13/draft-steele-cose-merkle-tree-proofs",
+      "headRefName": "feat/revisions",
+      "headRefOid": "7a500571f601e0763f548e0697751a3191908921",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    }
+  ]
+}
