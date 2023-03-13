@@ -1055,7 +1055,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Steele, et al.</td>
-<td class="center">Expires 10 September 2023</td>
+<td class="center">Expires 14 September 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1068,12 +1068,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-steele-cose-merkle-tree-proofs-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-03-09" class="published">9 March 2023</time>
+<time datetime="2023-03-13" class="published">13 March 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-09-10">10 September 2023</time></dd>
+<dd class="expires"><time datetime="2023-09-14">14 September 2023</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1131,7 +1131,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 10 September 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 14 September 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1172,13 +1172,13 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-terminology" class="internal xref">Terminology</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-merkle-tree-related-cbor-st" class="internal xref">Merkle Tree Related CBOR Structures</a></p>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-cbor-merkle-structures" class="internal xref">CBOR Merkle Structures</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
                 <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-signed-merkle-tree-root" class="internal xref">Signed Merkle Tree Root</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
-                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-inclusion-path" class="internal xref">Inclusion Path</a></p>
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-inclusion-paths" class="internal xref">Inclusion Paths</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
                 <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-signed-merkle-tree-proof" class="internal xref">Signed Merkle Tree Proof</a></p>
@@ -1261,7 +1261,16 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">This specification describes three CBOR data structures for primary use in COSE envelopes. A format for Merkle Tree Root Signatures with metadata, a format for Inclusions Paths, and a format for disclosure of a single hadh tree leaf payload (Merkle Tree Proofs).<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">Merkle proofs are verifiable data structures that support secure data storage,
+through their ability to protect the integrity of batches of documents or collections of statements.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">Merkle proofs can be used to prove a document is in a database (proof of existence),
+or that a smaller set of statements are contained in a large set of statements (proof of disclosure).<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">A merkle proof is a path from a leaf to a root in a merkle tree.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">Merkle trees are constructed from simple operations such as concatenation and digest via a cryptographic hash function.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">The simple design and valuable cryptographic properties of merkle trees have been leveraged in many network and database applications.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-6">Differences in the representation of a merkle tree, merkle leaf and merkle inclusion proof can increase the
+burden for implementers, and create interoperability challenges.<a href="#section-1-6" class="pilcrow">¶</a></p>
+<p id="section-1-7">This document describes the three data structures necessary to use merkle proofs with COSE envelopes.<a href="#section-1-7" class="pilcrow">¶</a></p>
 <div id="requirements-notation">
 <section id="section-1.1">
         <h3 id="name-requirements-notation">
@@ -1283,12 +1292,14 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
 <span class="break"></span><dl class="dlParallel" id="section-2-1">
         <dt id="section-2-1.1">Leaf Bytes:</dt>
         <dd style="margin-left: 1.5em" id="section-2-1.2">
-          <p id="section-2-1.2.1">TBD<a href="#section-2-1.2.1" class="pilcrow">¶</a></p>
+          <p id="section-2-1.2.1">A merkle tree leaf is labelled with the cryptographic hash of a sequence of bytes.
+These bytes may be structured as a combination of Payload and Extra Data.<a href="#section-2-1.2.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-1.3">Merkle Tree:</dt>
         <dd style="margin-left: 1.5em" id="section-2-1.4">
-          <p id="section-2-1.4.1">A Merkle tree is a tree where every leaf is labelled with the cryptographic hash of a sequence of bytes and every node that is not a leaf is labeled with the cryptographic hash of the labels of its child nodes.<a href="#section-2-1.4.1" class="pilcrow">¶</a></p>
+          <p id="section-2-1.4.1">A Merkle tree is a tree where every leaf is labelled with the cryptographic hash of a sequence of
+bytes and every node that is not a leaf is labeled with the cryptographic hash of the labels of its child nodes.<a href="#section-2-1.4.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-1.5">Merkle Tree Root:</dt>
@@ -1303,7 +1314,9 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
         <dd class="break"></dd>
 <dt id="section-2-1.9">Payload and Extra Data:</dt>
         <dd style="margin-left: 1.5em" id="section-2-1.10">
-          <p id="section-2-1.10.1">A payload is data bound to in a Merkle tree leaf. The Merkle tree algorithm determines how a payload together with extra data is bound to a leaf. The simplest case is that the payload is the leaf itself without extra data.<a href="#section-2-1.10.1" class="pilcrow">¶</a></p>
+          <p id="section-2-1.10.1">A payload is data bound to in a Merkle tree leaf.
+The Merkle tree algorithm determines how a payload together with extra data is bound to a leaf.
+The simplest case is that the payload is the leaf itself without extra data.<a href="#section-2-1.10.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-1.11">Inclusion Path:</dt>
@@ -1319,12 +1332,16 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
 </dl>
 </section>
 </div>
-<div id="merkle-tree-related-cbor-structures">
+<div id="cbor-merkle-structures">
 <section id="section-3">
-      <h2 id="name-merkle-tree-related-cbor-st">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-merkle-tree-related-cbor-st" class="section-name selfRef">Merkle Tree Related CBOR Structures</a>
+      <h2 id="name-cbor-merkle-structures">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-cbor-merkle-structures" class="section-name selfRef">CBOR Merkle Structures</a>
       </h2>
-<p id="section-3-1">[FIXME] SecIntro Text<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-1">This section describes representations of merkle tree structures in CBOR.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">Some of the structures such as the construction of a merkle tree leaf,
+or an inclusion proof from a leaf to a merkle root, might have several different representations.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<p id="section-3-3">Some differences in representations are necessary to support efficient
+verification of proofs and compatibility with deployed tree algorithms used in specific implementations.<a href="#section-3-3" class="pilcrow">¶</a></p>
 <div id="signed-merkle-tree-root">
 <section id="section-3.1">
         <h3 id="name-signed-merkle-tree-root">
@@ -1348,49 +1365,54 @@ SMTR = THIS.COSE.profile .and COSE_Sign1_Tagged
 <p id="section-3.1-5">A COSE profile of this specification may add further header parameters, for example to identify the signer.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
 <p id="section-3.1-6">Payload: Merkle tree root hash bytes according to tree alg (i.e., header params tell you what the alg id is here)<a href="#section-3.1-6" class="pilcrow">¶</a></p>
 <p id="section-3.1-7">Note: The payload is just a byte string representing the Merkle tree root hash (and not some wrapper structure) so that it can be detached (see defintion of payload in https://www.rfc-editor.org/rfc/rfc9052#section-4.1) and easily re-computed from an inclusion path and leaf bytes. This allows to design other structures that force re-computation and prevent faulty implementations (forgetting to match a computed root with one embedded in a signature).<a href="#section-3.1-7" class="pilcrow">¶</a></p>
+<p id="section-3.1-8">One example of a Signed Merkle Tree Proof is a "transparent signed statement" or "claim" as defined in <span>[<a href="#I-D.ietf-scitt-architecture" class="cite xref">I-D.ietf-scitt-architecture</a>]</span>.<a href="#section-3.1-8" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="inclusion-path">
+<div id="inclusion-paths">
 <section id="section-3.2">
-        <h3 id="name-inclusion-path">
-<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-inclusion-path" class="section-name selfRef">Inclusion Path</a>
+        <h3 id="name-inclusion-paths">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-inclusion-paths" class="section-name selfRef">Inclusion Paths</a>
         </h3>
-<p id="section-3.2-1">If the tree size and leaf index is known, then a compact inclusion path (see, REF NEEDED, CT RFC?) variant can be used:<a href="#section-3.2-1" class="pilcrow">¶</a></p>
-<div class="lang-cddl sourcecode" id="section-3.2-2">
+<p id="section-3.2-1"><span>[<a href="#RFC6962" class="cite xref">RFC6962</a>]</span> defines a merkle audit path for a leaf in a merkle tree
+as the shortest list of additional nodes in the merkle tree required to compute the merkle root for that tree.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-2"><span>[<a href="#RFC9162" class="cite xref">RFC9162</a>]</span> changed the term from "merkle audit path" to "merkle inclusion proof".<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.2-3">We prefer to use the term "inclusion path" to avoid confusion with Signed Merkle Tree Proof.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.2-4">If the tree size and leaf index is known, then a compact inclusion path variant can be used:<a href="#section-3.2-4" class="pilcrow">¶</a></p>
+<div class="lang-cddl sourcecode" id="section-3.2-5">
 <pre>
 IndexAwareInclusionPath = #6.1234([
     leaf_index: int
     hashes: [+ bstr]
 ])
-</pre><a href="#section-3.2-2" class="pilcrow">¶</a>
+</pre><a href="#section-3.2-5" class="pilcrow">¶</a>
 </div>
-<p id="section-3.2-3">Otherwise, the direction for each path step must be included:<a href="#section-3.2-3" class="pilcrow">¶</a></p>
-<p id="section-3.2-4">FIXME bit vector: 0 right, 1 left, so no bit labels<a href="#section-3.2-4" class="pilcrow">¶</a></p>
-<div class="lang-cddl sourcecode" id="section-3.2-5">
+<p id="section-3.2-6">Otherwise, the direction for each path step must be included:<a href="#section-3.2-6" class="pilcrow">¶</a></p>
+<p id="section-3.2-7">FIXME bit vector: 0 right, 1 left, so no bit labels<a href="#section-3.2-7" class="pilcrow">¶</a></p>
+<div class="lang-cddl sourcecode" id="section-3.2-8">
 <pre>
 IndexUnawareInclusionPath = #6.1235([
     hashes: [+ bstr]
     left: uint  ; bit vector
 ])
-</pre><a href="#section-3.2-5" class="pilcrow">¶</a>
+</pre><a href="#section-3.2-8" class="pilcrow">¶</a>
 </div>
-<p id="section-3.2-6">For some tree algorithms, like Quantum Ledger Data Base (QLDB), the direction is derived from the hashes themselves and both the index and direction can be left out in the path:<a href="#section-3.2-6" class="pilcrow">¶</a></p>
-<div class="lang-cddl sourcecode" id="section-3.2-7">
+<p id="section-3.2-9">For some tree algorithms, like Quantum Ledger Data Base (QLDB), the direction is derived from the hashes themselves and both the index and direction can be left out in the path:<a href="#section-3.2-9" class="pilcrow">¶</a></p>
+<div class="lang-cddl sourcecode" id="section-3.2-10">
 <pre>
 ; TODO: find a better name for this
 UndirectionalInclusionPath = #6.1236([+ bstr])
-</pre><a href="#section-3.2-7" class="pilcrow">¶</a>
+</pre><a href="#section-3.2-10" class="pilcrow">¶</a>
 </div>
-<div class="lang-cddl sourcecode" id="section-3.2-8">
+<div class="lang-cddl sourcecode" id="section-3.2-11">
 <pre>
 InclusionPath = IndexAwareInclusionPath / IndexUnawareInclusionPath / UndirectionalInclusionPath
-</pre><a href="#section-3.2-8" class="pilcrow">¶</a>
+</pre><a href="#section-3.2-11" class="pilcrow">¶</a>
 </div>
-<p id="section-3.2-9">Note: Including the tree size and leaf index may not be appropriate in certain privacy-focused applications as an attacker may be able to derive private information from them.<a href="#section-3.2-9" class="pilcrow">¶</a></p>
-<p id="section-3.2-10">TODO: Should leaf index be part of inclusion path (IndexAwareInclusionPath) or outside?<a href="#section-3.2-10" class="pilcrow">¶</a></p>
-<p id="section-3.2-11">TODO: Define root computation algorithm for each inclusion path type<a href="#section-3.2-11" class="pilcrow">¶</a></p>
-<p id="section-3.2-12">TODO: <a href="https://github.com/ietf-scitt/cose-merkle-tree-proofs/issues/6">Do we need both inclusion path types? what properties does each type have?</a><a href="#section-3.2-12" class="pilcrow">¶</a></p>
-<p id="section-3.2-13">TODO: Should the inclusion path be opaque (bstr) and fixed by the tree algorithm? It seems this is orthogonal and the choice of inclusion path type should be application-specific.<a href="#section-3.2-13" class="pilcrow">¶</a></p>
+<p id="section-3.2-12">Note: Including the tree size and leaf index may not be appropriate in certain privacy-focused applications as an attacker may be able to derive private information from them.<a href="#section-3.2-12" class="pilcrow">¶</a></p>
+<p id="section-3.2-13">TODO: Should leaf index be part of inclusion path (IndexAwareInclusionPath) or outside?<a href="#section-3.2-13" class="pilcrow">¶</a></p>
+<p id="section-3.2-14">TODO: Define root computation algorithm for each inclusion path type<a href="#section-3.2-14" class="pilcrow">¶</a></p>
+<p id="section-3.2-15">TODO: <a href="https://github.com/ietf-scitt/cose-merkle-tree-proofs/issues/6">Do we need both inclusion path types? what properties does each type have?</a><a href="#section-3.2-15" class="pilcrow">¶</a></p>
+<p id="section-3.2-16">TODO: Should the inclusion path be opaque (bstr) and fixed by the tree algorithm? It seems this is orthogonal and the choice of inclusion path type should be application-specific.<a href="#section-3.2-16" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="signed-merkle-tree-proof">
@@ -1714,6 +1736,10 @@ DOT(H1, H2) = if H1 &lt; H2 then H1 || H2 else H2 || H1
 <dt id="RFC6234">[RFC6234]</dt>
         <dd>
 <span class="refAuthor">Eastlake 3rd, D.</span> and <span class="refAuthor">T. Hansen</span>, <span class="refTitle">"US Secure Hash Algorithms (SHA and SHA-based HMAC and HKDF)"</span>, <span class="seriesInfo">RFC 6234</span>, <span class="seriesInfo">DOI 10.17487/RFC6234</span>, <time datetime="2011-05" class="refDate">May 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6234">https://www.rfc-editor.org/rfc/rfc6234</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6962">[RFC6962]</dt>
+        <dd>
+<span class="refAuthor">Laurie, B.</span>, <span class="refAuthor">Langley, A.</span>, and <span class="refAuthor">E. Kasper</span>, <span class="refTitle">"Certificate Transparency"</span>, <span class="seriesInfo">RFC 6962</span>, <span class="seriesInfo">DOI 10.17487/RFC6962</span>, <time datetime="2013-06" class="refDate">June 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6962">https://www.rfc-editor.org/rfc/rfc6962</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6979">[RFC6979]</dt>
         <dd>
