@@ -73,6 +73,7 @@ Table of Contents
      3.4.  Signed Merkle Tree Multiproof
    4.  Merkle Tree Algorithms
      4.1.  RFC9162_SHA256
+     4.2.  QLDB_SHA256
    5.  Privacy Considerations
    6.  Security Considerations
    7.  IANA Considerations
@@ -300,6 +301,8 @@ Table of Contents
    +----------------+-------+----------------------+
    | RFC9162_SHA256 | 1     | RFC9162 with SHA-256 |
    +----------------+-------+----------------------+
+   | QLDB_SHA256    | 3     | QLDB with SHA-256    |
+   +----------------+-------+----------------------+
 
              Table 1: Merke Tree Alogrithms
 
@@ -316,6 +319,19 @@ Table of Contents
 
    MTH({d(0)}) = SHA-256(0x00 || d(0))
    MTH(D[n]) = SHA-256(0x01 || MTH(D[0:k]) || MTH(D[k:n]))
+
+   where d(0) is the payload.  This algorithm takes no extra data.
+
+4.2.  QLDB_SHA256
+
+   The QLDB_SHA256 tree algorithm uses the Merkle tree definition from
+   TBD with SHA-256 hash algorithm.
+
+   For n > 1 inputs, let k be the largest power of two smaller than n.
+
+   MTH({d(0)}) = SHA-256(d(0))
+   MTH(D[n]) = SHA-256(DOT(MTH(D[0:k]), MTH(D[k:n])))
+   DOT(H1, H2) = if H1 < H2 then H1 || H2 else H2 || H1
 
    where d(0) is the payload.  This algorithm takes no extra data.
 
