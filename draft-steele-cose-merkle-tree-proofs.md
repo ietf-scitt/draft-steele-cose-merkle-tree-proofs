@@ -209,7 +209,6 @@ This document establishes a registry of Merkle tree algorithms with the followin
 |---
 |Reserved           | 0     |
 |RFC9162_SHA256     | 1     | RFC9162 with SHA-256
-|CCF_SHA256         | 2     | CCF with SHA256
 {: align="left" title="Merke Tree Alogrithms"}
 
 Each tree algorithm defines how to compute the root node from a sequence of leaves each represented by payload and extra data. Extra data is algorithm-specific and should be considered opaque.
@@ -226,33 +225,6 @@ MTH(D[n]) = SHA-256(0x01 || MTH(D[0:k]) || MTH(D[k:n]))
 ~~~~
 
 where `d(0)` is the payload. This algorithm takes no extra data.
-
-
-## CCF_SHA256
-
-The `CCF_SHA256` tree algorithm uses the Merkle tree definition from TBD with SHA-256 hash algorithm.
-
-For n > 1 inputs, let k be the largest power of two smaller than n.
-
-~~~~
-MTH({d(0)}) = SHA-256(d(0))
-MTH(D[n]) = SHA-256(MTH(D[0:k]) || MTH(D[k:n]))
-~~~~
-
-where `d(0)` is computed as:
-
-~~~~ cddl
-d(0) = writeset_digest || SHA-256(commit_evidence) || SHA-256(payload)
-~~~~
-
-with extra data defined as:
-
-~~~~ cddl
-ExtraData = bstr .cbor [
-    writeset_digest: bstr .size 32
-    commit_evidence: bstr
-]
-~~~~
 
 # Privacy Considerations
 
