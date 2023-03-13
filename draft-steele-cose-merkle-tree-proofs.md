@@ -156,7 +156,7 @@ Payload: Merkle tree root hash bytes according to tree alg (i.e., header params 
 
 Note: The payload is just a byte string representing the Merkle tree root hash (and not some wrapper structure) so that it can be detached (see defintion of payload in https://www.rfc-editor.org/rfc/rfc9052#section-4.1) and easily re-computed from an inclusion path and leaf bytes. This allows to design other structures that force re-computation and prevent faulty implementations (forgetting to match a computed root with one embedded in a signature).
 
-One example of a Signed Merkle Tree Root is a "transparent signed statement" or "claim" as defined in {{-scitt-architecture}}.
+One example of a Signed Merkle Tree Proof is a "transparent signed statement" or "claim" as defined in {{-scitt-architecture}}.
 
 ## Inclusion Paths
 
