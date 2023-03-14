@@ -5,12 +5,12 @@
 TBD                                                            O. Steele
 Internet-Draft                                                 Transmute
 Intended status: Standards Track                             H. Birkholz
-Expires: 14 September 2023                                Fraunhofer SIT
+Expires: 15 September 2023                                Fraunhofer SIT
                                                              M. Riechert
                                                       A. Delignat-Lavaud
                                                               C. Fournet
                                                                Microsoft
-                                                           13 March 2023
+                                                           14 March 2023
 
 
              Concise Encoding of Signed Merkle Tree Proofs
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 September 2023.
+   This Internet-Draft will expire on 15 September 2023.
 
 Copyright Notice
 
@@ -66,9 +66,9 @@ Table of Contents
    1.  Introduction
      1.1.  Requirements Notation
    2.  Terminology
-   3.  Merkle Tree Related CBOR Structures
+   3.  CBOR Merkle Structures
      3.1.  Signed Merkle Tree Root
-     3.2.  Inclusion Path
+     3.2.  Inclusion Paths
      3.3.  Signed Merkle Tree Proof
      3.4.  Signed Merkle Tree Multiproof
    4.  Merkle Tree Algorithms
@@ -79,9 +79,8 @@ Table of Contents
    7.  IANA Considerations
      7.1.  Additions to Existing Registries
        7.1.1.  New Entries to the COSE Header Parameters Registry
-     7.2.  New SCITT-Related Registries
+     7.2.  New Registries
        7.2.1.  Tree Algorithms
-       7.2.2.  Signature Algorithms
    8.  References
      8.1.  Normative References
      8.2.  Informative References
@@ -89,10 +88,28 @@ Table of Contents
 
 1.  Introduction
 
-   This specification describes three CBOR data structures for primary
-   use in COSE envelopes.  A format for Merkle Tree Root Signatures with
-   metadata, a format for Inclusions Paths, and a format for disclosure
-   of a single hadh tree leaf payload (Merkle Tree Proofs).
+   Merkle proofs are verifiable data structures that support secure data
+   storage, through their ability to protect the integrity of batches of
+   documents or collections of statements.
+
+   Merkle proofs can be used to prove a document is in a database (proof
+   of existence), or that a smaller set of statements are contained in a
+   large set of statements (proof of disclosure).
+
+   A merkle proof is a path from a leaf to a root in a merkle tree.
+
+   Merkle trees are constructed from simple operations such as
+   concatenation and digest via a cryptographic hash function.
+
+   The simple design and valuable cryptographic properties of merkle
+   trees have been leveraged in many network and database applications.
+
+   Differences in the representation of a merkle tree, merkle leaf and
+   merkle inclusion proof can increase the burden for implementers, and
+   create interoperability challenges.
+
+   This document describes the three data structures necessary to use
+   merkle proofs with COSE envelopes.
 
 1.1.  Requirements Notation
 
@@ -104,7 +121,9 @@ Table of Contents
 
 2.  Terminology
 
-   Leaf Bytes:  TBD
+   Leaf Bytes:  A merkle tree leaf is labelled with the cryptographic
+      hash of a sequence of bytes.  These bytes may be structured as a
+      combination of Payload and Extra Data.
 
    Merkle Tree:  A Merkle tree is a tree where every leaf is labelled
       with the cryptographic hash of a sequence of bytes and every node
@@ -131,9 +150,18 @@ Table of Contents
       combination of signed Merkle tree root hash, inclusion path, extra
       data, and payload.
 
-3.  Merkle Tree Related CBOR Structures
+3.  CBOR Merkle Structures
 
-   [FIXME] SecIntro Text
+   This section describes representations of merkle tree structures in
+   CBOR.
+
+   Some of the structures such as the construction of a merkle tree
+   leaf, or an inclusion proof from a leaf to a merkle root, might have
+   several different representations.
+
+   Some differences in representations are necessary to support
+   efficient verification of proofs and compatibility with deployed tree
+   algorithms used in specific implementations.
 
 3.1.  Signed Merkle Tree Root
 
@@ -167,10 +195,23 @@ Table of Contents
    re-computation and prevent faulty implementations (forgetting to
    match a computed root with one embedded in a signature).
 
-3.2.  Inclusion Path
+   One example of a Signed Merkle Tree Proof is a "transparent signed
+   statement" or "claim" as defined in [I-D.ietf-scitt-architecture].
+
+3.2.  Inclusion Paths
+
+   [RFC6962] defines a merkle audit path for a leaf in a merkle tree as
+   the shortest list of additional nodes in the merkle tree required to
+   compute the merkle root for that tree.
+
+   [RFC9162] changed the term from "merkle audit path" to "merkle
+   inclusion proof".
+
+   We prefer to use the term "inclusion path" to avoid confusion with
+   Signed Merkle Tree Proof.
 
    If the tree size and leaf index is known, then a compact inclusion
-   path (see, REF NEEDED, CT RFC?) variant can be used:
+   path variant can be used:
 
    IndexAwareInclusionPath = #6.1234([
        leaf_index: int
@@ -186,9 +227,9 @@ Table of Contents
        left: uint  ; bit vector
    ])
 
-   For some tree algorithms, like Quantum Ledger Data Base (QLDB), the
-   direction is derived from the hashes themselves and both the index
-   and direction can be left out in the path:
+   For some tree algorithms, the direction is derived from the hashes
+   themselves and both the index and direction can be left out in the
+   path:
 
    ; TODO: find a better name for this
    UndirectionalInclusionPath = #6.1236([+ bstr])
@@ -316,9 +357,9 @@ Table of Contents
 7.1.1.  New Entries to the COSE Header Parameters Registry
 
    IANA will be requested to register the new COSE Header parameters
-   defined below in the "COSE Header Parameters" registry at some point
+   defined below in the "COSE Header Parameters" registry at some point.
 
-7.2.  New SCITT-Related Registries
+7.2.  New Registries
 
    IANA will be asked to add a new registry "TBD" to the list that
    appears at https://www.iana.org/assignments/.
@@ -337,7 +378,7 @@ Table of Contents
             +============+====================+===============+
             | Identifier | Tree Algorithm     | Reference     |
             +============+====================+===============+
-            | CCF        | CCF tree algorithm | This document |
+            | TBD        | TBD tree algorithm | This document |
             +------------+--------------------+---------------+
 
                 Table 2: Initial content of Tree Algorithms
@@ -345,28 +386,6 @@ Table of Contents
 
    The designated expert(s) should ensure that the proposed algorithm
    has a public specification and is suitable for use as [TBD].
-
-7.2.2.  Signature Algorithms
-
-   IANA might be asked to establish a registry of signature algorithm
-   identifiers, named "Signature Algorithms", with the following
-   registration procedures: TBD
-
-   The "Signature Algorithms" registry initially consists of:
-
-          +============+===========================+===========+
-          | Identifier | Signature Algorithm       | Reference |
-          +============+===========================+===========+
-          | ES256      | Deterministic ECDSA (NIST | [RFC6979] |
-          |            | P-256) with HMAC-SHA256   |           |
-          +------------+---------------------------+-----------+
-
-             Table 3: Initial content of Signature Algorithms
-                                 registry
-
-   The designated expert(s) should ensure that the proposed algorithm
-   has a public specification and is suitable for use as a cryptographic
-   signature algorithm.
 
 8.  References
 
@@ -381,6 +400,10 @@ Table of Contents
               (SHA and SHA-based HMAC and HKDF)", RFC 6234,
               DOI 10.17487/RFC6234, May 2011,
               <https://www.rfc-editor.org/rfc/rfc6234>.
+
+   [RFC6962]  Laurie, B., Langley, A., and E. Kasper, "Certificate
+              Transparency", RFC 6962, DOI 10.17487/RFC6962, June 2013,
+              <https://www.rfc-editor.org/rfc/rfc6962>.
 
    [RFC6979]  Pornin, T., "Deterministic Usage of the Digital Signature
               Algorithm (DSA) and Elliptic Curve Digital Signature
@@ -407,11 +430,6 @@ Table of Contents
 
 8.2.  Informative References
 
-   [CCF_Merkle_Tree]
-              Microsoft Research, "CCF - Merkle Tree", n.d.,
-              <https://microsoft.github.io/CCF/main/architecture/
-              merkle_tree.html>.
-
    [I-D.ietf-cose-countersign]
               Schaad, J., "CBOR Object Signing and Encryption (COSE):
               Countersignatures", Work in Progress, Internet-Draft,
@@ -423,9 +441,9 @@ Table of Contents
               Birkholz, H., Delignat-Lavaud, A., Fournet, C., and Y.
               Deshpande, "An Architecture for Trustworthy and
               Transparent Digital Supply Chains", Work in Progress,
-              Internet-Draft, draft-ietf-scitt-architecture-00, 8
-              December 2022, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-scitt-architecture-00>.
+              Internet-Draft, draft-ietf-scitt-architecture-01, 13 March
+              2023, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              scitt-architecture-01>.
 
 Authors' Addresses
 
