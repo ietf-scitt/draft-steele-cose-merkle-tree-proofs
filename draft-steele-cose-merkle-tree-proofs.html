@@ -1055,7 +1055,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Steele, et al.</td>
-<td class="center">Expires 14 September 2023</td>
+<td class="center">Expires 15 September 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1068,12 +1068,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-steele-cose-merkle-tree-proofs-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-03-13" class="published">13 March 2023</time>
+<time datetime="2023-03-14" class="published">14 March 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-09-14">14 September 2023</time></dd>
+<dd class="expires"><time datetime="2023-09-15">15 September 2023</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1131,7 +1131,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 14 September 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 15 September 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1194,9 +1194,6 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
                 <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-rfc9162_sha256" class="internal xref">RFC9162_SHA256</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
-                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-qldb_sha256" class="internal xref">QLDB_SHA256</a></p>
-</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
@@ -1221,9 +1218,6 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.1">
                     <p id="section-toc.1-1.7.2.2.2.1.1"><a href="#section-7.2.1" class="auto internal xref">7.2.1</a>.  <a href="#name-tree-algorithms" class="internal xref">Tree Algorithms</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.2">
-                    <p id="section-toc.1-1.7.2.2.2.2.1"><a href="#section-7.2.2" class="auto internal xref">7.2.2</a>.  <a href="#name-signature-algorithms" class="internal xref">Signature Algorithms</a></p>
 </li>
                 </ul>
 </li>
@@ -1387,7 +1381,7 @@ IndexUnawareInclusionPath = #6.1235([
 ])
 </pre><a href="#section-3.2-8" class="pilcrow">¶</a>
 </div>
-<p id="section-3.2-9">For some tree algorithms, like Quantum Ledger Data Base (QLDB), the direction is derived from the hashes themselves and both the index and direction can be left out in the path:<a href="#section-3.2-9" class="pilcrow">¶</a></p>
+<p id="section-3.2-9">For some tree algorithms, the direction is derived from the hashes themselves and both the index and direction can be left out in the path:<a href="#section-3.2-9" class="pilcrow">¶</a></p>
 <div class="lang-cddl sourcecode" id="section-3.2-10">
 <pre>
 ; TODO: find a better name for this
@@ -1473,11 +1467,6 @@ SignedMerkleTreeProof = [
             <td class="text-left" rowspan="1" colspan="1">1</td>
             <td class="text-left" rowspan="1" colspan="1">RFC9162 with SHA-256</td>
           </tr>
-          <tr>
-            <td class="text-left" rowspan="1" colspan="1">QLDB_SHA256</td>
-            <td class="text-left" rowspan="1" colspan="1">3</td>
-            <td class="text-left" rowspan="1" colspan="1">QLDB with SHA-256</td>
-          </tr>
         </tbody>
       </table>
 <p id="section-4-4">Each tree algorithm defines how to compute the root node from a sequence of leaves each represented by payload and extra data. Extra data is algorithm-specific and should be considered opaque.<a href="#section-4-4" class="pilcrow">¶</a></p>
@@ -1495,23 +1484,6 @@ MTH(D[n]) = SHA-256(0x01 || MTH(D[0:k]) || MTH(D[k:n]))
 </pre><a href="#section-4.1-3" class="pilcrow">¶</a>
 </div>
 <p id="section-4.1-4">where <code>d(0)</code> is the payload. This algorithm takes no extra data.<a href="#section-4.1-4" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="qldbsha256">
-<section id="section-4.2">
-        <h3 id="name-qldb_sha256">
-<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-qldb_sha256" class="section-name selfRef">QLDB_SHA256</a>
-        </h3>
-<p id="section-4.2-1">The <code>QLDB_SHA256</code> tree algorithm uses the Merkle tree definition from TBD with SHA-256 hash algorithm.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.2-2">For n &gt; 1 inputs, let k be the largest power of two smaller than n.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4.2-3">
-<pre>
-MTH({d(0)}) = SHA-256(d(0))
-MTH(D[n]) = SHA-256(DOT(MTH(D[0:k]), MTH(D[k:n])))
-DOT(H1, H2) = if H1 &lt; H2 then H1 || H2 else H2 || H1
-</pre><a href="#section-4.2-3" class="pilcrow">¶</a>
-</div>
-<p id="section-4.2-4">where <code>d(0)</code> is the payload. This algorithm takes no extra data.<a href="#section-4.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1547,7 +1519,7 @@ DOT(H1, H2) = if H1 &lt; H2 then H1 || H2 else H2 || H1
           <h4 id="name-new-entries-to-the-cose-hea">
 <a href="#section-7.1.1" class="section-number selfRef">7.1.1. </a><a href="#name-new-entries-to-the-cose-hea" class="section-name selfRef">New Entries to the COSE Header Parameters Registry</a>
           </h4>
-<p id="section-7.1.1-1">IANA will be requested to register the new COSE Header parameters defined below in the "COSE Header Parameters" registry at some point<a href="#section-7.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-1">IANA will be requested to register the new COSE Header parameters defined below in the "COSE Header Parameters" registry at some point.<a href="#section-7.1.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1580,45 +1552,13 @@ DOT(H1, H2) = if H1 &lt; H2 then H1 || H2 else H2 || H1
             </thead>
             <tbody>
               <tr>
-                <td class="text-left" rowspan="1" colspan="1">CCF</td>
-                <td class="text-left" rowspan="1" colspan="1">CCF tree algorithm</td>
+                <td class="text-left" rowspan="1" colspan="1">TBD</td>
+                <td class="text-left" rowspan="1" colspan="1">TBD tree algorithm</td>
                 <td class="text-left" rowspan="1" colspan="1">This document</td>
               </tr>
             </tbody>
           </table>
 <p id="section-7.2.1-4">The designated expert(s) should ensure that the proposed algorithm has a public specification and is suitable for use as [TBD].<a href="#section-7.2.1-4" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="sig-alg-registry">
-<section id="section-7.2.2">
-          <h4 id="name-signature-algorithms">
-<a href="#section-7.2.2" class="section-number selfRef">7.2.2. </a><a href="#name-signature-algorithms" class="section-name selfRef">Signature Algorithms</a>
-          </h4>
-<p id="section-7.2.2-1">IANA might be asked to establish a registry of signature algorithm identifiers, named "Signature Algorithms", with the following registration procedures: TBD<a href="#section-7.2.2-1" class="pilcrow">¶</a></p>
-<p id="section-7.2.2-2">The "Signature Algorithms" registry initially consists of:<a href="#section-7.2.2-2" class="pilcrow">¶</a></p>
-<span id="name-initial-content-of-signatur"></span><table class="center" id="table-3">
-            <caption>
-<a href="#table-3" class="selfRef">Table 3</a>:
-<a href="#name-initial-content-of-signatur" class="selfRef">Initial content of Signature Algorithms registry</a>
-            </caption>
-<thead>
-              <tr>
-                <th class="text-left" rowspan="1" colspan="1">Identifier</th>
-                <th class="text-left" rowspan="1" colspan="1">Signature Algorithm</th>
-                <th class="text-left" rowspan="1" colspan="1">Reference</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">ES256</td>
-                <td class="text-left" rowspan="1" colspan="1">Deterministic ECDSA (NIST P-256) with HMAC-SHA256</td>
-                <td class="text-left" rowspan="1" colspan="1">
-                  <span>[<a href="#RFC6979" class="cite xref">RFC6979</a>]</span>
-</td>
-              </tr>
-            </tbody>
-          </table>
-<p id="section-7.2.2-4">The designated expert(s) should ensure that the proposed algorithm has a public specification and is suitable for use as a cryptographic signature algorithm.<a href="#section-7.2.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1673,17 +1613,13 @@ DOT(H1, H2) = if H1 &lt; H2 then H1 || H2 else H2 || H1
 <a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
-<dt id="CCF_Merkle_Tree">[CCF_Merkle_Tree]</dt>
-        <dd>
-<span class="refAuthor">Microsoft Research</span>, <span class="refTitle">"CCF - Merkle Tree"</span>, <span>n.d.</span>, <span>&lt;<a href="https://microsoft.github.io/CCF/main/architecture/merkle_tree.html">https://microsoft.github.io/CCF/main/architecture/merkle_tree.html</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="I-D.ietf-cose-countersign">[I-D.ietf-cose-countersign]</dt>
         <dd>
 <span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Countersignatures"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cose-countersign-10</span>, <time datetime="2022-09-20" class="refDate">20 September 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cose-countersign-10">https://datatracker.ietf.org/doc/html/draft-ietf-cose-countersign-10</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-scitt-architecture">[I-D.ietf-scitt-architecture]</dt>
       <dd>
-<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Delignat-Lavaud, A.</span>, <span class="refAuthor">Fournet, C.</span>, and <span class="refAuthor">Y. Deshpande</span>, <span class="refTitle">"An Architecture for Trustworthy and Transparent Digital Supply Chains"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-scitt-architecture-00</span>, <time datetime="2022-12-08" class="refDate">8 December 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-scitt-architecture-00">https://datatracker.ietf.org/doc/html/draft-ietf-scitt-architecture-00</a>&gt;</span>. </dd>
+<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Delignat-Lavaud, A.</span>, <span class="refAuthor">Fournet, C.</span>, and <span class="refAuthor">Y. Deshpande</span>, <span class="refTitle">"An Architecture for Trustworthy and Transparent Digital Supply Chains"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-scitt-architecture-01</span>, <time datetime="2023-03-13" class="refDate">13 March 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-scitt-architecture-01">https://datatracker.ietf.org/doc/html/draft-ietf-scitt-architecture-01</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>

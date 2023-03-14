@@ -5,12 +5,12 @@
 TBD                                                            O. Steele
 Internet-Draft                                                 Transmute
 Intended status: Standards Track                             H. Birkholz
-Expires: 14 September 2023                                Fraunhofer SIT
+Expires: 15 September 2023                                Fraunhofer SIT
                                                              M. Riechert
                                                       A. Delignat-Lavaud
                                                               C. Fournet
                                                                Microsoft
-                                                           13 March 2023
+                                                           14 March 2023
 
 
              Concise Encoding of Signed Merkle Tree Proofs
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 September 2023.
+   This Internet-Draft will expire on 15 September 2023.
 
 Copyright Notice
 
@@ -73,7 +73,6 @@ Table of Contents
      3.4.  Signed Merkle Tree Multiproof
    4.  Merkle Tree Algorithms
      4.1.  RFC9162_SHA256
-     4.2.  QLDB_SHA256
    5.  Privacy Considerations
    6.  Security Considerations
    7.  IANA Considerations
@@ -81,7 +80,6 @@ Table of Contents
        7.1.1.  New Entries to the COSE Header Parameters Registry
      7.2.  New SCITT-Related Registries
        7.2.1.  Tree Algorithms
-       7.2.2.  Signature Algorithms
    8.  References
      8.1.  Normative References
      8.2.  Informative References
@@ -228,9 +226,9 @@ Table of Contents
        left: uint  ; bit vector
    ])
 
-   For some tree algorithms, like Quantum Ledger Data Base (QLDB), the
-   direction is derived from the hashes themselves and both the index
-   and direction can be left out in the path:
+   For some tree algorithms, the direction is derived from the hashes
+   themselves and both the index and direction can be left out in the
+   path:
 
    ; TODO: find a better name for this
    UndirectionalInclusionPath = #6.1236([+ bstr])
@@ -301,8 +299,6 @@ Table of Contents
    +----------------+-------+----------------------+
    | RFC9162_SHA256 | 1     | RFC9162 with SHA-256 |
    +----------------+-------+----------------------+
-   | QLDB_SHA256    | 3     | QLDB with SHA-256    |
-   +----------------+-------+----------------------+
 
              Table 1: Merke Tree Alogrithms
 
@@ -322,19 +318,6 @@ Table of Contents
 
    where d(0) is the payload.  This algorithm takes no extra data.
 
-4.2.  QLDB_SHA256
-
-   The QLDB_SHA256 tree algorithm uses the Merkle tree definition from
-   TBD with SHA-256 hash algorithm.
-
-   For n > 1 inputs, let k be the largest power of two smaller than n.
-
-   MTH({d(0)}) = SHA-256(d(0))
-   MTH(D[n]) = SHA-256(DOT(MTH(D[0:k]), MTH(D[k:n])))
-   DOT(H1, H2) = if H1 < H2 then H1 || H2 else H2 || H1
-
-   where d(0) is the payload.  This algorithm takes no extra data.
-
 5.  Privacy Considerations
 
    TBD
@@ -350,7 +333,7 @@ Table of Contents
 7.1.1.  New Entries to the COSE Header Parameters Registry
 
    IANA will be requested to register the new COSE Header parameters
-   defined below in the "COSE Header Parameters" registry at some point
+   defined below in the "COSE Header Parameters" registry at some point.
 
 7.2.  New SCITT-Related Registries
 
@@ -371,7 +354,7 @@ Table of Contents
             +============+====================+===============+
             | Identifier | Tree Algorithm     | Reference     |
             +============+====================+===============+
-            | CCF        | CCF tree algorithm | This document |
+            | TBD        | TBD tree algorithm | This document |
             +------------+--------------------+---------------+
 
                 Table 2: Initial content of Tree Algorithms
@@ -379,28 +362,6 @@ Table of Contents
 
    The designated expert(s) should ensure that the proposed algorithm
    has a public specification and is suitable for use as [TBD].
-
-7.2.2.  Signature Algorithms
-
-   IANA might be asked to establish a registry of signature algorithm
-   identifiers, named "Signature Algorithms", with the following
-   registration procedures: TBD
-
-   The "Signature Algorithms" registry initially consists of:
-
-          +============+===========================+===========+
-          | Identifier | Signature Algorithm       | Reference |
-          +============+===========================+===========+
-          | ES256      | Deterministic ECDSA (NIST | [RFC6979] |
-          |            | P-256) with HMAC-SHA256   |           |
-          +------------+---------------------------+-----------+
-
-             Table 3: Initial content of Signature Algorithms
-                                 registry
-
-   The designated expert(s) should ensure that the proposed algorithm
-   has a public specification and is suitable for use as a cryptographic
-   signature algorithm.
 
 8.  References
 
@@ -445,11 +406,6 @@ Table of Contents
 
 8.2.  Informative References
 
-   [CCF_Merkle_Tree]
-              Microsoft Research, "CCF - Merkle Tree", n.d.,
-              <https://microsoft.github.io/CCF/main/architecture/
-              merkle_tree.html>.
-
    [I-D.ietf-cose-countersign]
               Schaad, J., "CBOR Object Signing and Encryption (COSE):
               Countersignatures", Work in Progress, Internet-Draft,
@@ -461,9 +417,9 @@ Table of Contents
               Birkholz, H., Delignat-Lavaud, A., Fournet, C., and Y.
               Deshpande, "An Architecture for Trustworthy and
               Transparent Digital Supply Chains", Work in Progress,
-              Internet-Draft, draft-ietf-scitt-architecture-00, 8
-              December 2022, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-scitt-architecture-00>.
+              Internet-Draft, draft-ietf-scitt-architecture-01, 13 March
+              2023, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              scitt-architecture-01>.
 
 Authors' Addresses
 
