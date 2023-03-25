@@ -66,15 +66,15 @@ This specification describes three CBOR data structures for primary use in COSE 
 
 # Introduction
 
-Merkle proofs are verifiable data structures that support secure data storage,
+Merkle trees are verifiable data structures that support secure data storage,
 through their ability to protect the integrity of batches of documents or collections of statements.
-
-Merkle proofs can be used to prove a document is in a database (proof of existence),
-or that a smaller set of statements are contained in a large set of statements (proof of disclosure).
 
 A merkle proof is a path from a leaf to a root in a merkle tree.
 
-Merkle trees are constructed from simple operations such as concatenation and digest via a cryptographic hash function.
+Merkle proofs can be used to prove a document is in a database (proof of inclusion),
+or that a smaller set of statements are contained in a large set of statements (selective disclosure proofs).
+
+Typically, merkle trees are constructed from simple operations such as concatenation and digest via a cryptographic hash function.
 
 The simple design and valuable cryptographic properties of merkle trees have been leveraged in many network and database applications.
 
@@ -89,51 +89,50 @@ This document describes the three data structures necessary to use merkle proofs
 
 # Terminology
 
-Leaf Bytes:
+Leaf:
 
-: A merkle tree leaf is labelled with the cryptographic hash of a sequence of bytes.
-These bytes may be structured as a combination of Payload and Extra Data.
+: A merkle tree leaf is the cryptographic hash of a sequence of bytes that combines Payload and Extra Data.
 
 Merkle Tree:
 
-: A Merkle tree is a tree where every leaf is labelled with the cryptographic hash of a sequence of
-bytes and every node that is not a leaf is labeled with the cryptographic hash of the labels of its child nodes.
+: A Merkle tree is a tree where every leaf is a cryptographic hash of a sequence of
+bytes and every node that is not a leaf is the cryptographic hash of the its child nodes.
 
-Merkle Tree Root:
+Merkle Root:
 
-: A Merkle tree root is the root node of a tree which represents the cryptographic hash that commits to all leaves in the tree.
+: A Merkle root is the root node of a tree; this cryptographic hash is a committment to the content of the tree.
 
 Merkle Tree Algorithm:
 
-: A Merkle tree algorithm specifies how nodes in the tree must be hashed to compute the root node.
+: A Merkle tree algorithm specifies how to construct the tree and how to compute its root.
 
 Payload and Extra Data:
 
-: A payload is data bound to in a Merkle tree leaf.
-The Merkle tree algorithm determines how a payload together with extra data is bound to a leaf.
-The simplest case is that the payload is the leaf itself without extra data.
+: A payload is application data used to produce a Leaf.
+The Merkle tree algorithm determines how a payload together with extra data is used to produce a leaf.
+The simplest case is that the leaf is the cryptographic hash of the payload without extra data.
 
 Inclusion Path:
 
-: An inclusion path confirms that a value is a leaf of a Merkle tree known only by its root hash (and tree size, possibly).
+: The inclusion path enables a verifier to recompute a root, given a leaf.
 
-Signed Merkle Tree Proof:
+Signed Inclusion Proof:
 
-: A signed Merkle tree proof is the combination of signed Merkle tree root hash, inclusion path, extra data, and payload.
+: A signed inclusion proof is a combination of payload, extra data, inclusion path and signed envelope that includes a merkle root.
 
 # CBOR Merkle Structures
 
-This section describes representations of merkle tree structures in CBOR.
+This section describes representations of merkle proof structures in CBOR.
 
 Some of the structures such as the construction of a merkle tree leaf,
 or an inclusion proof from a leaf to a merkle root, might have several different representations.
 
 Some differences in representations are necessary to support efficient
-verification of proofs and compatibility with deployed tree algorithms used in specific implementations.
+verification of different kinds of inclusion proofs and for compatibility with deployed tree algorithms used in specific implementations.
 
-## Signed Merkle Tree Root
+## Signed Inclusion Proof
 
-A Merkle tree root is signed with COSE_Sign1, creating a Signed Merkle Tree Root:
+A Merkle root is signed with COSE_Sign1:
 
 ~~~~ cddl
 SMTR = THIS.COSE.profile .and COSE_Sign1_Tagged
@@ -145,13 +144,15 @@ Protected header parameters:
 * tree alg (label: TBD): REQUIRED. Merkle tree algorithm. Value type: int / tstr.
 * tree size (label: TBD): OPTIONAL. Merkle tree size as the number of leaves. Value type: uint.
 
-A COSE profile of this specification may add further header parameters, for example to identify the signer.
+A COSE profile of this specification may add further header parameters, for example to identify the signer or add a timestamp.
 
-Payload: Merkle tree root hash bytes according to tree alg (i.e., header params tell you what the alg id is here)
+Envelope Payload: A Merkle tree root according to the tree alg.
 
-Note: The payload is just a byte string representing the Merkle tree root hash (and not some wrapper structure) so that it can be detached (see defintion of payload in https://www.rfc-editor.org/rfc/rfc9052#section-4.1) and easily re-computed from an inclusion path and leaf bytes. This allows to design other structures that force re-computation and prevent faulty implementations (forgetting to match a computed root with one embedded in a signature).
+The envelope payload can be detached, since it can be recomputed by the verifier.
 
-One example of a Signed Merkle Tree Proof is a "transparent signed statement" or "claim" as defined in {{-scitt-architecture}}.
+Forcing a verifier to perform re-computation can prevent faulty implementations.
+
+One example of a Signed Inclusion Proof is a "transparent signed statement" or "claim" as defined in {{-scitt-architecture}}.
 
 ## Inclusion Paths
 
