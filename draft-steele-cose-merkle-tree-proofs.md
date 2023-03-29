@@ -116,7 +116,11 @@ The simplest case is that the leaf is the cryptographic hash of the payload with
 
 Inclusion Path:
 
-: The inclusion path enables a verifier to recompute a root, given a leaf.
+: An inclusion path enables a verifier to recompute a root, given a leaf.
+
+Inclusion Proof:
+
+: An inclusion proof is a combination of the leaf payload, extra data, inclusion path and a merkle tree root.
 
 Signed Inclusion Proof:
 
@@ -202,6 +206,19 @@ inclusion-path = index-aware-inclusion-path / index-unaware-inclusion-path / sor
 ~~~~
 
 Presence of leaf index, and whether it is an input or an output is tree algorithm specific.
+
+## Inclusion Proof
+
+An inclusion proof is a CBOR array containing a merkle tree root, an inclusion path, extra data for the tree algorithm, and the payload.
+
+~~~~ cddl
+inclusion-proof = [
+  merkle-tree-root: bstr ; 
+  inclusion-path: bstr .cbor inclusion-path
+  extra-data: bstr / nil
+  leaf-payload: bstr ;
+]
+~~~~
 
 ## Signed Inclusion Proof
 
