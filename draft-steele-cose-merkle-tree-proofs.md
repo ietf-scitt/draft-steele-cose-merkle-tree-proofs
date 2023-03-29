@@ -213,7 +213,7 @@ An inclusion proof is a CBOR array containing a merkle tree root, an inclusion p
 
 ~~~~ cddl
 inclusion-proof = [
-  merkle-tree-root: bstr ; 
+  merkle-tree-root: bstr ;
   inclusion-path: bstr .cbor inclusion-path
   extra-data: bstr / nil
   leaf-payload: bstr ;
