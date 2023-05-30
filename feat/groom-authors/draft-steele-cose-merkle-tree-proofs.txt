@@ -1,0 +1,507 @@
+
+
+
+
+TBD                                                            O. Steele
+Internet-Draft                                                 Transmute
+Intended status: Standards Track                             H. Birkholz
+Expires: 1 December 2023                                  Fraunhofer SIT
+                                                      A. Delignat-Lavaud
+                                                              C. Fournet
+                                                               Microsoft
+                                                             30 May 2023
+
+
+             Concise Encoding of Signed Merkle Tree Proofs
+              draft-steele-cose-merkle-tree-proofs-latest
+
+Abstract
+
+   This specification describes three CBOR data structures for primary
+   use in COSE envelopes.  A format for Merkle Tree Root Signatures with
+   metadata, a format for Inclusions Paths, and a format for disclosure
+   of a single hadh tree leaf payload (Merkle Tree Proofs).
+
+Discussion Venues
+
+   This note is to be removed before publishing as an RFC.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 1 December 2023.
+
+Copyright Notice
+
+   Copyright (c) 2023 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction
+     1.1.  Requirements Notation
+   2.  Terminology
+   3.  CBOR Merkle Structures
+     3.1.  Signed Inclusion Proof
+     3.2.  Inclusion Paths
+     3.3.  Inclusion Proof
+     3.4.  Signed Inclusion Proof
+     3.5.  Signed Multiple Inclusion Proofs
+       3.5.1.  Sorted Hashes Multiproof
+   4.  Merkle Tree Algorithms
+   5.  Privacy Considerations
+     5.1.  Leaf Blinding
+   6.  Security Considerations
+     6.1.  Hash Function Agility
+   7.  IANA Considerations
+     7.1.  Additions to Existing Registries
+       7.1.1.  New Entries to the COSE Header Parameters Registry
+     7.2.  New SCITT-Related Registries
+       7.2.1.  Tree Algorithms
+   8.  References
+     8.1.  Normative References
+     8.2.  Informative References
+   Appendix A.  Example Tree Algorithms
+     A.1.  RFC9162_SHA256
+       A.1.1.  Blinding Example
+   Authors' Addresses
+
+1.  Introduction
+
+   Merkle trees are verifiable data structures that support secure data
+   storage, through their ability to protect the integrity of batches of
+   documents or collections of statements.
+
+   A merkle proof is a path from a leaf to a root in a merkle tree.
+
+   Merkle proofs can be used to prove a document is in a database (proof
+   of inclusion), or that a smaller set of statements are contained in a
+   large set of statements (selective disclosure proofs).
+
+   Typically, merkle trees are constructed from simple operations such
+   as concatenation and digest via a cryptographic hash function.
+
+   The simple design and valuable cryptographic properties of merkle
+   trees have been leveraged in many network and database applications.
+
+   Differences in the representation of a merkle tree, merkle leaf and
+   merkle inclusion proof can increase the burden for implementers, and
+   create interoperability challenges.
+
+   This document describes the three data structures necessary to use
+   merkle proofs with COSE envelopes.
+
+1.1.  Requirements Notation
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+2.  Terminology
+
+   Leaf:  A merkle tree leaf is the cryptographic hash of a sequence of
+      bytes that combines Leaf Payload and Extra Data.
+
+   Merkle Tree:  A Merkle tree is a tree where every leaf is a
+      cryptographic hash of a sequence of bytes and every node that is
+      not a leaf is the cryptographic hash of the its child nodes.
+
+   Merkle Root:  A Merkle root is the root node of a tree; this
+      cryptographic hash is a committment to the content of the tree.
+
+   Merkle Tree Algorithm:  A Merkle tree algorithm specifies how to
+      construct the tree and how to compute its root.
+
+   Leaf Payload and Extra Data:  A leaf payload is application data used
+      to produce a Leaf.  The Merkle tree algorithm determines how a
+      payload together with extra data is used to produce a leaf.  The
+      simplest case is that the leaf is the cryptographic hash of the
+      payload without extra data.
+
+   Inclusion Path:  An inclusion path enables a verifier to recompute a
+      root, given a leaf.
+
+   Inclusion Proof:  An inclusion proof is a combination of the leaf
+      payload, extra data, inclusion path and a merkle tree root.
+
+   Signed Inclusion Proof:  A signed inclusion proof is a combination of
+      the leaf payload, extra data, inclusion path and signed envelope
+      that includes a merkle root.
+
+3.  CBOR Merkle Structures
+
+   This section describes representations of merkle proof structures in
+   CBOR.
+
+   Some of the structures such as the construction of a merkle tree
+   leaf, or an inclusion proof from a leaf to a merkle root, might have
+   several different representations.
+
+   Some differences in representations are necessary to support
+   efficient verification of different kinds of inclusion proofs and for
+   compatibility with deployed tree algorithms used in specific
+   implementations.
+
+3.1.  Signed Inclusion Proof
+
+   A Merkle root is signed with COSE_Sign1:
+
+   smtr = THIS.COSE.profile .and COSE_Sign1_Tagged
+
+   Protected header parameters:
+
+   *  alg (label: 1): REQUIRED.  Signature algorithm.  Value type: int /
+      tstr.
+
+   *  tree alg (label: TBD): REQUIRED.  Merkle tree algorithm.  Value
+      type: int / tstr.
+
+   A COSE profile of this specification may add further header
+   parameters, for example to identify the signer or add a timestamp.
+
+   Envelope Payload: A Merkle tree root according to the tree alg.
+
+   The envelope payload can be detached, since it can be recomputed by
+   the verifier.
+
+   Forcing a verifier to perform re-computation can prevent faulty
+   implementations.
+
+   One example of a Signed Inclusion Proof is a "transparent statement"
+   as defined in [I-D.ietf-scitt-architecture].
+
+3.2.  Inclusion Paths
+
+   [RFC6962] defines a merkle audit path for a leaf in a merkle tree as
+   the shortest list of additional nodes in the merkle tree required to
+   compute the merkle root for that tree.
+
+   [RFC9162] changed the term from "merkle audit path" to "merkle
+   inclusion proof".
+
+   We prefer to use the term "inclusion path" to avoid confusion with
+   Signed Inclusion Proof.
+
+   Editors note: We may want to move inclusion path representations to
+   the specification that is required to register a new algorithm in the
+   proposed tree algorithms registry.
+
+   Editors note: We recommend tree algorithm simple take the inclusion
+   path as opaque bytes.
+
+   If the tree size and leaf index is known, then a compact inclusion
+   path variant can be used:
+
+   index-aware-inclusion-path = #6.1234([
+       tree-size: int
+       leaf-index: int
+       hashes: [+ bstr]
+   ])
+
+   Leaf index is also sometimes referred to as sequence number.
+
+   Otherwise, the direction each path step must be included:
+
+   FIXME bit vector: 0 right, 1 left, so no bit labels
+
+   index-unaware-inclusion-path = #6.1235([
+       hashes: [+ bstr]
+       left: uint  ; bit vector
+   ])
+
+   For some tree algorithms, the direction is derived from the hashes
+   themselves and both the index and direction can be left out in the
+   path:
+
+   sorted-inclusion-proof = #6.1236([+ bstr])
+
+   inclusion-path = index-aware-inclusion-path / index-unaware-inclusion-path / sorted-inclusion-proof
+
+   Presence of leaf index, and whether it is an input or an output is
+   tree algorithm specific.
+
+3.3.  Inclusion Proof
+
+   An inclusion proof is a CBOR array containing a merkle tree root, an
+   inclusion path, extra data for the tree algorithm, and the payload.
+
+   inclusion-proof = [
+     merkle-tree-root: bstr ;
+     inclusion-path: bstr .cbor inclusion-path
+     extra-data: bstr / nil
+     leaf-payload: bstr ;
+   ]
+
+3.4.  Signed Inclusion Proof
+
+   A signed inclusion proof is a CBOR array containing a signed tree
+   root, an inclusion path, extra data for the tree algorithm, and the
+   payload.
+
+   signed-inclusion-proof = [
+     signed-tree-root: bstr .cbor smtr ; payload of COSE_Sign1_Tagged is detached
+     inclusion-path: bstr .cbor inclusion-path
+     extra-data: bstr / nil
+     leaf-payload: bstr ; leaf payload, not payload in signed_tree_root, could be detached.
+   ]
+
+   extra-data is an additional input to the tree algorithm and is used
+   together with the payload to compute the leaf hash.  See
+   Appendix A.1.1 for an example use case for this field to enable leaf
+   blinding as described in Section 5.1.
+
+3.5.  Signed Multiple Inclusion Proofs
+
+3.5.1.  Sorted Hashes Multiproof
+
+   This signed mulitple inclusion proof representation relies on 2 lists
+   to enable proof of inclusion for multiple payloads in a given signed
+   merkle root.
+
+   Note that the extra-data may be ommited if not required by the tree
+   algorithm, and that leaf payloads may be detached.
+
+   signed-multiple-inclusion-proof = [
+     signed-tree-root: bstr .cbor smtr ; payload of COSE_Sign1_Tagged is detached
+     inclusion-paths: [+ [ bstr / nil .cbor extra-data, bstr .cbor inclusion-path] ]
+     leaf-payloads: [+ bstr] ; leaf payloads, could be detached.
+   ]
+
+   TODO: refine multi-leaf variant of a signed inclusion proof like in:
+
+   *  https://github.com/transmute-industries/merkle-proof
+
+   *  https://transmute-industries.github.io/merkle-disclosure-proof-
+      2021/
+
+   TODO: consider using sparse multiproofs, see
+   https://medium.com/@jgm.orinoco/understanding-sparse-merkle-
+   multiproofs-9b9f049e8f08 and https://arxiv.org/pdf/2002.07648.pdf
+
+4.  Merkle Tree Algorithms
+
+   This document establishes a registry of merkle tree algorithms with
+   the following initial contents:
+
+   +============+================+===========+
+   | Identifier | Tree Algorithm | Reference |
+   +============+================+===========+
+   | 0          | N/A            |           |
+   +------------+----------------+-----------+
+   | 1          | RFC9162_SHA256 | [RFC9162] |
+   +------------+----------------+-----------+
+
+          Table 1: Merke Tree Alogrithms
+
+   Each tree algorithm defines how to compute the root node from a
+   sequence of leaves each represented by payload and extra data.  Extra
+   data is algorithm-specific and should be considered opaque.
+
+5.  Privacy Considerations
+
+   TBD
+
+5.1.  Leaf Blinding
+
+   In cases where a single merkle root and multiple inclusion paths are
+   used to prove inclusion for multiple payloads.  There is a risk that
+   an attacker may be able to learn the content of undisclosed payloads,
+   by brute forcing the values adjacent to the disclosed payloads
+   through application of the cryptographic hash function and comparison
+   to the the disclosed inclusion paths.  This kind of attack can be
+   mitigated by including a cryptographic nonce in the construction of
+   the leaf, however this nonce must then disclosed along side an
+   inclusion proof which increases the size of multiple payload signed
+   inclusion proofs.
+
+6.  Security Considerations
+
+   TBD
+
+6.1.  Hash Function Agility
+
+   The choice of cryptographic hash function is the primary primitive
+   impacting the security of authenticating payload inclusion in a
+   merkle root.  Tree algorithm designers should review the latest
+   guidance on selecting a suitable cryptographic hash function.
+
+7.  IANA Considerations
+
+7.1.  Additions to Existing Registries
+
+7.1.1.  New Entries to the COSE Header Parameters Registry
+
+   IANA will be requested to register the new COSE Header parameters
+   defined below in the "COSE Header Parameters" registry at some point.
+
+   *  Name: tree_alg
+
+   *  Label: TBD
+
+   *  Value type: tree_alg
+
+   *  Value registry: See Section 7.2.1
+
+   *  Description: Merkle tree algorithm used to produce a COSE Sign1
+      payload.
+
+7.2.  New SCITT-Related Registries
+
+   IANA will be asked to add a new registry "TBD" to the list that
+   appears at IANA Assignments (https://www.iana.org/assignments/).
+
+   The rest of this section defines the subregistries that are to be
+   created within the new "TBD" registry.
+
+7.2.1.  Tree Algorithms
+
+   IANA will be asked to establish a registry of tree algorithm
+   identifiers, named "Tree Algorithms" to be administered under a
+   Specification Required policy [RFC8126].
+
+   Template:
+
+   *  Identifier: The two-byte identifier for the algorithm
+
+   *  Tree Algorithm: The name of the algorithm
+
+   *  Reference: Where this algorithm is defined
+
+   Initial contents: Provided in Table 1
+
+8.  References
+
+8.1.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC6234]  Eastlake 3rd, D. and T. Hansen, "US Secure Hash Algorithms
+              (SHA and SHA-based HMAC and HKDF)", RFC 6234,
+              DOI 10.17487/RFC6234, May 2011,
+              <https://www.rfc-editor.org/rfc/rfc6234>.
+
+   [RFC6962]  Laurie, B., Langley, A., and E. Kasper, "Certificate
+              Transparency", RFC 6962, DOI 10.17487/RFC6962, June 2013,
+              <https://www.rfc-editor.org/rfc/rfc6962>.
+
+   [RFC6979]  Pornin, T., "Deterministic Usage of the Digital Signature
+              Algorithm (DSA) and Elliptic Curve Digital Signature
+              Algorithm (ECDSA)", RFC 6979, DOI 10.17487/RFC6979, August
+              2013, <https://www.rfc-editor.org/rfc/rfc6979>.
+
+   [RFC8032]  Josefsson, S. and I. Liusvaara, "Edwards-Curve Digital
+              Signature Algorithm (EdDSA)", RFC 8032,
+              DOI 10.17487/RFC8032, January 2017,
+              <https://www.rfc-editor.org/rfc/rfc8032>.
+
+   [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
+              Writing an IANA Considerations Section in RFCs", BCP 26,
+              RFC 8126, DOI 10.17487/RFC8126, June 2017,
+              <https://www.rfc-editor.org/rfc/rfc8126>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC8949]  Bormann, C. and P. Hoffman, "Concise Binary Object
+              Representation (CBOR)", STD 94, RFC 8949,
+              DOI 10.17487/RFC8949, December 2020,
+              <https://www.rfc-editor.org/rfc/rfc8949>.
+
+   [RFC9162]  Laurie, B., Messeri, E., and R. Stradling, "Certificate
+              Transparency Version 2.0", RFC 9162, DOI 10.17487/RFC9162,
+              December 2021, <https://www.rfc-editor.org/rfc/rfc9162>.
+
+8.2.  Informative References
+
+   [I-D.ietf-cose-countersign]
+              Schaad, J., "CBOR Object Signing and Encryption (COSE):
+              Countersignatures", Work in Progress, Internet-Draft,
+              draft-ietf-cose-countersign-10, 20 September 2022,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-cose-
+              countersign-10>.
+
+   [I-D.ietf-scitt-architecture]
+              Birkholz, H., Delignat-Lavaud, A., Fournet, C., and Y.
+              Deshpande, "An Architecture for Trustworthy and
+              Transparent Digital Supply Chains", Work in Progress,
+              Internet-Draft, draft-ietf-scitt-architecture-01, 13 March
+              2023, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              scitt-architecture-01>.
+
+Appendix A.  Example Tree Algorithms
+
+A.1.  RFC9162_SHA256
+
+   The RFC9162_SHA256 tree algorithm uses the merkle tree definition
+   from [RFC9162] with SHA-256 hash algorithm.
+
+   For n > 1 inputs, let k be the largest power of two smaller than n.
+
+   MTH({d(0)}) = SHA-256(0x00 || d(0))
+   MTH(D[n]) = SHA-256(0x01 || MTH(D[0:k]) || MTH(D[k:n]))
+
+   where d(0) is the payload.  By default this algorithm takes no extra
+   data.
+
+A.1.1.  Blinding Example
+
+   Implementers wishing to leverage this tree algorithm with multiple
+   inclusion proofs, may prepend payload with extra data before applying
+   the tree algorithm, where extra data is a cryptographic nonce.
+
+Authors' Addresses
+
+   Orie Steele
+   Transmute
+   United States
+   Email: orie@transmute.industries
+
+
+   Henk Birkholz
+   Fraunhofer SIT
+   Rheinstrasse 75
+   64295 Darmstadt
+   Germany
+   Email: henk.birkholz@sit.fraunhofer.de
+
+
+   Antoine Delignat-Lavaud
+   Microsoft
+   United Kingdom
+   Email: antdl@microsoft.com
+
+
+   Cedric Fournet
+   Microsoft
+   United Kingdom
+   Email: fournet@microsoft.com
