@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-05-14T01:16:49.929696+00:00",
+  "timestamp": "2023-06-01T01:51:49.655786+00:00",
   "repo": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
   "labels": [
     {
@@ -401,25 +401,33 @@
       "id": "PR_kwDOJHVbLc5MBvif",
       "title": "Add CCF_SHA256 tree algorithm",
       "url": "https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs/pull/7",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "letmaik",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Informal references:\r\n- https://microsoft.github.io/CCF/main/architecture/merkle_tree.html\r\n- https://microsoft.github.io/CCF/main/use_apps/verify_tx.html#receipt-verification\r\n\r\nTODO:\r\n- Add CCF reference to Merkle tree definition (including details on the leaves).\r\n\r\n(replaces #3)",
       "createdAt": "2023-03-14T17:53:16Z",
-      "updatedAt": "2023-03-14T17:53:16Z",
+      "updatedAt": "2023-05-30T15:09:57Z",
       "baseRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
       "baseRefName": "main",
       "baseRefOid": "051a5fa4c932412fa2143edd430dfb9b001dd310",
       "headRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
       "headRefName": "letmaik/ccf-tree-alg",
       "headRefOid": "f484897f83a670a3134c381b1d5caccc4a4828a7",
-      "closedAt": null,
+      "closedAt": "2023-05-30T15:09:56Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We discussed this on the call today, we plan to define only mapping to RFC 9162 in this document, and establish a convention and requirements for future tree algorithms, such that they can build on this draft, and not need to be defined in it.",
+          "createdAt": "2023-05-30T15:09:56Z",
+          "updatedAt": "2023-05-30T15:09:56Z"
+        }
+      ],
       "reviews": []
     },
     {
@@ -550,6 +558,85 @@
               "updatedAt": "2023-03-29T02:30:11Z"
             }
           ]
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "id": "PR_kwDOJHVbLc5RtPH8",
+      "title": "Focus on RFC9162 in CBOR & COSE",
+      "url": "https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs/pull/14",
+      "state": "OPEN",
+      "author": "OR13",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "These changes focus this draft on the minimal definitions required to secure the data structures defined in RFC9162 using CBOR and COSE.\r\n\r\nExtraneous information has been removed.\r\n\r\nThere is a wip implementation available here: \r\n\r\n- https://github.com/transmute-industries/cose\r\n\r\nThere is a demo here:\r\n\r\n- https://scitt.xyz",
+      "createdAt": "2023-05-30T17:07:56Z",
+      "updatedAt": "2023-05-30T17:11:56Z",
+      "baseRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
+      "baseRefName": "main",
+      "baseRefOid": "8561d19437cb03ae550d449f0fc9b8f8bcde03a9",
+      "headRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
+      "headRefName": "feat/focus-rfc-9162",
+      "headRefOid": "51ffe72910446cd7023c5a1758b1795089b0aaa7",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 15,
+      "id": "PR_kwDOJHVbLc5RtXSl",
+      "title": "Remove author",
+      "url": "https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs/pull/15",
+      "state": "OPEN",
+      "author": "OR13",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I chatted with @letmaik about this and he suggested he won't be able to provide reviews, and requested to be removed.",
+      "createdAt": "2023-05-30T17:36:23Z",
+      "updatedAt": "2023-05-30T20:21:39Z",
+      "baseRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
+      "baseRefName": "main",
+      "baseRefOid": "8561d19437cb03ae550d449f0fc9b8f8bcde03a9",
+      "headRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
+      "headRefName": "feat/groom-authors",
+      "headRefOid": "772de64307d8f8c621094c7fcffc667a3c6e1a68",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHVbLc5WhMd1",
+          "commit": {
+            "abbreviatedOid": "772de64"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "ah, well then",
+          "createdAt": "2023-05-30T18:12:09Z",
+          "updatedAt": "2023-05-30T18:12:09Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5WiAp2",
+          "commit": {
+            "abbreviatedOid": "772de64"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-05-30T20:21:39Z",
+          "updatedAt": "2023-05-30T20:21:39Z",
+          "comments": []
         }
       ]
     }
