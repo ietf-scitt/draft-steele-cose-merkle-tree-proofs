@@ -54,6 +54,7 @@ normative:
   RFC6234:
   RFC8032:
   RFC6979:
+  RFC7049: CBOR
   RFC9053: COSE
   RFC8126: iana-considerations-guide
   BCP205: RFC7942
