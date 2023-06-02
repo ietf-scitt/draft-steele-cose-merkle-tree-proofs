@@ -31,11 +31,6 @@ author:
   code: '64295'
   city: Darmstadt
   country: Germany
-- ins: M. Riechert
-  name: Maik Riechert
-  organization: Microsoft
-  email: Maik.Riechert@microsoft.com
-  country: UK
 - ins: A. Delignat-Lavaud
   name: Antoine Delignat-Lavaud
   organization: Microsoft
