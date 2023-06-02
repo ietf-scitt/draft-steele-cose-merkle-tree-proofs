@@ -391,11 +391,11 @@ The implementation builds on concepts described in SCITT {{-scitt-architecture}}
 
 The implementation uses the Concise Binary Object Representation {{-CBOR}} (https://cbor.io/).
 
-The implementation uses the CBOR Object Signing and Encryption {{-COSE}}, maintained at: 
+The implementation uses the CBOR Object Signing and Encryption {{-COSE}}, maintained at:
 - https://github.com/erdtman/cose-js
 
-The implementation uses an implementation of {{-certificate-transparency-v2}}, 
-maintained at: 
+The implementation uses an implementation of {{-certificate-transparency-v2}},
+maintained at:
 
 - https://github.com/transmute-industries/rfc9162/tree/main/src/CoMETRE
 
