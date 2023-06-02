@@ -5,12 +5,11 @@
 TBD                                                            O. Steele
 Internet-Draft                                                 Transmute
 Intended status: Standards Track                             H. Birkholz
-Expires: 8 October 2023                                   Fraunhofer SIT
-                                                             M. Riechert
+Expires: 4 December 2023                                  Fraunhofer SIT
                                                       A. Delignat-Lavaud
                                                               C. Fournet
                                                                Microsoft
-                                                            6 April 2023
+                                                             2 June 2023
 
 
              Concise Encoding of Signed Merkle Tree Proofs
@@ -45,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 October 2023.
+   This Internet-Draft will expire on 4 December 2023.
 
 Copyright Notice
 
@@ -494,12 +493,6 @@ Authors' Addresses
    64295 Darmstadt
    Germany
    Email: henk.birkholz@sit.fraunhofer.de
-
-
-   Maik Riechert
-   Microsoft
-   United Kingdom
-   Email: Maik.Riechert@microsoft.com
 
 
    Antoine Delignat-Lavaud
