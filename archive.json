@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-06-04T01:47:10.804210+00:00",
+  "timestamp": "2023-06-06T01:27:18.647452+00:00",
   "repo": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
   "labels": [
     {
@@ -47,6 +47,11 @@
       "name": "wontfix",
       "description": "This will not be worked on",
       "color": "ffffff"
+    },
+    {
+      "name": "merge-first",
+      "description": "",
+      "color": "81770A"
     }
   ],
   "issues": [
@@ -570,10 +575,12 @@
       "author": "OR13",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "merge-first"
+      ],
       "body": "These changes focus this draft on the minimal definitions required to secure the data structures defined in RFC9162 using CBOR and COSE.\r\n\r\nExtraneous information has been removed.\r\n\r\nThere is a wip implementation available here: \r\n\r\n- https://github.com/transmute-industries/cose\r\n\r\nThere is a demo here:\r\n\r\n- https://scitt.xyz",
       "createdAt": "2023-05-30T17:07:56Z",
-      "updatedAt": "2023-05-30T17:11:56Z",
+      "updatedAt": "2023-06-05T16:31:59Z",
       "baseRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
       "baseRefName": "main",
       "baseRefOid": "8561d19437cb03ae550d449f0fc9b8f8bcde03a9",
@@ -585,7 +592,21 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHVbLc5XLx4n",
+          "commit": {
+            "abbreviatedOid": "51ffe72"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "sry 4 the l8 approval",
+          "createdAt": "2023-06-05T14:37:45Z",
+          "updatedAt": "2023-06-05T14:37:45Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 15,
@@ -654,7 +675,7 @@
       "labels": [],
       "body": "See related PR: https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs/pull/14",
       "createdAt": "2023-06-02T20:42:31Z",
-      "updatedAt": "2023-06-02T20:48:54Z",
+      "updatedAt": "2023-06-05T14:36:59Z",
       "baseRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
       "baseRefName": "main",
       "baseRefOid": "8561d19437cb03ae550d449f0fc9b8f8bcde03a9",
@@ -666,7 +687,21 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHVbLc5XLxd8",
+          "commit": {
+            "abbreviatedOid": "57ce5db"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-05T14:36:59Z",
+          "updatedAt": "2023-06-05T14:36:59Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
