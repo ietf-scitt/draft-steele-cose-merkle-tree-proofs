@@ -46,7 +46,6 @@ normative:
   RFC8949:
   RFC6962: certificate-transparency-v1
   RFC9162: certificate-transparency-v2
-  RFC8152: cose
   RFC6234:
   RFC8032:
   RFC6979:
@@ -340,7 +339,7 @@ In a signed consistency proof, the latest merkle tree root, maps to tree-size-2,
 See the privacy considerations section of:
 
 - {{-certificate-transparency-v2}}
-- {{-cose}}
+- {{-COSE}}
 
 ## Leaf Blinding {#sec-leaf-blinding}
 
@@ -354,7 +353,7 @@ Tree algorithm designers are encouraged to comment on this property of their lea
 See the privacy considerations section of:
 
 - {{-certificate-transparency-v2}}
-- {{-cose}}
+- {{-COSE}}
 
 ## Hash Function Agility
 
