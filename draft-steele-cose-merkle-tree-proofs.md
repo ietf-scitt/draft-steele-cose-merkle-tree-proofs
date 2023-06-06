@@ -46,11 +46,13 @@ normative:
   RFC8949:
   RFC6962: certificate-transparency-v1
   RFC9162: certificate-transparency-v2
-  RFC8152: cose
   RFC6234:
   RFC8032:
   RFC6979:
+  RFC7049: CBOR
+  RFC9053: COSE
   RFC8126: iana-considerations-guide
+  BCP205: RFC7942
 
 informative:
   I-D.ietf-cose-countersign:
@@ -337,7 +339,7 @@ In a signed consistency proof, the latest merkle tree root, maps to tree-size-2,
 See the privacy considerations section of:
 
 - {{-certificate-transparency-v2}}
-- {{-cose}}
+- {{-COSE}}
 
 ## Leaf Blinding {#sec-leaf-blinding}
 
@@ -351,7 +353,7 @@ Tree algorithm designers are encouraged to comment on this property of their lea
 See the privacy considerations section of:
 
 - {{-certificate-transparency-v2}}
-- {{-cose}}
+- {{-COSE}}
 
 ## Hash Function Agility
 
@@ -406,3 +408,61 @@ Initial contents: Provided in {{merkle-tree-alg-values}}
 
 Implementers wishing to leverage this tree algorithm with multiple inclusion proofs, may prepend payload with extra data before applying the tree algorithm, where extra data is a cryptographic nonce.
 
+# Implementation Status
+
+Note to RFC Editor: Please remove this section as well as references to {{BCP205}} before AUTH48.
+
+This section records the status of known implementations of the protocol defined by this specification at the time of posting of this Internet-Draft, and is based on a proposal described in {{BCP205}}.
+The description of implementations in this section is intended to assist the IETF in its decision processes in progressing drafts to RFCs.
+Please note that the listing of any individual implementation here does not imply endorsement by the IETF.
+Furthermore, no effort has been spent to verify the information presented here that was supplied by IETF contributors.
+This is not intended as, and must not be construed to be, a catalog of available implementations or their features.
+Readers are advised to note that other implementations may exist.
+
+According to {{BCP205}},
+"this will allow reviewers and working groups to assign due consideration to documents that have the benefit of running code, which may serve as evidence of valuable experimentation and feedback that have made the implemented protocols more mature.
+It is up to the individual working groups to use this information as they see fit".
+
+## Implementer
+
+An open-source implementation was initiated and is maintained by the Transmute Industries Inc. - Transmute.
+
+## Implementation Name
+
+An application demonstrating the concepts is available at [https://scitt.xyz](https://scitt.xyz).
+
+## Implementation URL
+
+An open-source implementation is available at:
+
+- https://github.com/transmute-industries/cose
+
+## Maturity
+
+The code's level of maturity is considered to be "prototype".
+
+## Coverage and Version Compatibility
+
+The current version ('main') implements the tree algorithm, inclusion proof and consistency proof concepts of this draft.
+
+## License
+
+The project and all corresponding code and data maintained on GitHub are provided under the Apache License, version 2.
+
+## Implementation Dependencies
+
+The implementation builds on concepts described in SCITT {{-scitt-architecture}} (https://scitt.io/).
+
+The implementation uses the Concise Binary Object Representation {{-CBOR}} (https://cbor.io/).
+
+The implementation uses the CBOR Object Signing and Encryption {{-COSE}}, maintained at:
+- https://github.com/erdtman/cose-js
+
+The implementation uses an implementation of {{-certificate-transparency-v2}},
+maintained at:
+
+- https://github.com/transmute-industries/rfc9162/tree/main/src/CoMETRE
+
+## Contact
+
+Orie Steele (orie@transmute.industries)
