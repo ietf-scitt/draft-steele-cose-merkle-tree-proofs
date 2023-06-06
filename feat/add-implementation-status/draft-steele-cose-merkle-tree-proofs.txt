@@ -395,7 +395,7 @@ Table of Contents
 
    *  [RFC9162]
 
-   *  [RFC8152]
+   *  [RFC9053]
 
 5.1.  Leaf Blinding
 
@@ -419,7 +419,7 @@ Table of Contents
 
    *  [RFC9162]
 
-   *  [RFC8152]
+   *  [RFC9053]
 
 6.1.  Hash Function Agility
 
@@ -528,10 +528,6 @@ Table of Contents
               Writing an IANA Considerations Section in RFCs", BCP 26,
               RFC 8126, DOI 10.17487/RFC8126, June 2017,
               <https://www.rfc-editor.org/rfc/rfc8126>.
-
-   [RFC8152]  Schaad, J., "CBOR Object Signing and Encryption (COSE)",
-              RFC 8152, DOI 10.17487/RFC8152, July 2017,
-              <https://www.rfc-editor.org/rfc/rfc8152>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
