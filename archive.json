@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-06-06T01:27:18.647452+00:00",
+  "timestamp": "2023-06-08T01:26:55.529379+00:00",
   "repo": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
   "labels": [
     {
@@ -571,7 +571,7 @@
       "id": "PR_kwDOJHVbLc5RtPH8",
       "title": "Focus on RFC9162 in CBOR & COSE",
       "url": "https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs/pull/14",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "OR13",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -580,17 +580,19 @@
       ],
       "body": "These changes focus this draft on the minimal definitions required to secure the data structures defined in RFC9162 using CBOR and COSE.\r\n\r\nExtraneous information has been removed.\r\n\r\nThere is a wip implementation available here: \r\n\r\n- https://github.com/transmute-industries/cose\r\n\r\nThere is a demo here:\r\n\r\n- https://scitt.xyz",
       "createdAt": "2023-05-30T17:07:56Z",
-      "updatedAt": "2023-06-05T16:31:59Z",
+      "updatedAt": "2023-06-06T14:05:42Z",
       "baseRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
       "baseRefName": "main",
       "baseRefOid": "8561d19437cb03ae550d449f0fc9b8f8bcde03a9",
       "headRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
       "headRefName": "feat/focus-rfc-9162",
       "headRefOid": "51ffe72910446cd7023c5a1758b1795089b0aaa7",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-06-06T14:05:42Z",
+      "mergedAt": "2023-06-06T14:05:42Z",
+      "mergedBy": "OR13",
+      "mergeCommit": {
+        "oid": "6bef6b29576a3dc9745833a857283c6c9fb35645"
+      },
       "comments": [],
       "reviews": [
         {
@@ -604,6 +606,32 @@
           "body": "sry 4 the l8 approval",
           "createdAt": "2023-06-05T14:37:45Z",
           "updatedAt": "2023-06-05T14:37:45Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5XVqrB",
+          "commit": {
+            "abbreviatedOid": "51ffe72"
+          },
+          "author": "ad-l",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "I recommend merging now",
+          "createdAt": "2023-06-06T14:04:44Z",
+          "updatedAt": "2023-06-06T14:04:44Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5XVrGP",
+          "commit": {
+            "abbreviatedOid": "51ffe72"
+          },
+          "author": "yogeshbdeshpande",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "LGTM!",
+          "createdAt": "2023-06-06T14:05:29Z",
+          "updatedAt": "2023-06-06T14:05:29Z",
           "comments": []
         }
       ]
@@ -668,37 +696,39 @@
       "id": "PR_kwDOJHVbLc5SCQMb",
       "title": "Add implementation status section",
       "url": "https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs/pull/16",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "OR13",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "See related PR: https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs/pull/14",
       "createdAt": "2023-06-02T20:42:31Z",
-      "updatedAt": "2023-06-05T14:36:59Z",
+      "updatedAt": "2023-06-06T14:10:17Z",
       "baseRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
       "baseRefName": "main",
-      "baseRefOid": "8561d19437cb03ae550d449f0fc9b8f8bcde03a9",
+      "baseRefOid": "6bef6b29576a3dc9745833a857283c6c9fb35645",
       "headRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
       "headRefName": "feat/add-implementation-status",
-      "headRefOid": "57ce5dbcfed1ae7cc9e8df5fca7ce0d8340b9ea3",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "2199cd712dc7aec6bc4e16643dd1a548c104849b",
+      "closedAt": "2023-06-06T14:10:17Z",
+      "mergedAt": "2023-06-06T14:10:17Z",
+      "mergedBy": "OR13",
+      "mergeCommit": {
+        "oid": "2e3aa66560bc3e52cf52587b19b80b3dab4bf90f"
+      },
       "comments": [],
       "reviews": [
         {
           "id": "PRR_kwDOJHVbLc5XLxd8",
           "commit": {
-            "abbreviatedOid": "57ce5db"
+            "abbreviatedOid": "2ba1547"
           },
           "author": "henkbirkholz",
           "authorAssociation": "MEMBER",
           "state": "APPROVED",
           "body": "",
           "createdAt": "2023-06-05T14:36:59Z",
-          "updatedAt": "2023-06-05T14:36:59Z",
+          "updatedAt": "2023-06-06T14:08:12Z",
           "comments": []
         }
       ]
