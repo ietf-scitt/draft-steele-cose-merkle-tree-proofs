@@ -332,6 +332,17 @@ See the privacy considerations section of:
 - {{-certificate-transparency-v2}}
 - {{-COSE}}
 
+Although the word transparency implies to some degree read access, 
+it is important to note that transparency logs might include sensitive information. 
+
+Depending on the leaf algorithm used, a log operator might be able to count unique entries.
+
+In the case that a leaf is produced from a cose sign 1 envelope,
+adding information to the unprotected header can be used to produce a unique leaf entry.
+
+However, this could impact privacy, and some transparency service operators might prefer only integrity protected content be made transparent.
+
+
 ## Leaf Blinding {#sec-leaf-blinding}
 
 In cases where a single merkle root and multiple inclusion paths are used to prove inclusion for multiple payloads. There is a risk that an attacker may be able to learn the content of undisclosed payloads, by brute forcing the values adjacent to the disclosed payloads through application of the cryptographic hash function and comparison to the the disclosed inclusion paths. This kind of attack can be mitigated by including a cryptographic nonce in the construction of the leaf, however this nonce must then disclosed along side an inclusion proof which increases the size of multiple payload signed inclusion proofs.
@@ -341,7 +352,7 @@ Tree algorithm designers are encouraged to comment on this property of their lea
 
 # Security Considerations
 
-See the privacy considerations section of:
+See the security considerations section of:
 
 - {{-certificate-transparency-v2}}
 - {{-COSE}}
