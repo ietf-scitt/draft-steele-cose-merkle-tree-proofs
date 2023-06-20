@@ -388,6 +388,21 @@ Table of Contents
 
    *  [RFC9053]
 
+   Although the word transparency implies to some degree read access, it
+   is important to note that transparency logs might include sensitive
+   information.
+
+   Depending on the leaf algorithm used, a log operator might be able to
+   count unique entries.
+
+   In the case that a leaf is produced from a cose sign 1 envelope,
+   adding information to the unprotected header can be used to produce a
+   unique leaf entry.
+
+   However, this could impact privacy, and some transparency service
+   operators might prefer only integrity protected content be made
+   transparent.
+
 5.1.  Leaf Blinding
 
    In cases where a single merkle root and multiple inclusion paths are
@@ -406,7 +421,7 @@ Table of Contents
 
 6.  Security Considerations
 
-   See the privacy considerations section of:
+   See the security considerations section of:
 
    *  [RFC9162]
 

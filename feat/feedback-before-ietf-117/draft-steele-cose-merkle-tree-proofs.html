@@ -1662,6 +1662,12 @@ In a signed consistency proof, the latest merkle tree root, maps to tree-size-2,
           <span>[<a href="#RFC9053" class="cite xref">RFC9053</a>]</span><a href="#section-5-2.2" class="pilcrow">¶</a>
 </li>
       </ul>
+<p id="section-5-3">Although the word transparency implies to some degree read access,
+it is important to note that transparency logs might include sensitive information.<a href="#section-5-3" class="pilcrow">¶</a></p>
+<p id="section-5-4">Depending on the leaf algorithm used, a log operator might be able to count unique entries.<a href="#section-5-4" class="pilcrow">¶</a></p>
+<p id="section-5-5">In the case that a leaf is produced from a cose sign 1 envelope,
+adding information to the unprotected header can be used to produce a unique leaf entry.<a href="#section-5-5" class="pilcrow">¶</a></p>
+<p id="section-5-6">However, this could impact privacy, and some transparency service operators might prefer only integrity protected content be made transparent.<a href="#section-5-6" class="pilcrow">¶</a></p>
 <div id="sec-leaf-blinding">
 <section id="section-5.1">
         <h3 id="name-leaf-blinding">
@@ -1678,7 +1684,7 @@ In a signed consistency proof, the latest merkle tree root, maps to tree-size-2,
       <h2 id="name-security-considerations">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-6-1">See the privacy considerations section of:<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">See the security considerations section of:<a href="#section-6-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6-2.1">
           <span>[<a href="#RFC9162" class="cite xref">RFC9162</a>]</span><a href="#section-6-2.1" class="pilcrow">¶</a>
