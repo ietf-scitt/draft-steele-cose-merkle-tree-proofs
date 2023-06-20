@@ -208,15 +208,6 @@ One example of a Signed Inclusion Proof is a "transparent statement" as defined 
 ])
 ~~~~
 
-### Array form CDDL
-
-~~~~ cddl
-signed-inclusion-proof = [
-  signed-inclusion-proof: bstr .cbor smtr ; the payload is a merkle root, as described by the tree algorithm, and is detached.
-  inclusion-proof: bstr .cbor inclusion-proof ; the inclusion-proof, as described in the tree algorithm
-  leaf: bstr ; the leaf, as described in the tree algorithm
-]
-~~~~
 
 ## Signed Consistency Proof
 
