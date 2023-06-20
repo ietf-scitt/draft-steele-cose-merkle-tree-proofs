@@ -332,8 +332,8 @@ See the privacy considerations section of:
 - {{-certificate-transparency-v2}}
 - {{-COSE}}
 
-Although the word transparency implies to some degree read access, 
-it is important to note that transparency logs might include sensitive information. 
+Although the word transparency implies to some degree read access,
+it is important to note that transparency logs might include sensitive information.
 
 Depending on the leaf algorithm used, a log operator might be able to count unique entries.
 
