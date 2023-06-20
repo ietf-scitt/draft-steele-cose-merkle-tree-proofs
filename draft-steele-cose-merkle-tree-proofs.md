@@ -151,7 +151,7 @@ We prefer to use the term "inclusion path" to avoid confusion with Signed Inclus
 For tree algorithm "RFC9162_SHA256", we define the following compact encoding of an inclusion proof for a leaf:
 
 ~~~~ cddl
-inclusion-proof = #6.1234([
+inclusion-proof = #TBD_2([
     tree-size: int
     leaf-index: int
     inclusion-path: [+ bstr]
@@ -306,7 +306,7 @@ See {{-certificate-transparency-v2}}, 2.1.3.1. Generating an Inclusion Proof.
 The cbor representation of the inclusion proof is:
 
 ~~~~ cddl
-inclusion-proof = #6.1234([
+inclusion-proof = #TBD_2([
     tree-size: int
     leaf-index: int
     inclusion-path: [+ bstr]
@@ -320,7 +320,7 @@ See {{-certificate-transparency-v2}}, 2.1.4.1. Generating a Consistency Proof.
 The cbor representation of the consistency proof is:
 
 ~~~~ cddl
-consistency-proof = #6.1234([
+consistency-proof = #TBD_3([
     tree-size-1: int ; size of the tree, when the previous root was produced.
     tree-size-2: int ; size of the tree, when the latest root was produced.
     consistency-path: [+ bstr] ; consistency path, from previous root to latest root.
