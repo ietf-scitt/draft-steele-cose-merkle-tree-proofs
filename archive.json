@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-06-08T01:26:55.529379+00:00",
+  "timestamp": "2023-06-22T01:22:10.781335+00:00",
   "repo": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
   "labels": [
     {
@@ -730,6 +730,121 @@
           "createdAt": "2023-06-05T14:36:59Z",
           "updatedAt": "2023-06-06T14:08:12Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "id": "PR_kwDOJHVbLc5TcrKM",
+      "title": "Address List Feedback",
+      "url": "https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs/pull/17",
+      "state": "OPEN",
+      "author": "OR13",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Feedback gathered from https://mailarchive.ietf.org/arch/msg/cose/LCvZEcA2oeYdSDa2Lv7gp2fJIxo/",
+      "createdAt": "2023-06-20T14:50:31Z",
+      "updatedAt": "2023-06-20T15:26:56Z",
+      "baseRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
+      "baseRefName": "main",
+      "baseRefOid": "2e3aa66560bc3e52cf52587b19b80b3dab4bf90f",
+      "headRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
+      "headRefName": "feat/feedback-before-ietf-117",
+      "headRefOid": "a48ebd7401b596b729c3ec6cd4233d85d9dd8dbe",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Consider attempting better CDDL by applying https://www.ietf.org/archive/id/draft-bormann-cbor-draft-numbers-01.html",
+          "createdAt": "2023-06-20T15:17:49Z",
+          "updatedAt": "2023-06-20T15:17:49Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHVbLc5Yt6aP",
+          "commit": {
+            "abbreviatedOid": "a48ebd7"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-20T15:25:56Z",
+          "updatedAt": "2023-06-20T15:25:56Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "I remove this array form, as it causes confusion and does not seem necessary",
+              "createdAt": "2023-06-20T15:25:56Z",
+              "updatedAt": "2023-06-20T15:25:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5Yt6v7",
+          "commit": {
+            "abbreviatedOid": "a48ebd7"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-20T15:26:19Z",
+          "updatedAt": "2023-06-20T15:26:19Z",
+          "comments": [
+            {
+              "originalPosition": 30,
+              "body": "any change suggestions on this CDDL very welcome.",
+              "createdAt": "2023-06-20T15:26:19Z",
+              "updatedAt": "2023-06-20T15:26:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5Yt6_z",
+          "commit": {
+            "abbreviatedOid": "a48ebd7"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-20T15:26:42Z",
+          "updatedAt": "2023-06-20T15:26:42Z",
+          "comments": [
+            {
+              "originalPosition": 47,
+              "body": "I attempt to add some text about privacy here, comments welcome",
+              "createdAt": "2023-06-20T15:26:42Z",
+              "updatedAt": "2023-06-20T15:26:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5Yt7G9",
+          "commit": {
+            "abbreviatedOid": "a48ebd7"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-20T15:26:56Z",
+          "updatedAt": "2023-06-20T15:26:56Z",
+          "comments": [
+            {
+              "originalPosition": 66,
+              "body": "fix copy paste error",
+              "createdAt": "2023-06-20T15:26:56Z",
+              "updatedAt": "2023-06-20T15:26:56Z"
+            }
+          ]
         }
       ]
     }
