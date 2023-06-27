@@ -5,11 +5,11 @@
 TBD                                                            O. Steele
 Internet-Draft                                                 Transmute
 Intended status: Standards Track                             H. Birkholz
-Expires: 8 December 2023                                  Fraunhofer SIT
+Expires: 29 December 2023                                 Fraunhofer SIT
                                                       A. Delignat-Lavaud
                                                               C. Fournet
                                                                Microsoft
-                                                             6 June 2023
+                                                            27 June 2023
 
 
              Concise Encoding of Signed Merkle Tree Proofs
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 December 2023.
+   This Internet-Draft will expire on 29 December 2023.
 
 Copyright Notice
 
@@ -69,7 +69,6 @@ Table of Contents
    3.  CBOR Merkle Structures
      3.1.  Inclusion Proof
      3.2.  Signed Inclusion Proof
-       3.2.1.  Array form CDDL
      3.3.  Signed Consistency Proof
        3.3.1.  Array form CDDL
    4.  Merkle Tree Algorithms
@@ -196,7 +195,7 @@ Table of Contents
    For tree algorithm "RFC9162_SHA256", we define the following compact
    encoding of an inclusion proof for a leaf:
 
-   inclusion-proof = #6.1234([
+   inclusion-proof = #TBD_2([
        tree-size: int
        leaf-index: int
        inclusion-path: [+ bstr]
@@ -255,14 +254,6 @@ Table of Contents
   # Signature
   h'4862c1dced27ceeb1f7a6277d13be127a8969a7171ae000ffa90ef5757b817ca8ee61d57645d1a087251a97f06eb61aec46ecf958e4a0fb94ae37f410c7f77ea'
 ])
-
-3.2.1.  Array form CDDL
-
-   signed-inclusion-proof = [
-     signed-inclusion-proof: bstr .cbor smtr ; the payload is a merkle root, as described by the tree algorithm, and is detached.
-     inclusion-proof: bstr .cbor inclusion-proof ; the inclusion-proof, as described in the tree algorithm
-     leaf: bstr ; the leaf, as described in the tree algorithm
-   ]
 
 3.3.  Signed Consistency Proof
 
@@ -361,7 +352,7 @@ Table of Contents
 
    The cbor representation of the inclusion proof is:
 
-   inclusion-proof = #6.1234([
+   inclusion-proof = #TBD_2([
        tree-size: int
        leaf-index: int
        inclusion-path: [+ bstr]
@@ -373,7 +364,7 @@ Table of Contents
 
    The cbor representation of the consistency proof is:
 
-   consistency-proof = #6.1234([
+   consistency-proof = #TBD_3([
        tree-size-1: int ; size of the tree, when the previous root was produced.
        tree-size-2: int ; size of the tree, when the latest root was produced.
        consistency-path: [+ bstr] ; consistency path, from previous root to latest root.
@@ -397,6 +388,21 @@ Table of Contents
 
    *  [RFC9053]
 
+   Although the word transparency implies to some degree read access, it
+   is important to note that transparency logs might include sensitive
+   information.
+
+   Depending on the leaf algorithm used, a log operator might be able to
+   count unique entries.
+
+   In the case that a leaf is produced from a cose sign 1 envelope,
+   adding information to the unprotected header can be used to produce a
+   unique leaf entry.
+
+   However, this could impact privacy, and some transparency service
+   operators might prefer only integrity protected content be made
+   transparent.
+
 5.1.  Leaf Blinding
 
    In cases where a single merkle root and multiple inclusion paths are
@@ -415,7 +421,7 @@ Table of Contents
 
 6.  Security Considerations
 
-   See the privacy considerations section of:
+   See the security considerations section of:
 
    *  [RFC9162]
 

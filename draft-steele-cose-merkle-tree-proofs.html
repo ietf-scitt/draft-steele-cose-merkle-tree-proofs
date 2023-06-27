@@ -15,15 +15,15 @@ A CBOR encoding of Merkle Roots for use in COSE payloads.
 A CBOR encoding of Inclusions Proofs for use in COSE unprotected headers.
 A CBOR encoding of Consistency Proofs for use in COSE unprotected headers. 
     " name="description">
-<meta content="xml2rfc 3.17.2" name="generator">
+<meta content="xml2rfc 3.17.3" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-steele-cose-merkle-tree-proofs-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.17.2
-    Python 3.11.3
+  xml2rfc 3.17.3
+    Python 3.11.4
     appdirs 1.4.4
     ConfigArgParse 1.5.3
-    google-i18n-address 2.5.2
+    google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.2
@@ -1057,7 +1057,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Steele, et al.</td>
-<td class="center">Expires 8 December 2023</td>
+<td class="center">Expires 29 December 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1070,12 +1070,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-steele-cose-merkle-tree-proofs-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-06-06" class="published">6 June 2023</time>
+<time datetime="2023-06-27" class="published">27 June 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-12-08">8 December 2023</time></dd>
+<dd class="expires"><time datetime="2023-12-29">29 December 2023</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1132,7 +1132,7 @@ A CBOR encoding of Consistency Proofs for use in COSE unprotected headers.<a hre
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 8 December 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 29 December 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1180,17 +1180,12 @@ A CBOR encoding of Consistency Proofs for use in COSE unprotected headers.<a hre
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
                 <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-signed-inclusion-proof" class="internal xref">Signed Inclusion Proof</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2.2.1">
-                    <p id="section-toc.1-1.3.2.2.2.1.1"><a href="#section-3.2.1" class="auto internal xref">3.2.1</a>.  <a href="#name-array-form-cddl" class="internal xref">Array form CDDL</a></p>
-</li>
-                </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
                 <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-signed-consistency-proof" class="internal xref">Signed Consistency Proof</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3.2.1">
-                    <p id="section-toc.1-1.3.2.3.2.1.1"><a href="#section-3.3.1" class="auto internal xref">3.3.1</a>.  <a href="#name-array-form-cddl-2" class="internal xref">Array form CDDL</a></p>
+                    <p id="section-toc.1-1.3.2.3.2.1.1"><a href="#section-3.3.1" class="auto internal xref">3.3.1</a>.  <a href="#name-array-form-cddl" class="internal xref">Array form CDDL</a></p>
 </li>
                 </ul>
 </li>
@@ -1400,7 +1395,7 @@ as the shortest list of additional nodes in the merkle tree required to compute 
 <p id="section-3.1-4">For tree algorithm "RFC9162_SHA256", we define the following compact encoding of an inclusion proof for a leaf:<a href="#section-3.1-4" class="pilcrow">¶</a></p>
 <div class="lang-cddl sourcecode" id="section-3.1-5">
 <pre>
-inclusion-proof = #6.1234([
+inclusion-proof = #TBD_2([
     tree-size: int
     leaf-index: int
     inclusion-path: [+ bstr]
@@ -1461,22 +1456,6 @@ smtr = THIS.COSE.profile .and COSE_Sign1_Tagged
 ])
 </pre><a href="#section-3.2-9" class="pilcrow">¶</a>
 </div>
-<div id="array-form-cddl">
-<section id="section-3.2.1">
-          <h4 id="name-array-form-cddl">
-<a href="#section-3.2.1" class="section-number selfRef">3.2.1. </a><a href="#name-array-form-cddl" class="section-name selfRef">Array form CDDL</a>
-          </h4>
-<div class="lang-cddl sourcecode" id="section-3.2.1-1">
-<pre>
-signed-inclusion-proof = [
-  signed-inclusion-proof: bstr .cbor smtr ; the payload is a merkle root, as described by the tree algorithm, and is detached.
-  inclusion-proof: bstr .cbor inclusion-proof ; the inclusion-proof, as described in the tree algorithm
-  leaf: bstr ; the leaf, as described in the tree algorithm
-]
-</pre><a href="#section-3.2.1-1" class="pilcrow">¶</a>
-</div>
-</section>
-</div>
 </section>
 </div>
 <div id="signed-consistency-proof">
@@ -1512,10 +1491,10 @@ signed-inclusion-proof = [
 ])
 </pre><a href="#section-3.3-1" class="pilcrow">¶</a>
 </div>
-<div id="array-form-cddl-1">
+<div id="array-form-cddl">
 <section id="section-3.3.1">
-          <h4 id="name-array-form-cddl-2">
-<a href="#section-3.3.1" class="section-number selfRef">3.3.1. </a><a href="#name-array-form-cddl-2" class="section-name selfRef">Array form CDDL</a>
+          <h4 id="name-array-form-cddl">
+<a href="#section-3.3.1" class="section-number selfRef">3.3.1. </a><a href="#name-array-form-cddl" class="section-name selfRef">Array form CDDL</a>
           </h4>
 <div class="lang-cddl sourcecode" id="section-3.3.1-1">
 <pre>
@@ -1626,7 +1605,7 @@ The string identifier for "tree-alg" is "RFC9162_SHA256".<a href="#section-4.1.1
 <p id="section-4.1.2.2-2">The cbor representation of the inclusion proof is:<a href="#section-4.1.2.2-2" class="pilcrow">¶</a></p>
 <div class="lang-cddl sourcecode" id="section-4.1.2.2-3">
 <pre>
-inclusion-proof = #6.1234([
+inclusion-proof = #TBD_2([
     tree-size: int
     leaf-index: int
     inclusion-path: [+ bstr]
@@ -1644,7 +1623,7 @@ inclusion-proof = #6.1234([
 <p id="section-4.1.2.3-2">The cbor representation of the consistency proof is:<a href="#section-4.1.2.3-2" class="pilcrow">¶</a></p>
 <div class="lang-cddl sourcecode" id="section-4.1.2.3-3">
 <pre>
-consistency-proof = #6.1234([
+consistency-proof = #TBD_3([
     tree-size-1: int ; size of the tree, when the previous root was produced.
     tree-size-2: int ; size of the tree, when the latest root was produced.
     consistency-path: [+ bstr] ; consistency path, from previous root to latest root.
@@ -1683,6 +1662,12 @@ In a signed consistency proof, the latest merkle tree root, maps to tree-size-2,
           <span>[<a href="#RFC9053" class="cite xref">RFC9053</a>]</span><a href="#section-5-2.2" class="pilcrow">¶</a>
 </li>
       </ul>
+<p id="section-5-3">Although the word transparency implies to some degree read access,
+it is important to note that transparency logs might include sensitive information.<a href="#section-5-3" class="pilcrow">¶</a></p>
+<p id="section-5-4">Depending on the leaf algorithm used, a log operator might be able to count unique entries.<a href="#section-5-4" class="pilcrow">¶</a></p>
+<p id="section-5-5">In the case that a leaf is produced from a cose sign 1 envelope,
+adding information to the unprotected header can be used to produce a unique leaf entry.<a href="#section-5-5" class="pilcrow">¶</a></p>
+<p id="section-5-6">However, this could impact privacy, and some transparency service operators might prefer only integrity protected content be made transparent.<a href="#section-5-6" class="pilcrow">¶</a></p>
 <div id="sec-leaf-blinding">
 <section id="section-5.1">
         <h3 id="name-leaf-blinding">
@@ -1699,7 +1684,7 @@ In a signed consistency proof, the latest merkle tree root, maps to tree-size-2,
       <h2 id="name-security-considerations">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-6-1">See the privacy considerations section of:<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">See the security considerations section of:<a href="#section-6-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6-2.1">
           <span>[<a href="#RFC9162" class="cite xref">RFC9162</a>]</span><a href="#section-6-2.1" class="pilcrow">¶</a>
