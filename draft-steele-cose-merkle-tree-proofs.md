@@ -151,7 +151,7 @@ We prefer to use the term "inclusion path" to avoid confusion with Signed Inclus
 For tree algorithm "RFC9162_SHA256", we define the following compact encoding of an inclusion proof for a leaf:
 
 ~~~~ cddl
-inclusion-proof = #6.1234([
+inclusion-proof = #TBD_2([
     tree-size: int
     leaf-index: int
     inclusion-path: [+ bstr]
@@ -208,15 +208,6 @@ One example of a Signed Inclusion Proof is a "transparent statement" as defined 
 ])
 ~~~~
 
-### Array form CDDL
-
-~~~~ cddl
-signed-inclusion-proof = [
-  signed-inclusion-proof: bstr .cbor smtr ; the payload is a merkle root, as described by the tree algorithm, and is detached.
-  inclusion-proof: bstr .cbor inclusion-proof ; the inclusion-proof, as described in the tree algorithm
-  leaf: bstr ; the leaf, as described in the tree algorithm
-]
-~~~~
 
 ## Signed Consistency Proof
 
@@ -306,7 +297,7 @@ See {{-certificate-transparency-v2}}, 2.1.3.1. Generating an Inclusion Proof.
 The cbor representation of the inclusion proof is:
 
 ~~~~ cddl
-inclusion-proof = #6.1234([
+inclusion-proof = #TBD_2([
     tree-size: int
     leaf-index: int
     inclusion-path: [+ bstr]
@@ -320,7 +311,7 @@ See {{-certificate-transparency-v2}}, 2.1.4.1. Generating a Consistency Proof.
 The cbor representation of the consistency proof is:
 
 ~~~~ cddl
-consistency-proof = #6.1234([
+consistency-proof = #TBD_3([
     tree-size-1: int ; size of the tree, when the previous root was produced.
     tree-size-2: int ; size of the tree, when the latest root was produced.
     consistency-path: [+ bstr] ; consistency path, from previous root to latest root.
@@ -341,6 +332,17 @@ See the privacy considerations section of:
 - {{-certificate-transparency-v2}}
 - {{-COSE}}
 
+Although the word transparency implies to some degree read access,
+it is important to note that transparency logs might include sensitive information.
+
+Depending on the leaf algorithm used, a log operator might be able to count unique entries.
+
+In the case that a leaf is produced from a cose sign 1 envelope,
+adding information to the unprotected header can be used to produce a unique leaf entry.
+
+However, this could impact privacy, and some transparency service operators might prefer only integrity protected content be made transparent.
+
+
 ## Leaf Blinding {#sec-leaf-blinding}
 
 In cases where a single merkle root and multiple inclusion paths are used to prove inclusion for multiple payloads. There is a risk that an attacker may be able to learn the content of undisclosed payloads, by brute forcing the values adjacent to the disclosed payloads through application of the cryptographic hash function and comparison to the the disclosed inclusion paths. This kind of attack can be mitigated by including a cryptographic nonce in the construction of the leaf, however this nonce must then disclosed along side an inclusion proof which increases the size of multiple payload signed inclusion proofs.
@@ -350,7 +352,7 @@ Tree algorithm designers are encouraged to comment on this property of their lea
 
 # Security Considerations
 
-See the privacy considerations section of:
+See the security considerations section of:
 
 - {{-certificate-transparency-v2}}
 - {{-COSE}}
