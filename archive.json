@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-06-22T01:22:10.781335+00:00",
+  "timestamp": "2023-06-29T01:36:02.060013+00:00",
   "repo": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
   "labels": [
     {
@@ -738,24 +738,26 @@
       "id": "PR_kwDOJHVbLc5TcrKM",
       "title": "Address List Feedback",
       "url": "https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs/pull/17",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "OR13",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Feedback gathered from https://mailarchive.ietf.org/arch/msg/cose/LCvZEcA2oeYdSDa2Lv7gp2fJIxo/",
       "createdAt": "2023-06-20T14:50:31Z",
-      "updatedAt": "2023-06-20T15:26:56Z",
+      "updatedAt": "2023-06-27T15:03:12Z",
       "baseRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
       "baseRefName": "main",
       "baseRefOid": "2e3aa66560bc3e52cf52587b19b80b3dab4bf90f",
       "headRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
       "headRefName": "feat/feedback-before-ietf-117",
       "headRefOid": "a48ebd7401b596b729c3ec6cd4233d85d9dd8dbe",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-06-27T15:03:11Z",
+      "mergedAt": "2023-06-27T15:03:11Z",
+      "mergedBy": "OR13",
+      "mergeCommit": {
+        "oid": "bdc0814405fd4e1c65ca098be350f8ac6fb8a1a8"
+      },
       "comments": [
         {
           "author": "OR13",
@@ -843,6 +845,65 @@
               "body": "fix copy paste error",
               "createdAt": "2023-06-20T15:26:56Z",
               "updatedAt": "2023-06-20T15:26:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5ZeXud",
+          "commit": {
+            "abbreviatedOid": "a48ebd7"
+          },
+          "author": "ad-l",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-27T14:57:21Z",
+          "updatedAt": "2023-06-27T14:57:21Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5ZeY4F",
+          "commit": {
+            "abbreviatedOid": "a48ebd7"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-06-27T14:58:48Z",
+          "updatedAt": "2023-06-27T14:58:48Z",
+          "comments": [
+            {
+              "originalPosition": 30,
+              "body": "good enough for now",
+              "createdAt": "2023-06-27T14:58:48Z",
+              "updatedAt": "2023-06-27T14:58:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5Zeav0",
+          "commit": {
+            "abbreviatedOid": "a48ebd7"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-27T15:01:06Z",
+          "updatedAt": "2023-06-27T15:02:00Z",
+          "comments": [
+            {
+              "originalPosition": 47,
+              "body": ":+1: ",
+              "createdAt": "2023-06-27T15:01:06Z",
+              "updatedAt": "2023-06-27T15:02:00Z"
+            },
+            {
+              "originalPosition": 66,
+              "body": ":+1: ",
+              "createdAt": "2023-06-27T15:01:25Z",
+              "updatedAt": "2023-06-27T15:02:00Z"
             }
           ]
         }
