@@ -288,7 +288,7 @@ with the following initial contents:
 |TBD_3        | consistency  | {{sec-generic-consistency-proof}}
 {: #verifiable-data-structure-proof-types align="left" title="Verifiable Data Structure Proof Types"}
 
-## Inclusion Proof {{sec-generic-inclusion-proof}}
+## Inclusion Proof {#sec-generic-inclusion-proof}
 
 Inclusion proofs provide a mechanism for a verifier to validate set membership.
 
@@ -297,7 +297,7 @@ The string identifier for this "verifiable-data-structure-proof-type" is "inclus
 
 {{sec-rfc9162-sha256-inclusion-proof}} provides a concrete example.
 
-## Consistency Proof {{sec-generic-consistency-proof}}
+## Consistency Proof {#sec-generic-consistency-proof}
 
 Consistency proofs provide a mechanism for a verifier to validate the consistency of a verifiable data structure.
 
