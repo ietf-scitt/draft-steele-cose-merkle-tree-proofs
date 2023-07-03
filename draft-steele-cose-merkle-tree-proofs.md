@@ -276,7 +276,7 @@ For example, 2 different merkle tree based verifiable data structures might both
 Protocols requireing proof of inclusion ought to be able to preserve their functionality,
 while switching from one verifiable data structure to another, so long as both structures upport the same proof types.
 
-# Verifiable Data Structure Proof Types
+# Verifiable Data Structure Proof Types {#sec-verifiable-data-structure-proof-types}
 
 This document establishes a registry of verifiable data structure proof types tags,
 with the following initial contents:
@@ -286,7 +286,7 @@ with the following initial contents:
 |0            | N/A          |
 |TBD_2        | inclusion    | {{sec-generic-inclusion-proof}}
 |TBD_3        | consistency  | {{sec-generic-consistency-proof}}
-{: #verifiable-data-structure-proof-types align="left" title="Verifiable Data Structure Proof Types"}
+{: #verifiable-data-structure-proof-types-values align="left" title="Verifiable Data Structure Proof Types"}
 
 ## Inclusion Proof {#sec-generic-inclusion-proof}
 
@@ -410,7 +410,7 @@ in the 'Standards Action With Expert Review category.
 * Name: verifiable_data_structure
 * Label: TBD_1
 * Value type: verifiable_data_structure
-* Value registry: See {{verifiable-data-structure}}
+* Value registry: See {{verifiable-data-structure-registry}}
 * Description: Merkle tree algorithm used to produce a COSE Sign1 payload.
 
 * Name: inclusion_proof
@@ -428,15 +428,29 @@ in the 'Standards Action With Expert Review category.
 
 ### Verifiable Data Structures {#verifiable-data-structure-registry}
 
-IANA will be asked to establish a registry of tree algorithm identifiers, named "Verifiable Data Structures" to be administered under a Specification Required policy {{-iana-considerations-guide}}.
+IANA will be asked to establish a registry of tree algorithm identifiers,
+named "Verifiable Data Structures" to be administered under a Specification Required policy {{-iana-considerations-guide}}.
 
 Template:
 
 * Identifier: The two-byte identifier for the algorithm
-* Algorithm: The name of the data structure or algorithm use to produce the structures
-* Reference: Where this the data structure or algorithm is defined
+* Algorithm: The name of the data structure
+* Reference: Where the data structure is defined
 
 Initial contents: Provided in {{verifiable-data-structure-values}}
+
+### Verifiable Data Structure Proof Types {#verifiable-data-structure-proof-types-registry}
+
+IANA will be asked to establish a registry of tree algorithm identifiers,
+named "Verifiable Data Structures Proof Types" to be administered under a Specification Required policy {{-iana-considerations-guide}}.
+
+Template:
+
+* Identifier: The two-byte identifier for the algorithm
+* Algorithm: The name of the proof type algorithm
+* Reference: Where the algorithm is defined
+
+Initial contents: Provided in {{verifiable-data-structure-proof-types-values}}
 
 --- back
 
