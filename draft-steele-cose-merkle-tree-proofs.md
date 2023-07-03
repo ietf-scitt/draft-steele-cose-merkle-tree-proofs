@@ -241,7 +241,7 @@ One example of a Signed Inclusion Proof is a "transparent statement" as defined 
 
 # Verifiable Data Structures {#sec-verifiable-data-structure-algorithms}
 
-This document establishes a registry of verifiable data structure algorithms values for TBD_1, 
+This document establishes a registry of verifiable data structure algorithms values for TBD_1,
 with the following initial contents:
 
 | Identifier            | Algorithm | Reference
@@ -266,14 +266,14 @@ For example, RFC9162_SHA256 requires the following:
 
 See {{sec-rfc-9162-verifiable-data-structure-definition}} as an example.
 
-Proof types are specific to their associated "verifiable data structure", 
+Proof types are specific to their associated "verifiable data structure",
 for example, different merkle trees might support different representations of "inclusion proof" or "consistency proof".
 
-Implementers should not expect interoperability accross "verifiable data structures", 
+Implementers should not expect interoperability accross "verifiable data structures",
 but they should expect conceptually similar properties across registered proof types.
 
 For example, 2 different merkle tree based verifiable data structures might both support proofs of inclusion.
-Protocols requireing proof of inclusion ought to be able to preserve their functionality, 
+Protocols requireing proof of inclusion ought to be able to preserve their functionality,
 while switching from one verifiable data structure to another, so long as both structures upport the same proof types.
 
 # Verifiable Data Structure Proof Types
@@ -283,7 +283,7 @@ with the following initial contents:
 
 | Identifier  | Proof Type   | Reference
 |---
-|0            | N/A          | 
+|0            | N/A          |
 |TBD_2        | inclusion    | {{sec-generic-inclusion-proof}}
 |TBD_3        | consistency  | {{sec-generic-consistency-proof}}
 {: #verifiable-data-structure-proof-types align="left" title="Verifiable Data Structure Proof Types"}
