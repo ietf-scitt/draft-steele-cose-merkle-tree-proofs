@@ -171,12 +171,12 @@ smtr = THIS.COSE.profile .and COSE_Sign1_Tagged
 Protected header parameters:
 
 * alg (label: 1): REQUIRED. Signature algorithm identifier. Value type: int / tstr.
-* tree_alg (label: TBD): REQUIRED. Merkle tree algorithm identifier. Value type: int / tstr.
+* verifiable_data_structure (label: TBD): REQUIRED. Merkle tree algorithm identifier. Value type: int / tstr.
 * crit (label: 2): REQUIRED. Criticality marker. Value type: [ +label ]
 
-The criticality header MUST contain the tree_alg label.
+The criticality header MUST contain the verifiable_data_structure label.
 
-The envelope payload MUST be computed by the process defined for the tree_alg.
+The envelope payload MUST be computed by the process defined for the verifiable_data_structure.
 
 The envelope payload MUST be detached, and recomputed by the verifier.
 
@@ -191,7 +191,7 @@ One example of a Signed Inclusion Proof is a "transparent statement" as defined 
   # {
   #   "alg" : "ES256",
   #   1 : -7,
-  #   "tree_alg" : "RFC9162_SHA256",
+  #   "verifiable_data_structure" : "RFC9162_SHA256",
   #   TBD_1 : 1,
   # }
 
@@ -220,7 +220,7 @@ One example of a Signed Inclusion Proof is a "transparent statement" as defined 
   # {
   #   "alg" : "ES256",
   #   1 : -7,
-  #   "tree_alg" : "RFC9162_SHA256",
+  #   "verifiable_data_structure" : "RFC9162_SHA256",
   #   TBD_1 : 1,
   # }
 
@@ -238,51 +238,85 @@ One example of a Signed Inclusion Proof is a "transparent statement" as defined 
 ])
 ~~~~
 
-### Array form CDDL
 
-~~~~ cddl
-signed-consistency-proof = [
-  signed-consistency-proof: bstr .cbor smtr ; the payload is a merkle root, as described by the tree algorithm, and is *attached*.
-  consistency-proof: bstr .cbor consistency-proof ; the consistency-proof, as described in the tree algorithm
-]
-~~~~
+# Verifiable Data Structures {#sec-verifiable-data-structure-algorithms}
 
-# Merkle Tree Algorithms {#sec-merkle-tree-algorithms}
+This document establishes a registry of verifiable data structure algorithms values for TBD_1, 
+with the following initial contents:
 
-This document establishes a registry of merkle tree algorithms with the following initial contents:
-
-| Identifier            | Tree Algorithm | Reference
+| Identifier            | Algorithm | Reference
 |---
 |0 | N/A                |
 |1 | RFC9162_SHA256     | {{-certificate-transparency-v2}}
-{: #merkle-tree-alg-values align="left" title="Merke Tree Alogrithms"}
+{: #verifiable-data-structure-values align="left" title="Verifiable Data Structure Alogrithms"}
 
-Each tree algorithm defines:
+Each algorithm defines:
 
-0. How to compute a leaf from a payload and extra data, such as the current size of the tree.
-1. How to compute the merkle root from a sequence of leaves.
-2. How to compute an inclusion-proof for a leaf.
-3. How to compute a consistency-proof for a leaf.
+0. How to identify the data structures supported.
+1. How to identify the proof types supported.
+2. How to produce and consume the proof types supported.
 
-Each specification MUST define how to encode each of these parameters in CBOR, and map them to:
+Each specification MUST define how to encode the algorithm and proof types in CBOR.
 
-- TBD_1 - (tree alg)
-- TBD_2 - (inclusion proof)
-- TBD_3 - (consistency proof)
+For example, RFC9162_SHA256 requires the following:
 
-See {{sec-rfc-9162-tree-alg-definition}} as an example.
+- TBD_1, the verifiable data structure algorithm (binary merkle tree using sha256)
+- TBD_2, the inclusion proof type (binary merkle tree using sha256, inclusion proof)
+- TBD_3, the consistency proof type (binary merkle tree using sha256, consistency proof)
 
-## The RFC9162_SHA256 Tree Algorithm {#sec-rfc-9162-tree-alg-definition}
+See {{sec-rfc-9162-verifiable-data-structure-definition}} as an example.
+
+Proof types are specific to their associated "verifiable data structure", 
+for example, different merkle trees might support different representations of "inclusion proof" or "consistency proof".
+
+Implementers should not expect interoperability accross "verifiable data structures", 
+but they should expect conceptually similar properties across registered proof types.
+
+For example, 2 different merkle tree based verifiable data structures might both support proofs of inclusion.
+Protocols requireing proof of inclusion ought to be able to preserve their functionality, 
+while switching from one verifiable data structure to another, so long as both structures upport the same proof types.
+
+# Verifiable Data Structure Proof Types
+
+This document establishes a registry of verifiable data structure proof types tags,
+with the following initial contents:
+
+| Identifier  | Proof Type   | Reference
+|---
+|0            | N/A          | 
+|TBD_2        | inclusion    | {{sec-generic-inclusion-proof}}
+|TBD_3        | consistency  | {{sec-generic-consistency-proof}}
+{: #verifiable-data-structure-proof-types align="left" title="Verifiable Data Structure Proof Types"}
+
+## Inclusion Proof {{sec-generic-inclusion-proof}}
+
+Inclusion proofs provide a mechanism for a verifier to validate set membership.
+
+The integer identifier for this "verifiable-data-structure-proof-type" is TBD_2.
+The string identifier for this "verifiable-data-structure-proof-type" is "inclusion proof".
+
+{{sec-rfc9162-sha256-inclusion-proof}} provides a concrete example.
+
+## Consistency Proof {{sec-generic-consistency-proof}}
+
+Consistency proofs provide a mechanism for a verifier to validate the consistency of a verifiable data structure.
+
+The integer identifier for this "verifiable-data-structure-proof-type" is TBD_3.
+The string identifier for this "verifiable-data-structure-proof-type" is "consistency proof".
+
+{{sec-rfc9162-sha256-consistency-proof}} provides a concrete example.
+
+## The RFC9162_SHA256 Binary Merkle Tree Algorithm {#sec-rfc-9162-verifiable-data-structure-definition}
 
 This section defines how to map the data structures described in {{-certificate-transparency-v2}}
 to the terminology defined in this document, using cbor and cose.
 
-### Tree Algorithm
+### Algorithm
 
-The integer identifier for "tree-alg" is 1.
-The string identifier for "tree-alg" is "RFC9162_SHA256".
+The integer identifier for this "verifiable-data-structure" is 1.
+The string identifier for this "verifiable-data-structure" is "RFC9162_SHA256".
 
-### Tree Definition
+### Definition
 
 See {{-certificate-transparency-v2}}, 2.1.1. Definition of the Merkle Tree.
 
@@ -290,7 +324,7 @@ See {{-certificate-transparency-v2}}, 2.1.1. Definition of the Merkle Tree.
 
 The cbor representation of a merkle root is the bytestring represenation of MTH.
 
-#### Inclusion Proof
+#### Inclusion Proof {#sec-rfc9162-sha256-inclusion-proof}
 
 See {{-certificate-transparency-v2}}, 2.1.3.1. Generating an Inclusion Proof.
 
@@ -304,7 +338,7 @@ inclusion-proof = #TBD_2([
 ])
 ~~~~
 
-#### Consistency Proof
+#### Consistency Proof {#sec-rfc9162-sha256-consistency-proof}
 
 See {{-certificate-transparency-v2}}, 2.1.4.1. Generating a Consistency Proof.
 
@@ -373,36 +407,36 @@ in the 'Standards Action With Expert Review category.
 
 #### COSE Header Algorithm Parameters
 
-* Name: tree_alg
+* Name: verifiable_data_structure
 * Label: TBD_1
-* Value type: tree_alg
-* Value registry: See {{tree-alg-registry}}
+* Value type: verifiable_data_structure
+* Value registry: See {{verifiable-data-structure}}
 * Description: Merkle tree algorithm used to produce a COSE Sign1 payload.
 
 * Name: inclusion_proof
 * Label: TBD_2
 * Value type: inclusion_proof
-* Value registry: See {{tree-alg-registry}}
-* Description: Merkle tree inclusion proof for the given tree_alg.
+* Value registry: See {{verifiable-data-structure-registry}}
+* Description: Merkle tree inclusion proof for the given verifiable_data_structure.
 
 * Name: consistency_proof
 * Label: TBD_2
 * Value type: consistency_proof
-* Value registry: See {{tree-alg-registry}}
-* Description: Merkle tree consistency proof for the given tree_alg.
+* Value registry: See {{verifiable-data-structure-registry}}
+* Description: Merkle tree consistency proof for the given verifiable_data_structure.
 
 
-### Tree Algorithms {#tree-alg-registry}
+### Verifiable Data Structures {#verifiable-data-structure-registry}
 
-IANA will be asked to establish a registry of tree algorithm identifiers, named "Tree Algorithms" to be administered under a Specification Required policy {{-iana-considerations-guide}}.
+IANA will be asked to establish a registry of tree algorithm identifiers, named "Verifiable Data Structures" to be administered under a Specification Required policy {{-iana-considerations-guide}}.
 
 Template:
 
 * Identifier: The two-byte identifier for the algorithm
-* Tree Algorithm: The name of the algorithm
-* Reference: Where this algorithm is defined
+* Algorithm: The name of the data structure or algorithm use to produce the structures
+* Reference: Where this the data structure or algorithm is defined
 
-Initial contents: Provided in {{merkle-tree-alg-values}}
+Initial contents: Provided in {{verifiable-data-structure-values}}
 
 --- back
 
