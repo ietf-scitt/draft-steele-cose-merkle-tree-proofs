@@ -1,0 +1,753 @@
+
+
+
+
+TBD                                                            O. Steele
+Internet-Draft                                                 Transmute
+Intended status: Standards Track                             H. Birkholz
+Expires: 4 January 2024                                   Fraunhofer SIT
+                                                      A. Delignat-Lavaud
+                                                              C. Fournet
+                                                               Microsoft
+                                                             3 July 2023
+
+
+             Concise Encoding of Signed Merkle Tree Proofs
+              draft-steele-cose-merkle-tree-proofs-latest
+
+Abstract
+
+   This specification describes three CBOR data structures for primary
+   use in COSE envelopes.  A CBOR encoding of Merkle Roots for use in
+   COSE payloads.  A CBOR encoding of Inclusions Proofs for use in COSE
+   unprotected headers.  A CBOR encoding of Consistency Proofs for use
+   in COSE unprotected headers.
+
+Discussion Venues
+
+   This note is to be removed before publishing as an RFC.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 4 January 2024.
+
+Copyright Notice
+
+   Copyright (c) 2023 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction
+     1.1.  Requirements Notation
+   2.  Terminology
+   3.  CBOR Merkle Structures
+     3.1.  Inclusion Proof
+     3.2.  Signed Inclusion Proof
+     3.3.  Signed Consistency Proof
+   4.  Verifiable Data Structures
+   5.  Verifiable Data Structure Proof Types
+     5.1.  Inclusion Proof
+     5.2.  Consistency Proof
+     5.3.  The RFC9162_SHA256 Binary Merkle Tree Algorithm
+       5.3.1.  Algorithm
+       5.3.2.  Definition
+     5.4.  Signed Proofs
+   6.  Privacy Considerations
+     6.1.  Leaf Blinding
+   7.  Security Considerations
+     7.1.  Hash Function Agility
+   8.  IANA Considerations
+     8.1.  Additions to Existing Registries
+       8.1.1.  New Entries to the COSE Header Parameters Registry
+       8.1.2.  Verifiable Data Structures
+       8.1.3.  Verifiable Data Structure Proof Types
+   9.  References
+     9.1.  Normative References
+     9.2.  Informative References
+   Appendix A.  Blinding Example
+   Appendix B.  Implementation Status
+     B.1.  Implementer
+     B.2.  Implementation Name
+     B.3.  Implementation URL
+     B.4.  Maturity
+     B.5.  Coverage and Version Compatibility
+     B.6.  License
+     B.7.  Implementation Dependencies
+     B.8.  Contact
+   Authors' Addresses
+
+1.  Introduction
+
+   Merkle trees are verifiable data structures that support secure data
+   storage, through their ability to protect the integrity of batches of
+   documents or collections of statements.
+
+   A merkle proof is a path from a leaf to a root in a merkle tree.
+
+   Merkle proofs can be used to prove a document is in a database (proof
+   of inclusion), or that a smaller set of statements are contained in a
+   large set of statements (selective disclosure proofs).
+
+   Typically, merkle trees are constructed from simple operations such
+   as concatenation and digest via a cryptographic hash function.
+
+   The simple design and valuable cryptographic properties of merkle
+   trees have been leveraged in many network and database applications.
+
+   Differences in the representation of a merkle tree, merkle leaf and
+   merkle inclusion proof can increase the burden for implementers, and
+   create interoperability challenges.
+
+   This document describes the three data structures necessary to use
+   merkle proofs with COSE envelopes.
+
+1.1.  Requirements Notation
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+2.  Terminology
+
+   Leaf:  A merkle tree leaf is the cryptographic hash of a sequence of
+      bytes that combines Leaf Payload and Extra Data.
+
+   Merkle Tree:  A Merkle tree is a tree where every leaf is a
+      cryptographic hash of a sequence of bytes and every node that is
+      not a leaf is the cryptographic hash of the its child nodes.
+
+   Merkle Root:  A Merkle root is the root node of a tree; this
+      cryptographic hash is a committment to the content of the tree.
+
+   Merkle Tree Algorithm:  A Merkle tree algorithm specifies how to
+      construct the tree and how to compute its root.
+
+   Leaf Payload and Extra Data:  A leaf payload is application data used
+      to produce a Leaf.  The Merkle tree algorithm determines how a
+      payload together with extra data is used to produce a leaf.  The
+      simplest case is that the leaf is the cryptographic hash of the
+      payload without extra data.
+
+   Inclusion Path:  An inclusion path enables a verifier to recompute a
+      root, given a leaf and extra data.
+
+   Inclusion Proof:  An inclusion proof is a combination of the extra
+      data, inclusion path and a merkle tree root.
+
+   Signed Inclusion Proof:  A signed inclusion proof is a combination of
+      the inclusion path and signed envelope that includes a merkle
+      root.
+
+3.  CBOR Merkle Structures
+
+   This section describes representations of merkle proof structures in
+   CBOR.
+
+   Some of the structures such as the construction of a merkle tree
+   leaf, or an inclusion proof from a leaf to a merkle root, might have
+   several different representations.
+
+   Some differences in representations are necessary to support
+   efficient verification of different kinds of inclusion proofs and for
+   compatibility with deployed tree algorithms used in specific
+   implementations.
+
+   In case of [RFC9162], this is defined in Section 2.1.1.  Definition
+   of the Merkle Tree.
+
+3.1.  Inclusion Proof
+
+   [RFC6962] defines a merkle audit path for a leaf in a merkle tree as
+   the shortest list of additional nodes in the merkle tree required to
+   compute the merkle root for that tree.
+
+   [RFC9162] changed the term from "merkle audit path" to "merkle
+   inclusion proof".
+
+   We prefer to use the term "inclusion path" to avoid confusion with
+   Signed Inclusion Proof.
+
+   For tree algorithm "RFC9162_SHA256", we define the following compact
+   encoding of an inclusion proof for a leaf:
+
+   inclusion-proof = #TBD_2([
+       tree-size: int
+       leaf-index: int
+       inclusion-path: [+ bstr]
+   ])
+
+   Leaf index is also sometimes referred to as sequence number.
+
+3.2.  Signed Inclusion Proof
+
+   A Merkle root is signed with COSE_Sign1:
+
+   smtr = THIS.COSE.profile .and COSE_Sign1_Tagged
+
+   Protected header parameters:
+
+   *  alg (label: 1): REQUIRED.  Signature algorithm identifier.  Value
+      type: int / tstr.
+
+   *  verifiable_data_structure (label: TBD): REQUIRED.  Merkle tree
+      algorithm identifier.  Value type: int / tstr.
+
+   *  crit (label: 2): REQUIRED.  Criticality marker.  Value type: [
+      +label ]
+
+   The criticality header MUST contain the verifiable_data_structure
+   label.
+
+   The envelope payload MUST be computed by the process defined for the
+   verifiable_data_structure.
+
+   The envelope payload MUST be detached, and recomputed by the
+   verifier.
+
+   One example of a Signed Inclusion Proof is a "transparent statement"
+   as defined in [I-D.ietf-scitt-architecture].
+
+# COSE_Sign1
+18([
+
+  # Protected Header
+  h'a2012604588368747470733a2f2f73636974742e78797a2f75726e3a696574663a706172616d733a7472616e733a696e636c7573696f6e3a726663393136325f7368613235363a303a65343263333764326638306361613464323035353635376534303463386538363838313534346136663264313731356530663564616435643436343833633531',
+  # {
+  #   "alg" : "ES256",
+  #   1 : -7,
+  #   "verifiable_data_structure" : "RFC9162_SHA256",
+  #   TBD_1 : 1,
+  # }
+
+  # Unprotected Header
+  {
+      # "inclusion-proof" : "h'3133312c322c302c3132392c3231362c36342c38382c33322c3235342c3132382c33392c34392c3131382c312c3230352c38372c3235332c3136312c31332c3136312c38352c3139302c3133322c3234312c3137332c34352c3132372c32302c35302c35342c31332c3134342c33332c3233372c3234382c3132382c32332c3138392c3133352c3932'"
+      TBD_2 : h'3133312c322c302c3132392c3231362c36342c38382c33322c3235342c3132382c33392c34392c3131382c312c3230352c38372c3235332c3136312c31332c3136312c38352c3139302c3133322c3234312c3137332c34352c3132372c32302c35302c35342c31332c3134342c33332c3233372c3234382c3132382c32332c3138392c3133352c3932'
+  },
+
+  # Detached Payload
+
+  # Signature
+  h'4862c1dced27ceeb1f7a6277d13be127a8969a7171ae000ffa90ef5757b817ca8ee61d57645d1a087251a97f06eb61aec46ecf958e4a0fb94ae37f410c7f77ea'
+])
+
+3.3.  Signed Consistency Proof
+
+# COSE_Sign1
+18([
+
+  # Protected Header
+  h'a2012604588568747470733a2f2f73636974742e78797a2f75726e3a696574663a706172616d733a7472616e733a636f6e73697374656e63793a726663393136325f7368613235363a303a66653830323733313736303163643537666461313064613135356265383466316164326437663134333233363064393032316564663838303137626438373563',
+  # {
+  #   "alg" : "ES256",
+  #   1 : -7,
+  #   "verifiable_data_structure" : "RFC9162_SHA256",
+  #   TBD_1 : 1,
+  # }
+
+  # Unprotected Header
+  {
+      # "consistency-proof" : "h'3133312c312c312c3132392c3231362c36342c38382c33322c3235342c3132382c33392c34392c3131382c312c3230352c38372c3235332c3136312c31332c3136312c38352c3139302c3133322c3234312c3137332c34352c3132372c32302c35302c35342c31332c3134342c33332c3233372c3234382c3132382c32332c3138392c3133352c3932'"
+      TBD_3 : h'3133312c312c312c3132392c3231362c36342c38382c33322c3235342c3132382c33392c34392c3131382c312c3230352c38372c3235332c3136312c31332c3136312c38352c3139302c3133322c3234312c3137332c34352c3132372c32302c35302c35342c31332c3134342c33332c3233372c3234382c3132382c32332c3138392c3133352c3932'
+  },
+
+  # Protected Payload
+  h'fe8027317601cd57fda10da155be84f1ad2d7f1432360d9021edf88017bd875c',
+
+  # Signature
+  h'fe476fcddb783805fe344fc96837f4a5531c2e5a56d6f6353831e84e17ac69d4407a5a0d6eadf27f3a570bcf604181fd11b4692d3ac17b116c6226ba43726113'
+])
+
+4.  Verifiable Data Structures
+
+   This document establishes a registry of verifiable data structure
+   algorithms values for TBD_1, with the following initial contents:
+
+   +============+================+===========+
+   | Identifier | Algorithm      | Reference |
+   +============+================+===========+
+   | 0          | N/A            |           |
+   +------------+----------------+-----------+
+   | 1          | RFC9162_SHA256 | [RFC9162] |
+   +------------+----------------+-----------+
+
+        Table 1: Verifiable Data Structure
+                    Alogrithms
+
+   Each algorithm defines:
+
+   1.  How to identify the data structures supported.
+
+   2.  How to identify the proof types supported.
+
+   3.  How to produce and consume the proof types supported.
+
+   Each specification MUST define how to encode the algorithm and proof
+   types in CBOR.
+
+   For example, RFC9162_SHA256 requires the following:
+
+   *  TBD_1, the verifiable data structure algorithm (binary merkle tree
+      using sha256)
+
+   *  TBD_2, the inclusion proof type (binary merkle tree using sha256,
+      inclusion proof)
+
+   *  TBD_3, the consistency proof type (binary merkle tree using
+      sha256, consistency proof)
+
+   See Section 5.3 as an example.
+
+   Proof types are specific to their associated "verifiable data
+   structure", for example, different merkle trees might support
+   different representations of "inclusion proof" or "consistency
+   proof".
+
+   Implementers should not expect interoperability accross "verifiable
+   data structures", but they should expect conceptually similar
+   properties across registered proof types.
+
+   For example, 2 different merkle tree based verifiable data structures
+   might both support proofs of inclusion.  Protocols requireing proof
+   of inclusion ought to be able to preserve their functionality, while
+   switching from one verifiable data structure to another, so long as
+   both structures upport the same proof types.
+
+5.  Verifiable Data Structure Proof Types
+
+   This document establishes a registry of verifiable data structure
+   proof types tags, with the following initial contents:
+
+   +============+=============+=============+
+   | Identifier | Proof Type  | Reference   |
+   +============+=============+=============+
+   | 0          | N/A         |             |
+   +------------+-------------+-------------+
+   | TBD_2      | inclusion   | Section 5.1 |
+   +------------+-------------+-------------+
+   | TBD_3      | consistency | Section 5.2 |
+   +------------+-------------+-------------+
+
+       Table 2: Verifiable Data Structure
+                  Proof Types
+
+5.1.  Inclusion Proof
+
+   Inclusion proofs provide a mechanism for a verifier to validate set
+   membership.
+
+   The integer identifier for this "verifiable-data-structure-proof-
+   type" is TBD_2.  The string identifier for this "verifiable-data-
+   structure-proof-type" is "inclusion proof".
+
+   Section 5.3.2.2 provides a concrete example.
+
+5.2.  Consistency Proof
+
+   Consistency proofs provide a mechanism for a verifier to validate the
+   consistency of a verifiable data structure.
+
+   The integer identifier for this "verifiable-data-structure-proof-
+   type" is TBD_3.  The string identifier for this "verifiable-data-
+   structure-proof-type" is "consistency proof".
+
+   Section 5.3.2.3 provides a concrete example.
+
+5.3.  The RFC9162_SHA256 Binary Merkle Tree Algorithm
+
+   This section defines how to map the data structures described in
+   [RFC9162] to the terminology defined in this document, using cbor and
+   cose.
+
+5.3.1.  Algorithm
+
+   The integer identifier for this "verifiable-data-structure" is 1.
+   The string identifier for this "verifiable-data-structure" is
+   "RFC9162_SHA256".
+
+5.3.2.  Definition
+
+   See [RFC9162], 2.1.1.  Definition of the Merkle Tree.
+
+5.3.2.1.  Merkle Root
+
+   The cbor representation of a merkle root is the bytestring
+   represenation of MTH.
+
+5.3.2.2.  Inclusion Proof
+
+   See [RFC9162], 2.1.3.1.  Generating an Inclusion Proof.
+
+   The cbor representation of the inclusion proof is:
+
+   inclusion-proof = #TBD_2([
+       tree-size: int
+       leaf-index: int
+       inclusion-path: [+ bstr]
+   ])
+
+5.3.2.3.  Consistency Proof
+
+   See [RFC9162], 2.1.4.1.  Generating a Consistency Proof.
+
+   The cbor representation of the consistency proof is:
+
+   consistency-proof = #TBD_3([
+       tree-size-1: int ; size of the tree, when the previous root was produced.
+       tree-size-2: int ; size of the tree, when the latest root was produced.
+       consistency-path: [+ bstr] ; consistency path, from previous root to latest root.
+   ])
+
+   Editors note: tree-size-1, could be ommited, if an inclusion-proof is
+   always present, since the inclusion proof contains, tree-size-1.
+
+5.4.  Signed Proofs
+
+   In a signed inclusion proof, the previous merkle tree root, maps to
+   tree-size-1, and is a detached payload.  In a signed consistency
+   proof, the latest merkle tree root, maps to tree-size-2, and is an
+   attached payload.
+
+6.  Privacy Considerations
+
+   See the privacy considerations section of:
+
+   *  [RFC9162]
+
+   *  [RFC9053]
+
+   Although the word transparency implies to some degree read access, it
+   is important to note that transparency logs might include sensitive
+   information.
+
+   Depending on the leaf algorithm used, a log operator might be able to
+   count unique entries.
+
+   In the case that a leaf is produced from a cose sign 1 envelope,
+   adding information to the unprotected header can be used to produce a
+   unique leaf entry.
+
+   However, this could impact privacy, and some transparency service
+   operators might prefer only integrity protected content be made
+   transparent.
+
+6.1.  Leaf Blinding
+
+   In cases where a single merkle root and multiple inclusion paths are
+   used to prove inclusion for multiple payloads.  There is a risk that
+   an attacker may be able to learn the content of undisclosed payloads,
+   by brute forcing the values adjacent to the disclosed payloads
+   through application of the cryptographic hash function and comparison
+   to the the disclosed inclusion paths.  This kind of attack can be
+   mitigated by including a cryptographic nonce in the construction of
+   the leaf, however this nonce must then disclosed along side an
+   inclusion proof which increases the size of multiple payload signed
+   inclusion proofs.
+
+   Tree algorithm designers are encouraged to comment on this property
+   of their leaf construction algorithm.
+
+7.  Security Considerations
+
+   See the security considerations section of:
+
+   *  [RFC9162]
+
+   *  [RFC9053]
+
+7.1.  Hash Function Agility
+
+   The choice of cryptographic hash function is the primary primitive
+   impacting the security of authenticating payload inclusion in a
+   merkle root.  Tree algorithm designers should review the latest
+   guidance on selecting a suitable cryptographic hash function.
+
+8.  IANA Considerations
+
+8.1.  Additions to Existing Registries
+
+8.1.1.  New Entries to the COSE Header Parameters Registry
+
+   This document requests IANA to add new values to the 'COSE
+   Algorithms' and to the 'COSE Header Algorithm Parameters' registries
+   in the 'Standards Action With Expert Review category.
+
+8.1.1.1.  COSE Header Algorithm Parameters
+
+   *  Name: verifiable_data_structure
+
+   *  Label: TBD_1
+
+   *  Value type: verifiable_data_structure
+
+   *  Value registry: See Section 8.1.2
+
+   *  Description: Merkle tree algorithm used to produce a COSE Sign1
+      payload.
+
+   *  Name: inclusion_proof
+
+   *  Label: TBD_2
+
+   *  Value type: inclusion_proof
+
+   *  Value registry: See Section 8.1.2
+
+   *  Description: Merkle tree inclusion proof for the given
+      verifiable_data_structure.
+
+   *  Name: consistency_proof
+
+   *  Label: TBD_2
+
+   *  Value type: consistency_proof
+
+   *  Value registry: See Section 8.1.2
+
+   *  Description: Merkle tree consistency proof for the given
+      verifiable_data_structure.
+
+8.1.2.  Verifiable Data Structures
+
+   IANA will be asked to establish a registry of tree algorithm
+   identifiers, named "Verifiable Data Structures" to be administered
+   under a Specification Required policy [RFC8126].
+
+   Template:
+
+   *  Identifier: The two-byte identifier for the algorithm
+
+   *  Algorithm: The name of the data structure
+
+   *  Reference: Where the data structure is defined
+
+   Initial contents: Provided in Table 1
+
+8.1.3.  Verifiable Data Structure Proof Types
+
+   IANA will be asked to establish a registry of tree algorithm
+   identifiers, named "Verifiable Data Structures Proof Types" to be
+   administered under a Specification Required policy [RFC8126].
+
+   Template:
+
+   *  Identifier: The two-byte identifier for the algorithm
+
+   *  Algorithm: The name of the proof type algorithm
+
+   *  Reference: Where the algorithm is defined
+
+   Initial contents: Provided in Table 2
+
+9.  References
+
+9.1.  Normative References
+
+   [BCP205]   Sheffer, Y. and A. Farrel, "Improving Awareness of Running
+              Code: The Implementation Status Section", BCP 205,
+              RFC 7942, DOI 10.17487/RFC7942, July 2016,
+              <https://www.rfc-editor.org/rfc/rfc7942>.
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC6234]  Eastlake 3rd, D. and T. Hansen, "US Secure Hash Algorithms
+              (SHA and SHA-based HMAC and HKDF)", RFC 6234,
+              DOI 10.17487/RFC6234, May 2011,
+              <https://www.rfc-editor.org/rfc/rfc6234>.
+
+   [RFC6962]  Laurie, B., Langley, A., and E. Kasper, "Certificate
+              Transparency", RFC 6962, DOI 10.17487/RFC6962, June 2013,
+              <https://www.rfc-editor.org/rfc/rfc6962>.
+
+   [RFC6979]  Pornin, T., "Deterministic Usage of the Digital Signature
+              Algorithm (DSA) and Elliptic Curve Digital Signature
+              Algorithm (ECDSA)", RFC 6979, DOI 10.17487/RFC6979, August
+              2013, <https://www.rfc-editor.org/rfc/rfc6979>.
+
+   [RFC7049]  Bormann, C. and P. Hoffman, "Concise Binary Object
+              Representation (CBOR)", RFC 7049, DOI 10.17487/RFC7049,
+              October 2013, <https://www.rfc-editor.org/rfc/rfc7049>.
+
+   [RFC8032]  Josefsson, S. and I. Liusvaara, "Edwards-Curve Digital
+              Signature Algorithm (EdDSA)", RFC 8032,
+              DOI 10.17487/RFC8032, January 2017,
+              <https://www.rfc-editor.org/rfc/rfc8032>.
+
+   [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
+              Writing an IANA Considerations Section in RFCs", BCP 26,
+              RFC 8126, DOI 10.17487/RFC8126, June 2017,
+              <https://www.rfc-editor.org/rfc/rfc8126>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC8949]  Bormann, C. and P. Hoffman, "Concise Binary Object
+              Representation (CBOR)", STD 94, RFC 8949,
+              DOI 10.17487/RFC8949, December 2020,
+              <https://www.rfc-editor.org/rfc/rfc8949>.
+
+   [RFC9053]  Schaad, J., "CBOR Object Signing and Encryption (COSE):
+              Initial Algorithms", RFC 9053, DOI 10.17487/RFC9053,
+              August 2022, <https://www.rfc-editor.org/rfc/rfc9053>.
+
+   [RFC9162]  Laurie, B., Messeri, E., and R. Stradling, "Certificate
+              Transparency Version 2.0", RFC 9162, DOI 10.17487/RFC9162,
+              December 2021, <https://www.rfc-editor.org/rfc/rfc9162>.
+
+9.2.  Informative References
+
+   [I-D.ietf-cose-countersign]
+              Schaad, J., "CBOR Object Signing and Encryption (COSE):
+              Countersignatures", Work in Progress, Internet-Draft,
+              draft-ietf-cose-countersign-10, 20 September 2022,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-cose-
+              countersign-10>.
+
+   [I-D.ietf-scitt-architecture]
+              Birkholz, H., Delignat-Lavaud, A., Fournet, C., and Y.
+              Deshpande, "An Architecture for Trustworthy and
+              Transparent Digital Supply Chains", Work in Progress,
+              Internet-Draft, draft-ietf-scitt-architecture-01, 13 March
+              2023, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              scitt-architecture-01>.
+
+Appendix A.  Blinding Example
+
+   Implementers wishing to leverage this tree algorithm with multiple
+   inclusion proofs, may prepend payload with extra data before applying
+   the tree algorithm, where extra data is a cryptographic nonce.
+
+Appendix B.  Implementation Status
+
+   Note to RFC Editor: Please remove this section as well as references
+   to [BCP205] before AUTH48.
+
+   This section records the status of known implementations of the
+   protocol defined by this specification at the time of posting of this
+   Internet-Draft, and is based on a proposal described in [BCP205].
+   The description of implementations in this section is intended to
+   assist the IETF in its decision processes in progressing drafts to
+   RFCs.  Please note that the listing of any individual implementation
+   here does not imply endorsement by the IETF.  Furthermore, no effort
+   has been spent to verify the information presented here that was
+   supplied by IETF contributors.  This is not intended as, and must not
+   be construed to be, a catalog of available implementations or their
+   features.  Readers are advised to note that other implementations may
+   exist.
+
+   According to [BCP205], "this will allow reviewers and working groups
+   to assign due consideration to documents that have the benefit of
+   running code, which may serve as evidence of valuable experimentation
+   and feedback that have made the implemented protocols more mature.
+   It is up to the individual working groups to use this information as
+   they see fit".
+
+B.1.  Implementer
+
+   An open-source implementation was initiated and is maintained by the
+   Transmute Industries Inc. - Transmute.
+
+B.2.  Implementation Name
+
+   An application demonstrating the concepts is available at
+   https://scitt.xyz (https://scitt.xyz).
+
+B.3.  Implementation URL
+
+   An open-source implementation is available at:
+
+   *  https://github.com/transmute-industries/cose
+
+B.4.  Maturity
+
+   The code's level of maturity is considered to be "prototype".
+
+B.5.  Coverage and Version Compatibility
+
+   The current version ('main') implements the tree algorithm, inclusion
+   proof and consistency proof concepts of this draft.
+
+B.6.  License
+
+   The project and all corresponding code and data maintained on GitHub
+   are provided under the Apache License, version 2.
+
+B.7.  Implementation Dependencies
+
+   The implementation builds on concepts described in SCITT
+   [I-D.ietf-scitt-architecture] (https://scitt.io/).
+
+   The implementation uses the Concise Binary Object Representation
+   [RFC7049] (https://cbor.io/).
+
+   The implementation uses the CBOR Object Signing and Encryption
+   [RFC9053], maintained at: - https://github.com/erdtman/cose-js
+
+   The implementation uses an implementation of [RFC9162], maintained
+   at:
+
+   *  https://github.com/transmute-industries/rfc9162/tree/main/src/
+      CoMETRE
+
+B.8.  Contact
+
+   Orie Steele (orie@transmute.industries)
+
+Authors' Addresses
+
+   Orie Steele
+   Transmute
+   United States
+   Email: orie@transmute.industries
+
+
+   Henk Birkholz
+   Fraunhofer SIT
+   Rheinstrasse 75
+   64295 Darmstadt
+   Germany
+   Email: henk.birkholz@sit.fraunhofer.de
+
+
+   Antoine Delignat-Lavaud
+   Microsoft
+   United Kingdom
+   Email: antdl@microsoft.com
+
+
+   Cedric Fournet
+   Microsoft
+   United Kingdom
+   Email: fournet@microsoft.com
