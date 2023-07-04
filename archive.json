@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-06-29T01:36:02.060013+00:00",
+  "timestamp": "2023-07-04T01:40:05.196899+00:00",
   "repo": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
   "labels": [
     {
@@ -908,6 +908,40 @@
           ]
         }
       ]
+    },
+    {
+      "number": 18,
+      "id": "PR_kwDOJHVbLc5UiVoD",
+      "title": "Attempt to generalize tree algorithm to verifiable data structure",
+      "url": "https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs/pull/18",
+      "state": "OPEN",
+      "author": "OR13",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR attempts to generalize \"merkle tree alg\" and associated tags for \"merkle tree proof types\", to:\r\n\r\n\"verifiable data structure\" and associated \"verifiable data structure proof types\".\r\n\r\nThis is intended to support similar structures that provide similar proof types, but that are not based on merkle trees.\r\n\r\nWe are specifically thinking of cryptographic accumulators, and the merkle^2 paper.",
+      "createdAt": "2023-07-03T15:11:21Z",
+      "updatedAt": "2023-07-03T15:37:43Z",
+      "baseRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
+      "baseRefName": "main",
+      "baseRefOid": "bdc0814405fd4e1c65ca098be350f8ac6fb8a1a8",
+      "headRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
+      "headRefName": "feat/generalize-verifiable-data-structures",
+      "headRefOid": "d9cb116b7014f52b8ad929c20ea93af2effa542c",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I'm not attached to \"verifiable data structure\" or \"verifiable data structure proof types\", just needed a word that didn't imply \"trees\".",
+          "createdAt": "2023-07-03T15:37:43Z",
+          "updatedAt": "2023-07-03T15:37:43Z"
+        }
+      ],
+      "reviews": []
     }
   ]
 }
