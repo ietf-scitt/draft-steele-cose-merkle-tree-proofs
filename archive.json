@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-07-04T01:40:05.196899+00:00",
+  "timestamp": "2023-07-06T01:41:23.520239+00:00",
   "repo": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
   "labels": [
     {
@@ -921,7 +921,7 @@
       "labels": [],
       "body": "This PR attempts to generalize \"merkle tree alg\" and associated tags for \"merkle tree proof types\", to:\r\n\r\n\"verifiable data structure\" and associated \"verifiable data structure proof types\".\r\n\r\nThis is intended to support similar structures that provide similar proof types, but that are not based on merkle trees.\r\n\r\nWe are specifically thinking of cryptographic accumulators, and the merkle^2 paper.",
       "createdAt": "2023-07-03T15:11:21Z",
-      "updatedAt": "2023-07-03T15:37:43Z",
+      "updatedAt": "2023-07-04T15:39:59Z",
       "baseRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
       "baseRefName": "main",
       "baseRefOid": "bdc0814405fd4e1c65ca098be350f8ac6fb8a1a8",
@@ -939,9 +939,50 @@
           "body": "I'm not attached to \"verifiable data structure\" or \"verifiable data structure proof types\", just needed a word that didn't imply \"trees\".",
           "createdAt": "2023-07-03T15:37:43Z",
           "updatedAt": "2023-07-03T15:37:43Z"
+        },
+        {
+          "author": "ad-l",
+          "authorAssociation": "NONE",
+          "body": "The overall \"verifiable data structure\" generalization is fine, and doesn't impact the structure of the document too much.\r\n\r\nHowever, I am not fully satisfied with generalization of proof types. It seems very strange that TBD_1 (\"binary merkle tree using sha256\", a tag that appears in the protected header of the COSE signed root) and TBD_2 (\"binary merkle tree using sha256, inclusion proof\", a tag that appears in the CBOR type for inclusion proof associated with TBD_1). It seems clear that TBD_2 and TBD_3 are refinements of TBD_1 that should ideally be in a separate registry.\r\n\r\nFurthermore, as discussed last week, the notion of proof type (inclusion proof, consistency proof, freshness proof...) is a lot more meaningful than the notion of verfiable data structure type for protocols that build on COMETRE. \r\nTherefore, it may be natural to define either a universal type for each proof type, or at least agree on the convention that proofs for all verifiable data structures must be CBOR tagged with the same proof type, which is then defined as a separate registry. Each RFC that extends COMETE must define a new verifiable data structure but may or may not extend the proof type registry. For instance, it would allow the CCF_ledger to use the same CBOR tags for inclusion proof and consistency proof instead of having to define 3 tags with different semantics.",
+          "createdAt": "2023-07-04T13:03:25Z",
+          "updatedAt": "2023-07-04T13:03:25Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "body": "There were basically 2 paths discussed:\r\n\r\n### 2 Layer Registry (encryption like)\r\n\r\n(implemented in this PR)\r\n\r\ntree_alg (TBD_1): RFC9162 (1)\r\ninclusion proof (TBD_2): bytes based on tree_alg\r\nconsistency proof (TBD_3): bytes based on tree_alg\r\n\r\ntree_alg (TBD_1): BitcoinMerkleTree (2)\r\ninclusion proof (TBD_2): bytes based on tree_alg\r\nconsistency proof (TBD_3): bytes based on tree_alg\r\n\r\ntree_alg (TBD_1): Merkle^2 Tree (3)\r\ninclusion proof (TBD_2): bytes based on tree_alg\r\nconsistency proof (TBD_3): bytes based on tree_alg\r\nsearch proof (TBD_4): bytes based on tree_alg\r\nnon inclusion proof (TBD_5): bytes based on tree_alg\r\n\r\n### 1 Layer Registry  (signature like)\r\n\r\n(previously discussed at IETF 115)\r\n\r\ntree_alg (TBD_1) : \"RFC9162_SHA256_INCLUSION_PROOF\" (TBD_A)\r\nproof (TBD_B): bytes based on alg\r\n\r\ntree_alg (TBD_1) : \"RFC9162_SHA256_CONSISTENCY_PROOF\" (TBD_C)\r\nproof (TBD_B): bytes based on alg\r\n \r\nOther things to consider...\r\n\r\nCan an unprotected header contain multiple proofs for a single type?\r\n\r\nCan an unprotected header contain multiple proofs of multiple types?",
+          "createdAt": "2023-07-04T15:35:58Z",
+          "updatedAt": "2023-07-04T15:39:59Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHVbLc5aLrRv",
+          "commit": {
+            "abbreviatedOid": "d9cb116"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "Add an example of \"verify\" that uses the \"proof type tags\"\r\n",
+          "createdAt": "2023-07-04T14:29:13Z",
+          "updatedAt": "2023-07-04T14:29:13Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5aL5gc",
+          "commit": {
+            "abbreviatedOid": "d9cb116"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "Seems like maybe people prefer a single registry with proof types only being bound to a single data structure... ",
+          "createdAt": "2023-07-04T14:58:49Z",
+          "updatedAt": "2023-07-04T14:58:49Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
