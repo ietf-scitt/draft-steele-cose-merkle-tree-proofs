@@ -95,7 +95,7 @@ Verifiable Data Structure:
 
 Proof Type:
 
-: A verifiable process, that proves properties of one or more verifiable data structures.
+: A verifiable process, that proves properties of one or more Verifiable Data Structures.
 
 Proof Value:
 
