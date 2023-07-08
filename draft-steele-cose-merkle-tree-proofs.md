@@ -89,40 +89,21 @@ This document describes how to convey verifiable data structures, and associated
 
 # Terminology
 
-Leaf:
+Verifiable Data Structure:
 
-: A merkle tree leaf is the cryptographic hash of a sequence of bytes that combines Leaf Payload and Extra Data.
+: A data structure which supports one or more Proof Types.
 
-Merkle Tree:
+Proof Type:
 
-: A Merkle tree is a tree where every leaf is a cryptographic hash of a sequence of
-bytes and every node that is not a leaf is the cryptographic hash of the its child nodes.
+: A verifiable process, that proves properties of one or more verifiable data structures.
 
-Merkle Root:
+Proof Value:
 
-: A Merkle root is the root node of a tree; this cryptographic hash is a committment to the content of the tree.
+: An encoding of a Proof Type in CBOR.
 
-Merkle Tree Algorithm:
+Proof Signature:
 
-: A Merkle tree algorithm specifies how to construct the tree and how to compute its root.
-
-Leaf Payload and Extra Data:
-
-: A leaf payload is application data used to produce a Leaf.
-The Merkle tree algorithm determines how a payload together with extra data is used to produce a leaf.
-The simplest case is that the leaf is the cryptographic hash of the payload without extra data.
-
-Inclusion Path:
-
-: An inclusion path enables a verifier to recompute a root, given a leaf and extra data.
-
-Inclusion Proof:
-
-: An inclusion proof is a combination of the extra data, inclusion path and a merkle tree root.
-
-Signed Inclusion Proof:
-
-: A signed inclusion proof is a combination of the inclusion path and signed envelope that includes a merkle root.
+: A COSE Sign1 encoding of a specific Proof Type for a specific Verifiable Data Structure.
 
 # CBOR Merkle Structures
 
