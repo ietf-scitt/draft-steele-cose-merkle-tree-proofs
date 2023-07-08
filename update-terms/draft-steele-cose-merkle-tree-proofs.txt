@@ -141,7 +141,7 @@ Table of Contents
       more Proof Types.
 
    Proof Type:  A verifiable process, that proves properties of one or
-      more verifiable data structures.
+      more Verifiable Data Structures.
 
    Proof Value:  An encoding of a Proof Type in CBOR.
 
