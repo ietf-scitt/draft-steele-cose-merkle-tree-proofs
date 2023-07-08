@@ -61,7 +61,7 @@ informative:
 --- abstract
 
 This specification describes verifiable data structures and associated proof types for use with COSE.
-The extensibility of the approach is demonstrated by providing CBOR encodings for RFC9162. 
+The extensibility of the approach is demonstrated by providing CBOR encodings for RFC9162.
 
 --- middle
 
@@ -70,12 +70,12 @@ The extensibility of the approach is demonstrated by providing CBOR encodings fo
 Merkle trees are one of many verifiable data structures that enable tamper evident secure information storage,
 through their ability to protect the integrity of batches of documents or collections of statements.
 
-Merkle trees can be constructed from simple operations such as concatenation and digest via a cryptographic hash function, 
+Merkle trees can be constructed from simple operations such as concatenation and digest via a cryptographic hash function,
 however, more advanced constructions enable proofs of different properties of the underlying verifiable data structure.
 
 Verifiable data structure proofs can be used to prove a document is in a database (proof of inclusion),
-that a database is append only (proof of consistency), that a smaller set of statements are contained 
-in a large set of statements (proof of disclosure, a special case of proof of inclusion), 
+that a database is append only (proof of consistency), that a smaller set of statements are contained
+in a large set of statements (proof of disclosure, a special case of proof of inclusion),
 or proof that certain data is not yet present in a database (proofs of non inclusion).
 
 Differences in the representation of verifiable data structures, and verifiable data structure proof types,
