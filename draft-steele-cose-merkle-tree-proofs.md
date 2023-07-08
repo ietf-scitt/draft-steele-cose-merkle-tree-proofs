@@ -205,7 +205,7 @@ The string identifier for this Verifiable Data Structure is "RFC9162_SHA256".
 
 See {{sec-verifiable-data-structure-algorithms}}.
 
-See {{-certificate-transparency-v2}}, 2.1.1. Definition of the Merkle Tree, 
+See {{-certificate-transparency-v2}}, 2.1.1. Definition of the Merkle Tree,
 for a complete description of this verifiable data structure.
 
 ## Inclusion Proof Definition {#sec-rfc9162-sha256-inclusion-proof}
@@ -227,7 +227,7 @@ inclusion-proof = #TBD_2([
 
 In a signed inclusion proof, the previous merkle tree root, maps to tree-size-1, and is a detached payload.
 
-Other specification's refer to signed inclusion proofs as "receipts", 
+Other specification's refer to signed inclusion proofs as "receipts",
 profiles of proof signatures are encouraged to make additional protected header parameters mandatory.
 
 TODO: reference to scitt receipts.
@@ -250,7 +250,7 @@ A previous merkle tree hash as defined in {{-certificate-transparency-v2}}.
 
 The payload MUST be detached.
 
-Detaching the payload forces verifiers to recompute the root from the inclusion proof signature, 
+Detaching the payload forces verifiers to recompute the root from the inclusion proof signature,
 this protects against implementation errors where the signature is verified but to root does not match the inclusion proof.
 
 The following example needs to be converted to proper CDDL:
@@ -374,7 +374,7 @@ Tree algorithm designers are encouraged to comment on this property of their lea
 
 ### Blinding Example {#sec-leaf-blinding-example}
 
-Implementers wishing to leverage multiple inclusion proofs to support selective disclosure, 
+Implementers wishing to leverage multiple inclusion proofs to support selective disclosure,
 can prepend each payload with extra data before computing the inclusion proof, where extra data is a cryptographic nonce.
 
 # Security Considerations
