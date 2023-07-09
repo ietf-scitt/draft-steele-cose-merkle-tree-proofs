@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-07-06T01:41:23.520239+00:00",
+  "timestamp": "2023-07-09T01:46:26.087352+00:00",
   "repo": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
   "labels": [
     {
@@ -132,6 +132,22 @@
       "body": "\r\nhttps://github.com/merkletreejs/merkletreejs\r\n\r\nIt would be nice to have some test vectors and a nicer name for the popular tree algorithms",
       "createdAt": "2023-05-12T12:51:17Z",
       "updatedAt": "2023-05-12T12:51:45Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 21,
+      "id": "I_kwDOJHVbLc5q_Y_t",
+      "title": "Mandatory header parameters",
+      "url": "https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs/issues/21",
+      "state": "OPEN",
+      "author": "OR13",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Suggest:\r\n\r\nRemove `crit` from this draft, but encourage profiles to add normative text that forces verifier to understand `verifiable-data-structure`...\r\n\r\nMake `kid` mandatory.",
+      "createdAt": "2023-07-08T16:10:12Z",
+      "updatedAt": "2023-07-08T16:10:12Z",
       "closedAt": null,
       "comments": []
     }
@@ -914,24 +930,26 @@
       "id": "PR_kwDOJHVbLc5UiVoD",
       "title": "Attempt to generalize tree algorithm to verifiable data structure",
       "url": "https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs/pull/18",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "OR13",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "This PR attempts to generalize \"merkle tree alg\" and associated tags for \"merkle tree proof types\", to:\r\n\r\n\"verifiable data structure\" and associated \"verifiable data structure proof types\".\r\n\r\nThis is intended to support similar structures that provide similar proof types, but that are not based on merkle trees.\r\n\r\nWe are specifically thinking of cryptographic accumulators, and the merkle^2 paper.",
       "createdAt": "2023-07-03T15:11:21Z",
-      "updatedAt": "2023-07-04T15:39:59Z",
+      "updatedAt": "2023-07-07T13:47:40Z",
       "baseRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
       "baseRefName": "main",
       "baseRefOid": "bdc0814405fd4e1c65ca098be350f8ac6fb8a1a8",
       "headRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
       "headRefName": "feat/generalize-verifiable-data-structures",
       "headRefOid": "d9cb116b7014f52b8ad929c20ea93af2effa542c",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-07-07T13:47:40Z",
+      "mergedAt": "2023-07-07T13:47:39Z",
+      "mergedBy": "henkbirkholz",
+      "mergeCommit": {
+        "oid": "21b259f9b907cd91326da127a8882e50941b53f1"
+      },
       "comments": [
         {
           "author": "OR13",
@@ -953,6 +971,13 @@
           "body": "There were basically 2 paths discussed:\r\n\r\n### 2 Layer Registry (encryption like)\r\n\r\n(implemented in this PR)\r\n\r\ntree_alg (TBD_1): RFC9162 (1)\r\ninclusion proof (TBD_2): bytes based on tree_alg\r\nconsistency proof (TBD_3): bytes based on tree_alg\r\n\r\ntree_alg (TBD_1): BitcoinMerkleTree (2)\r\ninclusion proof (TBD_2): bytes based on tree_alg\r\nconsistency proof (TBD_3): bytes based on tree_alg\r\n\r\ntree_alg (TBD_1): Merkle^2 Tree (3)\r\ninclusion proof (TBD_2): bytes based on tree_alg\r\nconsistency proof (TBD_3): bytes based on tree_alg\r\nsearch proof (TBD_4): bytes based on tree_alg\r\nnon inclusion proof (TBD_5): bytes based on tree_alg\r\n\r\n### 1 Layer Registry  (signature like)\r\n\r\n(previously discussed at IETF 115)\r\n\r\ntree_alg (TBD_1) : \"RFC9162_SHA256_INCLUSION_PROOF\" (TBD_A)\r\nproof (TBD_B): bytes based on alg\r\n\r\ntree_alg (TBD_1) : \"RFC9162_SHA256_CONSISTENCY_PROOF\" (TBD_C)\r\nproof (TBD_B): bytes based on alg\r\n \r\nOther things to consider...\r\n\r\nCan an unprotected header contain multiple proofs for a single type?\r\n\r\nCan an unprotected header contain multiple proofs of multiple types?",
           "createdAt": "2023-07-04T15:35:58Z",
           "updatedAt": "2023-07-04T15:39:59Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@roywill @fournet thank you for the reviews.\r\n\r\nAll the CDDL examples will need some help, and certainly there is a lot more editorial work that needs to be done to fully align to this approach.\r\n\r\nI tried to do the minimum in this PR to host the discussion, but if we merge this, there will need to be further cleanup.",
+          "createdAt": "2023-07-07T13:33:54Z",
+          "updatedAt": "2023-07-07T13:33:54Z"
         }
       ],
       "reviews": [
@@ -981,6 +1006,165 @@
           "createdAt": "2023-07-04T14:58:49Z",
           "updatedAt": "2023-07-04T14:58:49Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5aawvH",
+          "commit": {
+            "abbreviatedOid": "d9cb116"
+          },
+          "author": "roywill",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "I should point out that the deletion of the consistency proof CDDL, means that it shows up before you define it below.  If you think that is ok, I am fine with it.",
+          "createdAt": "2023-07-06T16:59:59Z",
+          "updatedAt": "2023-07-06T16:59:59Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5agbUX",
+          "commit": {
+            "abbreviatedOid": "d9cb116"
+          },
+          "author": "fournet",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "I agree with Orie's choices; \"verifiable data structure\" and \"proof type\" are good generalizations,  and I prefer the 2-layer algorithm as e.g. some verifiers may care about a commitment to a VDS even if they don't use a particular proof type.",
+          "createdAt": "2023-07-07T09:37:30Z",
+          "updatedAt": "2023-07-07T09:37:30Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5aiT41",
+          "commit": {
+            "abbreviatedOid": "d9cb116"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Approved, acknowledging the need for further editorial work & CDDL examples",
+          "createdAt": "2023-07-07T13:47:27Z",
+          "updatedAt": "2023-07-07T13:47:27Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "id": "PR_kwDOJHVbLc5U_i_1",
+      "title": "Update introduction",
+      "url": "https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs/pull/19",
+      "state": "OPEN",
+      "author": "OR13",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR aligns the abstract and intro with generalizing away from specific merkle trees",
+      "createdAt": "2023-07-08T13:42:37Z",
+      "updatedAt": "2023-07-08T13:43:31Z",
+      "baseRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
+      "baseRefName": "main",
+      "baseRefOid": "21b259f9b907cd91326da127a8882e50941b53f1",
+      "headRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
+      "headRefName": "update-intro",
+      "headRefOid": "5ee57bd1795555c39c2c5a0deb36099a27966620",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 20,
+      "id": "PR_kwDOJHVbLc5U_kvG",
+      "title": "Update terms",
+      "url": "https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs/pull/20",
+      "state": "OPEN",
+      "author": "OR13",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "builds on #19 \r\n\r\nRemoves merkle specific terms, introduces generic terms",
+      "createdAt": "2023-07-08T14:11:09Z",
+      "updatedAt": "2023-07-08T14:14:03Z",
+      "baseRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
+      "baseRefName": "main",
+      "baseRefOid": "21b259f9b907cd91326da127a8882e50941b53f1",
+      "headRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
+      "headRefName": "update-terms",
+      "headRefOid": "c34e198a24ff7930b14ebcd5d56ef5ad8f4d3d5e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHVbLc5apDlV",
+          "commit": {
+            "abbreviatedOid": "c34e198"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-08T14:14:03Z",
+          "updatedAt": "2023-07-08T14:14:03Z",
+          "comments": [
+            {
+              "originalPosition": 66,
+              "body": "Changes after #19 start here.",
+              "createdAt": "2023-07-08T14:14:03Z",
+              "updatedAt": "2023-07-08T14:14:03Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 22,
+      "id": "PR_kwDOJHVbLc5U_tsp",
+      "title": "Update generic structures",
+      "url": "https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs/pull/22",
+      "state": "OPEN",
+      "author": "OR13",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR build on #20 and attempts to clarify what is generic vc what is specific to RFC9162 encodings",
+      "createdAt": "2023-07-08T16:15:06Z",
+      "updatedAt": "2023-07-08T16:16:07Z",
+      "baseRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
+      "baseRefName": "main",
+      "baseRefOid": "21b259f9b907cd91326da127a8882e50941b53f1",
+      "headRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
+      "headRefName": "generic-structures",
+      "headRefOid": "b15fb60e7f2136972bfc0637755156ce67a855e5",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHVbLc5apJV7",
+          "commit": {
+            "abbreviatedOid": "b15fb60"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-08T16:16:06Z",
+          "updatedAt": "2023-07-08T16:16:07Z",
+          "comments": [
+            {
+              "originalPosition": 84,
+              "body": "This is the beginning of changes after #20 \r\n\r\nSubstantial reordering an rewording follows...",
+              "createdAt": "2023-07-08T16:16:06Z",
+              "updatedAt": "2023-07-08T16:16:07Z"
+            }
+          ]
         }
       ]
     }
