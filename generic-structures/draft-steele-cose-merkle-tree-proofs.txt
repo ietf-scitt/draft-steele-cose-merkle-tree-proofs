@@ -5,11 +5,11 @@
 TBD                                                            O. Steele
 Internet-Draft                                                 Transmute
 Intended status: Standards Track                             H. Birkholz
-Expires: 9 January 2024                                   Fraunhofer SIT
+Expires: 11 January 2024                                  Fraunhofer SIT
                                                       A. Delignat-Lavaud
                                                               C. Fournet
                                                                Microsoft
-                                                             8 July 2023
+                                                            10 July 2023
 
 
              Concise Encoding of Signed Merkle Tree Proofs
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 January 2024.
+   This Internet-Draft will expire on 11 January 2024.
 
 Copyright Notice
 
@@ -201,7 +201,7 @@ Table of Contents
 4.  Proof Types in CBOR
 
    Proof types are specific to their associated "verifiable data
-   structure", for example, different merkle trees might support
+   structure", for example, different Merkle trees might support
    different representations of "inclusion proof" or "consistency
    proof".
 
