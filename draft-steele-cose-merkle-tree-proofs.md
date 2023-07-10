@@ -316,7 +316,7 @@ The unprotected header for an RFC9162_SHA256 consistency proof signature is:
 
 The payload of an RFC9162_SHA256 consistency proof signature is:
 
-The latest merkle tree hash as defined in {{-certificate-transparency-v2}}.
+The latest Merkle tree hash as defined in {{-certificate-transparency-v2}}.
 
 The payload MUST be attached.
 
