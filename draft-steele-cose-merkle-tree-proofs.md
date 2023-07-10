@@ -146,7 +146,7 @@ See {{sec-rfc-9162-verifiable-data-structure-definition}} as an example.
 # Proof Types in CBOR
 
 Proof types are specific to their associated "verifiable data structure",
-for example, different merkle trees might support different representations of "inclusion proof" or "consistency proof".
+for example, different Merkle trees might support different representations of "inclusion proof" or "consistency proof".
 
 Implementers should not expect interoperability accross "verifiable data structures",
 but they should expect conceptually similar properties across registered proof types.
