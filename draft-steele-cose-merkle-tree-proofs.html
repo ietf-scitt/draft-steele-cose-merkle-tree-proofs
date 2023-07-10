@@ -1330,47 +1330,24 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-terminology" class="section-name selfRef">Terminology</a>
       </h2>
 <span class="break"></span><dl class="dlParallel" id="section-2-1">
-        <dt id="section-2-1.1">Leaf:</dt>
+        <dt id="section-2-1.1">Verifiable Data Structure:</dt>
         <dd style="margin-left: 1.5em" id="section-2-1.2">
-          <p id="section-2-1.2.1">A merkle tree leaf is the cryptographic hash of a sequence of bytes that combines Leaf Payload and Extra Data.<a href="#section-2-1.2.1" class="pilcrow">¶</a></p>
+          <p id="section-2-1.2.1">A data structure which supports one or more Proof Types.<a href="#section-2-1.2.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-1.3">Merkle Tree:</dt>
+<dt id="section-2-1.3">Proof Type:</dt>
         <dd style="margin-left: 1.5em" id="section-2-1.4">
-          <p id="section-2-1.4.1">A Merkle tree is a tree where every leaf is a cryptographic hash of a sequence of
-bytes and every node that is not a leaf is the cryptographic hash of the its child nodes.<a href="#section-2-1.4.1" class="pilcrow">¶</a></p>
+          <p id="section-2-1.4.1">A verifiable process, that proves properties of one or more Verifiable Data Structures.<a href="#section-2-1.4.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-1.5">Merkle Root:</dt>
+<dt id="section-2-1.5">Proof Value:</dt>
         <dd style="margin-left: 1.5em" id="section-2-1.6">
-          <p id="section-2-1.6.1">A Merkle root is the root node of a tree; this cryptographic hash is a committment to the content of the tree.<a href="#section-2-1.6.1" class="pilcrow">¶</a></p>
+          <p id="section-2-1.6.1">An encoding of a Proof Type in CBOR.<a href="#section-2-1.6.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-1.7">Merkle Tree Algorithm:</dt>
+<dt id="section-2-1.7">Proof Signature:</dt>
         <dd style="margin-left: 1.5em" id="section-2-1.8">
-          <p id="section-2-1.8.1">A Merkle tree algorithm specifies how to construct the tree and how to compute its root.<a href="#section-2-1.8.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="section-2-1.9">Leaf Payload and Extra Data:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-1.10">
-          <p id="section-2-1.10.1">A leaf payload is application data used to produce a Leaf.
-The Merkle tree algorithm determines how a payload together with extra data is used to produce a leaf.
-The simplest case is that the leaf is the cryptographic hash of the payload without extra data.<a href="#section-2-1.10.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="section-2-1.11">Inclusion Path:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-1.12">
-          <p id="section-2-1.12.1">An inclusion path enables a verifier to recompute a root, given a leaf and extra data.<a href="#section-2-1.12.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="section-2-1.13">Inclusion Proof:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-1.14">
-          <p id="section-2-1.14.1">An inclusion proof is a combination of the extra data, inclusion path and a merkle tree root.<a href="#section-2-1.14.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="section-2-1.15">Signed Inclusion Proof:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-1.16">
-          <p id="section-2-1.16.1">A signed inclusion proof is a combination of the inclusion path and signed envelope that includes a merkle root.<a href="#section-2-1.16.1" class="pilcrow">¶</a></p>
+          <p id="section-2-1.8.1">A COSE Sign1 encoding of a specific Proof Type for a specific Verifiable Data Structure.<a href="#section-2-1.8.1" class="pilcrow">¶</a></p>
 </dd>
       <dd class="break"></dd>
 </dl>
