@@ -246,7 +246,7 @@ The unprotected header for an RFC9162_SHA256 inclusion proof signature is:
 
 The payload of an RFC9162_SHA256 inclusion proof signature is:
 
-A previous merkle tree hash as defined in {{-certificate-transparency-v2}}.
+A previous Merkle tree hash as defined in {{-certificate-transparency-v2}}.
 
 The payload MUST be detached.
 
