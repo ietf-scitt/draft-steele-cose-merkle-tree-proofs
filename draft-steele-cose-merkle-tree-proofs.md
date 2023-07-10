@@ -152,7 +152,7 @@ Implementers should not expect interoperability accross "verifiable data structu
 but they should expect conceptually similar properties across registered proof types.
 
 For example, 2 different merkle tree based verifiable data structures might both support proofs of inclusion.
-Protocols requireing proof of inclusion ought to be able to preserve their functionality,
+Protocols requiring proof of inclusion ought to be able to preserve their functionality,
 while switching from one verifiable data structure to another, so long as both structures upport the same proof types.
 
 ## Proof Types Registry {#sec-verifiable-data-structure-proof-types}
