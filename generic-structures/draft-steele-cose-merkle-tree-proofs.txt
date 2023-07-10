@@ -332,7 +332,7 @@ Table of Contents
 
    The payload of an RFC9162_SHA256 inclusion proof signature is:
 
-   A previous merkle tree hash as defined in [RFC9162].
+   A previous Merkle tree hash as defined in [RFC9162].
 
    The payload MUST be detached.
 
