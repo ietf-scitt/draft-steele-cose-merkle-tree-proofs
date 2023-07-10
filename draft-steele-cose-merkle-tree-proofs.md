@@ -60,31 +60,28 @@ informative:
 
 --- abstract
 
-This specification describes three CBOR data structures for primary use in COSE envelopes.
-A CBOR encoding of Merkle Roots for use in COSE payloads.
-A CBOR encoding of Inclusions Proofs for use in COSE unprotected headers.
-A CBOR encoding of Consistency Proofs for use in COSE unprotected headers.
+This specification describes verifiable data structures and associated proof types for use with COSE.
+The extensibility of the approach is demonstrated by providing CBOR encodings for RFC9162.
 
 --- middle
 
 # Introduction
 
-Merkle trees are verifiable data structures that support secure data storage,
+Merkle trees are one of many verifiable data structures that enable tamper evident secure information storage,
 through their ability to protect the integrity of batches of documents or collections of statements.
 
-A merkle proof is a path from a leaf to a root in a merkle tree.
+Merkle trees can be constructed from simple operations such as concatenation and digest via a cryptographic hash function,
+however, more advanced constructions enable proofs of different properties of the underlying verifiable data structure.
 
-Merkle proofs can be used to prove a document is in a database (proof of inclusion),
-or that a smaller set of statements are contained in a large set of statements (selective disclosure proofs).
+Verifiable data structure proofs can be used to prove a document is in a database (proof of inclusion),
+that a database is append only (proof of consistency), that a smaller set of statements are contained
+in a large set of statements (proof of disclosure, a special case of proof of inclusion),
+or proof that certain data is not yet present in a database (proofs of non inclusion).
 
-Typically, merkle trees are constructed from simple operations such as concatenation and digest via a cryptographic hash function.
+Differences in the representation of verifiable data structures, and verifiable data structure proof types,
+can increase the burden for implementers, and create interoperability challenges for transparency services.
 
-The simple design and valuable cryptographic properties of merkle trees have been leveraged in many network and database applications.
-
-Differences in the representation of a merkle tree, merkle leaf and merkle inclusion proof can increase the
-burden for implementers, and create interoperability challenges.
-
-This document describes the three data structures necessary to use merkle proofs with COSE envelopes.
+This document describes how to convey verifiable data structures, and associated proof types in COSE envelopes.
 
 ## Requirements Notation
 
