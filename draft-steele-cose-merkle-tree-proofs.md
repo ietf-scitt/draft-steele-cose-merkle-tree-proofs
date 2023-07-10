@@ -153,7 +153,7 @@ but they should expect conceptually similar properties across registered proof t
 
 For example, 2 different merkle tree based verifiable data structures might both support proofs of inclusion.
 Protocols requiring proof of inclusion ought to be able to preserve their functionality,
-while switching from one verifiable data structure to another, so long as both structures upport the same proof types.
+while switching from one verifiable data structure to another, so long as both structures support the same proof types.
 
 ## Proof Types Registry {#sec-verifiable-data-structure-proof-types}
 
