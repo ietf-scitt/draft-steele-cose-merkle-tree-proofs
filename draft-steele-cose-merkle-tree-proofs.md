@@ -118,7 +118,7 @@ might have several different representations, depending on the verifiable data s
 Some differences in representations are necessary to support efficient
 verification of different kinds of proofs and for compatibility with specific implementations.
 
-Some proof types benefit from standard envelope formats for signing and encryption.
+Some proof types benefit from standard envelope formats for signing and encryption, whilst others require no further cryptographic intervention at all.
 
 In order to improve interoperability we define two extension points for
 enabling verifiable data structures with COSE, and we provide concrete examples for
