@@ -302,7 +302,7 @@ Table of Contents
    In a signed inclusion proof, the previous merkle tree root, maps to
    tree-size-1, and is a detached payload.
 
-   Other specification's refer to signed inclusion proofs as "receipts",
+   Other specifications refer to signed inclusion proofs as "receipts",
    profiles of proof signatures are encouraged to make additional
    protected header parameters mandatory.
 
