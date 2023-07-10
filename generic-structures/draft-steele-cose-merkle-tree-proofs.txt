@@ -412,7 +412,7 @@ Table of Contents
 
    The payload of an RFC9162_SHA256 consistency proof signature is:
 
-   The latest merkle tree hash as defined in [RFC9162].
+   The latest Merkle tree hash as defined in [RFC9162].
 
    The payload MUST be attached.
 
