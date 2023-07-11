@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-07-09T01:46:26.087352+00:00",
+  "timestamp": "2023-07-11T01:24:26.715307+00:00",
   "repo": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
   "labels": [
     {
@@ -1053,50 +1053,141 @@
       "id": "PR_kwDOJHVbLc5U_i_1",
       "title": "Update introduction",
       "url": "https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs/pull/19",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "OR13",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "This PR aligns the abstract and intro with generalizing away from specific merkle trees",
       "createdAt": "2023-07-08T13:42:37Z",
-      "updatedAt": "2023-07-08T13:43:31Z",
+      "updatedAt": "2023-07-10T12:29:30Z",
       "baseRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
       "baseRefName": "main",
       "baseRefOid": "21b259f9b907cd91326da127a8882e50941b53f1",
       "headRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
       "headRefName": "update-intro",
       "headRefOid": "5ee57bd1795555c39c2c5a0deb36099a27966620",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-07-10T12:29:29Z",
+      "mergedAt": "2023-07-10T12:29:29Z",
+      "mergedBy": "OR13",
+      "mergeCommit": {
+        "oid": "b7cea85a2977f7c8e91c2a6b84d59f383daf721a"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHVbLc5ap8E4",
+          "commit": {
+            "abbreviatedOid": "5ee57bd"
+          },
+          "author": "JAG-UK",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "LGTM",
+          "createdAt": "2023-07-09T18:27:49Z",
+          "updatedAt": "2023-07-09T18:27:49Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5asTQJ",
+          "commit": {
+            "abbreviatedOid": "5ee57bd"
+          },
+          "author": "robinbryce",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-10T08:37:28Z",
+          "updatedAt": "2023-07-10T08:37:28Z",
+          "comments": [
+            {
+              "originalPosition": 26,
+              "body": "Are consistency proofs on their own sufficent to show a database has been managed in an append only manner ?",
+              "createdAt": "2023-07-10T08:37:28Z",
+              "updatedAt": "2023-07-10T08:37:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5atyue",
+          "commit": {
+            "abbreviatedOid": "5ee57bd"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-10T12:17:16Z",
+          "updatedAt": "2023-07-10T12:17:16Z",
+          "comments": [
+            {
+              "originalPosition": 26,
+              "body": "The ones from rfc9162 depend on inclusion proofs, but together they prove the append only property. The details are in rfc9162, there is a tree diagram that helps explain this better than the text in our draft.",
+              "createdAt": "2023-07-10T12:17:16Z",
+              "updatedAt": "2023-07-10T12:17:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5at3BH",
+          "commit": {
+            "abbreviatedOid": "5ee57bd"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-07-10T12:27:42Z",
+          "updatedAt": "2023-07-10T12:27:42Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5at3rA",
+          "commit": {
+            "abbreviatedOid": "5ee57bd"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-10T12:29:10Z",
+          "updatedAt": "2023-07-10T12:29:10Z",
+          "comments": [
+            {
+              "originalPosition": 26,
+              "body": "Here is an implementation that might be a bit easier to understand:\r\n\r\nhttps://github.com/transmute-industries/rfc9162/blob/main/test/consistencyProof.test.ts\r\n\r\nits base on this https://datatracker.ietf.org/doc/html/rfc9162#section-2.1.5",
+              "createdAt": "2023-07-10T12:29:10Z",
+              "updatedAt": "2023-07-10T12:29:10Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 20,
       "id": "PR_kwDOJHVbLc5U_kvG",
       "title": "Update terms",
       "url": "https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs/pull/20",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "OR13",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "builds on #19 \r\n\r\nRemoves merkle specific terms, introduces generic terms",
       "createdAt": "2023-07-08T14:11:09Z",
-      "updatedAt": "2023-07-08T14:14:03Z",
+      "updatedAt": "2023-07-10T12:30:03Z",
       "baseRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
       "baseRefName": "main",
       "baseRefOid": "21b259f9b907cd91326da127a8882e50941b53f1",
       "headRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
       "headRefName": "update-terms",
       "headRefOid": "c34e198a24ff7930b14ebcd5d56ef5ad8f4d3d5e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-07-10T12:30:02Z",
+      "mergedAt": "2023-07-10T12:30:02Z",
+      "mergedBy": "OR13",
+      "mergeCommit": {
+        "oid": "090f8a6977b37a2734b769fcf339d63a200f20a4"
+      },
       "comments": [],
       "reviews": [
         {
@@ -1118,6 +1209,59 @@
               "updatedAt": "2023-07-08T14:14:03Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5ap8HF",
+          "commit": {
+            "abbreviatedOid": "c34e198"
+          },
+          "author": "JAG-UK",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "More generic is good, although we should have a worked example with Merkle trees",
+          "createdAt": "2023-07-09T18:29:32Z",
+          "updatedAt": "2023-07-09T18:32:23Z",
+          "comments": [
+            {
+              "originalPosition": 66,
+              "body": "I just approved the 'update introduction' PR separately. Might we abandon that and just squash this one once approved?",
+              "createdAt": "2023-07-09T18:29:32Z",
+              "updatedAt": "2023-07-09T18:32:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5asZZM",
+          "commit": {
+            "abbreviatedOid": "c34e198"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-10T08:49:58Z",
+          "updatedAt": "2023-07-10T08:49:58Z",
+          "comments": [
+            {
+              "originalPosition": 66,
+              "body": "merging subsequently seems fine to me.",
+              "createdAt": "2023-07-10T08:49:58Z",
+              "updatedAt": "2023-07-10T08:49:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5at3bU",
+          "commit": {
+            "abbreviatedOid": "c34e198"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "subsequently to #19 ",
+          "createdAt": "2023-07-10T12:28:43Z",
+          "updatedAt": "2023-07-10T12:28:43Z",
+          "comments": []
         }
       ]
     },
@@ -1126,24 +1270,26 @@
       "id": "PR_kwDOJHVbLc5U_tsp",
       "title": "Update generic structures",
       "url": "https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs/pull/22",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "OR13",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "This PR build on #20 and attempts to clarify what is generic vc what is specific to RFC9162 encodings",
       "createdAt": "2023-07-08T16:15:06Z",
-      "updatedAt": "2023-07-08T16:16:07Z",
+      "updatedAt": "2023-07-10T13:07:49Z",
       "baseRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
       "baseRefName": "main",
       "baseRefOid": "21b259f9b907cd91326da127a8882e50941b53f1",
       "headRepository": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
       "headRefName": "generic-structures",
-      "headRefOid": "b15fb60e7f2136972bfc0637755156ce67a855e5",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "756a026102f0c86f62fb03fecb25251ffaed4c79",
+      "closedAt": "2023-07-10T13:07:48Z",
+      "mergedAt": "2023-07-10T13:07:48Z",
+      "mergedBy": "henkbirkholz",
+      "mergeCommit": {
+        "oid": "1738335142dfd571c7f27fdcc5fbb7fa4bfcda18"
+      },
       "comments": [],
       "reviews": [
         {
@@ -1165,6 +1311,107 @@
               "updatedAt": "2023-07-08T16:16:07Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5ap8OA",
+          "commit": {
+            "abbreviatedOid": "b15fb60"
+          },
+          "author": "JAG-UK",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Mostly improves on the earlier version, I like the generality it allows for.\r\nA couple of larger questions in here amongst the suggestions",
+          "createdAt": "2023-07-09T18:34:00Z",
+          "updatedAt": "2023-07-09T18:48:17Z",
+          "comments": [
+            {
+              "originalPosition": 84,
+              "body": "I've separately approved #19 and #20 in other PRs.Starting review from this point",
+              "createdAt": "2023-07-09T18:34:01Z",
+              "updatedAt": "2023-07-09T18:48:18Z"
+            },
+            {
+              "originalPosition": 208,
+              "body": "```suggestion\r\nSome proof types benefit from standard envelope formats for signing and encryption, whilst others require no further cryptographic intervention at all.\r\n```",
+              "createdAt": "2023-07-09T18:36:27Z",
+              "updatedAt": "2023-07-09T18:48:17Z"
+            },
+            {
+              "originalPosition": 247,
+              "body": "```suggestion\r\nfor example, different Merkle trees might support different representations of \"inclusion proof\" or \"consistency proof\".\r\n```",
+              "createdAt": "2023-07-09T18:37:21Z",
+              "updatedAt": "2023-07-09T18:48:17Z"
+            },
+            {
+              "originalPosition": 250,
+              "body": "```suggestion\r\nProtocols requiring proof of inclusion ought to be able to preserve their functionality,\r\n```",
+              "createdAt": "2023-07-09T18:37:35Z",
+              "updatedAt": "2023-07-09T18:48:17Z"
+            },
+            {
+              "originalPosition": 251,
+              "body": "```suggestion\r\nwhile switching from one verifiable data structure to another, so long as both structures support the same proof types.\r\n```",
+              "createdAt": "2023-07-09T18:37:46Z",
+              "updatedAt": "2023-07-09T18:48:17Z"
+            },
+            {
+              "originalPosition": 338,
+              "body": "```suggestion\r\nOther specifications refer to signed inclusion proofs as \"receipts\",\r\n```",
+              "createdAt": "2023-07-09T18:39:58Z",
+              "updatedAt": "2023-07-09T18:48:17Z"
+            },
+            {
+              "originalPosition": 338,
+              "body": "This is interesting. I've been struggling with the suggested need for signing inclusion proofs - in large scale native MT systems (like Ethereum) the proof stands alone (given a published root) and signatures are pointless. \r\n\r\nAre we saying here that actually 'signed inclusion proof' means 'a signed payload which includes a bunch of things including a stand-alone inclusion proof and some extra more semantically meaningful info about what the proof is for'? i.e. a complete SCITT sig?\r\n",
+              "createdAt": "2023-07-09T18:43:14Z",
+              "updatedAt": "2023-07-09T18:48:18Z"
+            },
+            {
+              "originalPosition": 357,
+              "body": "```suggestion\r\nA previous Merkle tree hash as defined in {{-certificate-transparency-v2}}.\r\n```",
+              "createdAt": "2023-07-09T18:45:24Z",
+              "updatedAt": "2023-07-09T18:48:18Z"
+            },
+            {
+              "originalPosition": 427,
+              "body": "```suggestion\r\nThe latest Merkle tree hash as defined in {{-certificate-transparency-v2}}.\r\n```",
+              "createdAt": "2023-07-09T18:46:29Z",
+              "updatedAt": "2023-07-09T18:48:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5at6bQ",
+          "commit": {
+            "abbreviatedOid": "b15fb60"
+          },
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-10T12:35:46Z",
+          "updatedAt": "2023-07-10T12:35:46Z",
+          "comments": [
+            {
+              "originalPosition": 338,
+              "body": "(in the case of merkle trees) a signed inclusion proof is a signature over a merkle root, with the merkle audit path and other proof data in the unprotected header... such as that any party holding a leaf can recompute the root, and check the signature.\r\n\r\nThis allows parties to avoid storing or accessing a large shared database, such as a blockchain.\r\n\r\nWhich is also valuable to blockchain based approaches that want to be trusted by parties that won't verify the chain.... for example, a vendor might issued signed inclusion proofs, and then other vendors can trust the transparency service vendor without running all their backend, etc...\r\n",
+              "createdAt": "2023-07-10T12:35:46Z",
+              "updatedAt": "2023-07-10T12:38:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHVbLc5at-VQ",
+          "commit": {
+            "abbreviatedOid": "756a026"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-07-10T12:45:05Z",
+          "updatedAt": "2023-07-10T12:45:05Z",
+          "comments": []
         }
       ]
     }
