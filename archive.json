@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-07-11T01:24:26.715307+00:00",
+  "timestamp": "2023-07-13T01:42:25.592622+00:00",
   "repo": "ietf-scitt/draft-steele-cose-merkle-tree-proofs",
   "labels": [
     {
@@ -148,6 +148,38 @@
       "body": "Suggest:\r\n\r\nRemove `crit` from this draft, but encourage profiles to add normative text that forces verifier to understand `verifiable-data-structure`...\r\n\r\nMake `kid` mandatory.",
       "createdAt": "2023-07-08T16:10:12Z",
       "updatedAt": "2023-07-08T16:10:12Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 23,
+      "id": "I_kwDOJHVbLc5rO3dP",
+      "title": "RFC9162 inclusion proofs do not include leaf",
+      "url": "https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs/issues/23",
+      "state": "OPEN",
+      "author": "ad-l",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The latest set of changes have removed the serialized leaf from the RFC9162-log inclusion proof. This is problematic for SCITT because the expectation was that verification of a COSE signed Merkle Proof would be self-contained (the CCF ledger ID is forced to make the serialization explicit because the leaf carries additional metadata).\r\n\r\nGenerally, I would argue that a proof type is only well defined if all inputs required for proof verification are carried in the COMETRE CBOR definition of the proof value. Otherwise, the question of the serialization of these additional inputs becomes ambiguous and you may end up with a mix of CBOR and other formats. Furthermore, it is difficult for implementations of validation libraries to define the API if they have to consider additional inputs for some verifiable data structures or some proof types. ",
+      "createdAt": "2023-07-11T14:23:42Z",
+      "updatedAt": "2023-07-11T14:23:42Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 24,
+      "id": "I_kwDOJHVbLc5rO-4r",
+      "title": "There needs to be a common CBOR type for all proof types",
+      "url": "https://github.com/ietf-scitt/draft-steele-cose-merkle-tree-proofs/issues/24",
+      "state": "OPEN",
+      "author": "ad-l",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "In last week's Editor call, the assumption was that COSE_Sign1 was always the common type for any COMETRE proof type, but this is very ambiguous in the document. The terminology defines the proof type, proof value, and proof signature but then defines inclusion proofs and consistency proof without any commonality. For instance, the document never explictly says that all proof have a proof signature or introduce a common type for all proof types\r\n",
+      "createdAt": "2023-07-11T14:37:48Z",
+      "updatedAt": "2023-07-11T14:37:48Z",
       "closedAt": null,
       "comments": []
     }
